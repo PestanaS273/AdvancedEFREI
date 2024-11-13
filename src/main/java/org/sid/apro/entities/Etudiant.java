@@ -15,6 +15,7 @@ import java.util.Collection;
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
 public class Etudiant extends Utilisateur{
     private Boolean etat;
+    private Long NumEtudiant;
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Cours> cours = new ArrayList<>();
 }

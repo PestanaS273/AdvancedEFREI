@@ -19,7 +19,6 @@ import java.util.Collection;
 public class Intervenant extends Utilisateur{
     private String Specialiste;
     private String description;
-    private int nmbEtudiant;
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Cours> cours = new ArrayList<>();
 }
