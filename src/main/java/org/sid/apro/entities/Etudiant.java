@@ -15,7 +15,6 @@ import java.util.Collection;
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
 public class Etudiant extends Utilisateur{
     private Boolean etat;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "etudiant")
-    private Collection<Forme> formes;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Cours> cours = new ArrayList<>();
 }

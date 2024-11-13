@@ -5,20 +5,18 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Collection;
+
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
 public class Forme implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    private Etudiant etudiant;
-    @ManyToOne
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    private Admin admin;
-    @ManyToOne
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    private Intervenant intervenant;
-
+    @OneToMany(cascade = CascadeType.MERGE ,mappedBy = "forme")
+    private Collection<Cours> cours;
+    @ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.MERGE)
+    private Question question;
+    @ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.MERGE)
+    private Forme forme;
 
 }
