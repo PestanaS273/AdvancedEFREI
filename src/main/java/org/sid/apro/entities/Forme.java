@@ -17,6 +17,6 @@ public class Forme implements Serializable {
     @ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.MERGE)
     private Question question;
     @ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.MERGE)
-    private Forme forme;
+    private Reponse reponse;
 
 }
