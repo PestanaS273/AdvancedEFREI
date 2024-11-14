@@ -22,7 +22,6 @@ public class Utilisateur implements Serializable {
     private String prenom;
     private String email;
     private String numTel;
-    private String sexe;
     private String imageProfile;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
