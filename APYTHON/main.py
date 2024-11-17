@@ -8,7 +8,7 @@ import os
 app = FastAPI()
 
 origins = [
-    "http://localhost",
+    "http://localhost:5173",
 ]
 
 app.add_middleware(
@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/analyze+excel")
+@app.post("/analyze-excel")
 async def analyze_excel(background_task: BackgroundTasks, file: UploadFile = File(...)):
     file_path = f"./uploads/{file.filename}"
     with open(file_path, "wb") as buffer:
@@ -31,4 +31,4 @@ async def analyze_excel(background_task: BackgroundTasks, file: UploadFile = Fil
 
 @app.get("/status")
 def get_status():
-    return JSONResponse(content={"status": excel_analysis.status}, status_code=200)
+    return JSONResponse(content={"status": excel_analysis.get_status()}, status_code=200)
