@@ -38,7 +38,7 @@ methods: {
     formData.append("file", this.file);
 
     try {
-        this.isProcessing = true; // Deshabilitar botón
+        this.isProcessing = true; 
         const response = await axios.post(
         "http://127.0.0.1:8000/analyze-excel",
         formData,
@@ -49,11 +49,10 @@ methods: {
         }
         );
         console.log(response.data);
-        // Iniciar la actualización automática del estado
         this.startStatusUpdate();
     } catch (error) {
         console.error(error);
-        this.isProcessing = false; // Rehabilitar botón si hay error
+        this.isProcessing = false;
     }
     },
     async checkStatus() {
@@ -61,9 +60,8 @@ methods: {
         const response = await axios.get("http://127.0.0.1:8000/status");
         this.status = response.data.status;
 
-        // Detener la actualización si el análisis se completa
         if (this.status.step === 3) {
-        this.isProcessing = false; // Rehabilitar botón
+        this.isProcessing = false;
         this.stopStatusUpdate();
         }
     } catch (error) {
@@ -72,7 +70,7 @@ methods: {
     }
     },
     startStatusUpdate() {
-    this.statusInterval = setInterval(this.checkStatus, 500); // Actualiza cada 0.5 segundos
+    this.statusInterval = setInterval(this.checkStatus, 500); 
     },
     stopStatusUpdate() {
     clearInterval(this.statusInterval);
