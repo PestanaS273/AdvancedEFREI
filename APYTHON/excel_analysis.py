@@ -7,10 +7,14 @@ from dotenv import load_dotenv
 from database_class import Base, Utilisateur, Etudiant, Cours, EtudiantCours
 import pymysql
 
-# Cargar las variables de entorno desde el archivo .env
 load_dotenv()
 
-progress_status = {"step": 0, "total_steps": 3}
+progress_status = {
+    "step": 0,
+    "total_steps": 3,
+    "percentage": 0,
+    "message": ""
+}
 
 def get_status():
     return progress_status
@@ -21,12 +25,12 @@ def run_analysis(file_path):
     print("Reading Excel File:", file_path)
     df = pd.read_excel(file_path)
 
-    # Imprimir los nombres de las columnas para depuración
-    print("Columnas del DataFrame:", df.columns)
+    progress_status["percentage"] = 20  
 
     student_array = []
     cours_etudiant = []
 
+    progress_status["message"] = "Processing Data"
     for index, row in df.iterrows():
         cours_etudiant = []
         if "coursNom" in row and isinstance(row["coursNom"], str) and "," in row["coursNom"]:
@@ -52,6 +56,8 @@ def run_analysis(file_path):
         }
 
         student_array.append(student)
+        progress_status["percentage"] = 20 + int((index + 1) / len(df) * 40)
+
 
     print("Student array:", student_array)
     update_database(student_array)
@@ -80,64 +86,72 @@ def update_database(student_array):
     Session = sessionmaker(bind=engine)
     session = Session()
 
+    total_students = len(student_array)
+    processed_students = 0
+
     try:
         for student_data in student_array:
-            # Validar o crear un usuario
-            utilisateur = session.query(Utilisateur).filter_by(id=student_data["num_etudiant"]).first()
-            if not utilisateur:
+            etudiant = session.query(Etudiant).filter_by(num_etudiant=student_data["num_etudiant"]).first()
+
+            if not etudiant:
                 utilisateur = Utilisateur(
-                    id=student_data["num_etudiant"],
                     prenom=student_data["prenom"],
                     nom=student_data["nom"],
                     date_naissance=student_data["date_naissance"],
                     email=student_data["email"],
                     num_tel=student_data["num_tel"],
-                    statut=True  # Usuario activo
+                    password="pass202234",
+                    statut=False  
                 )
                 session.add(utilisateur)
-            else:
-                # Actualizar campos existentes
-                utilisateur.prenom = student_data["prenom"]
-                utilisateur.nom = student_data["nom"]
-                utilisateur.date_naissance = student_data["date_naissance"]
-                utilisateur.email = student_data["email"]
-                utilisateur.num_tel = student_data["num_tel"]
+                session.flush()  
 
-            # Validar o crear estudiante
-            etudiant = session.query(Etudiant).filter_by(id=utilisateur.id).first()
-            if not etudiant:
                 etudiant = Etudiant(
                     id=utilisateur.id,
                     num_etudiant=student_data["num_etudiant"],
-                    etat=True
+                    etat=False if utilisateur.password == "pass202234" else True
                 )
                 session.add(etudiant)
+            else:
+                utilisateur = session.query(Utilisateur).filter_by(id=etudiant.id).first()
+                if utilisateur:
+                    utilisateur.prenom = student_data["prenom"]
+                    utilisateur.nom = student_data["nom"]
+                    utilisateur.date_naissance = student_data["date_naissance"]
+                    utilisateur.email = student_data["email"]
+                    utilisateur.num_tel = student_data["num_tel"]
+                    utilisateur.statut = utilisateur.password != "pass202234"
 
-            # Actualizar cursos asociados
             session.query(EtudiantCours).filter_by(etudiant_id=etudiant.id).delete()
             for course_data in student_data["cours"]:
                 cours = session.query(Cours).filter_by(nom_cours=course_data["coursNom"]).first()
                 if not cours:
-                    # Crear un nuevo curso si no existe
                     cours = Cours(
                         nom_cours=course_data["coursNom"],
-                        forme_id=None  # Si no hay form relacionado
+                        forme_id=None
                     )
                     session.add(cours)
-                    session.commit()  # Necesario para persistir el curso y obtener su ID
+                    session.flush() 
 
-                # Crear la relación entre estudiante y curso
                 etudiant_cours = EtudiantCours(
                     etudiant_id=etudiant.id,
-                    cours_id=cours.id  # Asegúrate de incluir cours.id
+                    cours_id=cours.id
                 )
                 session.add(etudiant_cours)
 
+            processed_students += 1
+            progress_status["percentage"] = 60 + int((processed_students / total_students) * 40)
+
         session.commit()
-        print("Database update complete")
+
 
     except Exception as e:
+        print(f"Error processing student {student_data.get('num_etudiant', 'Unknown')}: {e}")
         session.rollback()
-        print(f"Error during update: {e}")
     finally:
+        print("Database update complete")
+        progress_status["step"] = 3
+        progress_status["message"] = "Analysis Complete"
+        progress_status["percentage"] = 100
         session.close()
+

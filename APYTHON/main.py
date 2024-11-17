@@ -31,4 +31,6 @@ async def analyze_excel(background_task: BackgroundTasks, file: UploadFile = Fil
 
 @app.get("/status")
 def get_status():
-    return JSONResponse(content={"status": excel_analysis.get_status()}, status_code=200)
+    return JSONResponse(content={
+        "status": excel_analysis.get_status()
+    }, status_code=200)
