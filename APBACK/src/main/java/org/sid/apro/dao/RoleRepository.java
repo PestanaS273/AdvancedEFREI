@@ -8,4 +8,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @RepositoryRestResource
 @CrossOrigin("*")
 public interface RoleRepository extends JpaRepository<Role, Long> {
+    public Role findByRole(String name);
 }
