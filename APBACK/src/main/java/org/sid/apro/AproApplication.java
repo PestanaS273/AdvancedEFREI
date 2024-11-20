@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 public class AproApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(AproApplication.class, args);
     }
 
@@ -22,17 +23,17 @@ public class AproApplication {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+    /*@Bean
     CommandLineRunner start(IAproIniService aproIniService) {
         return args -> {
             aproIniService.saveRole(new Role(1, "etudiant"));
             aproIniService.saveRole(new Role(2, "professor"));
             aproIniService.saveRole(new Role(3, "admin"));
-            Stream.of("user1@gmail.com", "user2@gmail.com", "user3@gmail.com", "admin@gmail.com").forEach(un->{
+            Stream.of("user4@gmail.com", "user2@gmail.com", "user3@gmail.com", "admin@gmail.com").forEach(un -> {
                 aproIniService.saveUtilisateur(un, "1234", "1234");
             });
             aproIniService.addRoleToUser("admin@gmail.com", "admin");
         };
-    }
+    }*/
 
 }
