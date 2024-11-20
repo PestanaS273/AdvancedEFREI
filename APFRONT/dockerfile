@@ -4,5 +4,5 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
-EXPOSE 8080
-CMD ["npx", "serve", "-s", "dist"]
+EXPOSE 4173
+CMD ["npm", "run", "preview"]

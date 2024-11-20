@@ -7,4 +7,8 @@ export default defineConfig({
     reactivityTransform: true,
     
   })],
+  server: {
+    host: true, // Permite aceptar conexiones externas
+    port: 4173, // Puerto usado en tu Dockerfile
+  },
 })
