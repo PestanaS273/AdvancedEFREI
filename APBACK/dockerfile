@@ -5,7 +5,7 @@ WORKDIR /app
 ARG JAR_FILE=target/Apro-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} /app.jar
 
-COPY .env /app/.env
+COPY src/main/resources/application.properties /app/application.properties
 
 EXPOSE 8095
 
