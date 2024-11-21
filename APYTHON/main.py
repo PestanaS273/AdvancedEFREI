@@ -3,9 +3,9 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 import excel_analysis 
-import os
 
 app = FastAPI()
+
 
 origins = [
     "http://localhost:5173",

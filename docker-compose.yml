@@ -46,6 +46,19 @@ services:
     networks:
       - app-network
 
+  python-api:
+    build:
+      context: ./APYTHON
+      dockerfile: Dockerfile
+    container_name: python-api-container
+    depends_on:
+      - frontend
+      - mysql
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
