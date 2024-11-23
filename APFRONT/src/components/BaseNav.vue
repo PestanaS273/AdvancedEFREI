@@ -17,7 +17,10 @@
             <a v-for="item in navigation" :key="item.name" :href="item.href" class="text-sm/6 font-semibold text-gray-900">{{ item.name }}</a>
           </div>
           <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" class="text-sm/6 font-semibold text-gray-900">Log out <span aria-hidden="true">&rarr;</span></a>
+            <a href="#" class="text-sm/6 font-semibold text-gray-900">Log out</a>
+          </div>
+          <div class="hidden lg:flex lg:flex-1 lg:justify-end overflow">
+            <LanguageSwitcher />
           </div>
         </nav>
         <Dialog class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
@@ -52,14 +55,17 @@
 import { ref } from 'vue'
 import { Dialog, DialogPanel } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import LanguageSwitcher from './LanguageSwitcher.vue'
 
 const navigation = [
-  { name: 'Product', href: '#' },
-  { name: 'Features', href: '#' },
-  { name: 'Marketplace', href: '#' },
-  { name: 'Company', href: '#' },
+  { name: 'Courses', href: '#' },
+  { name: 'Evaluations', href: '#' },
+  { name: 'Teachers', href: '#' },
+  { name: 'Profile', href: '#' },
 ]
 
 const mobileMenuOpen = ref(false)
+
+
 
 </script>

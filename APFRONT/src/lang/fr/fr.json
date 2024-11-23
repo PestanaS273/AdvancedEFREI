@@ -1,3 +1,8 @@
 {
-    "Welcome" : "Bienvenue"
+    "Welcome" : "Bienvenue",
+    "Language" : "Langue",
+    "Title" : "Titre",
+    "Answers" : "Réponses",
+    "Questions" : "Questions",
+    "Creation Date" : "Date de Création"
 }
