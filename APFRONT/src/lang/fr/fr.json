@@ -9,6 +9,7 @@
     "Create New Form" : "Créer un Nouveau Formulaire",
     "Lesson" : "Leçon",
     "Teacher" : "Professeur",
+    "Student" : "Étudiant",
     "Cancel" : "Annuler",
     "Submit" : "Soumettre",
     "Teachers" : "Professeurs",
@@ -23,5 +24,12 @@
     "Basic Template" : "Modèle de Base",
     "Add" : "Ajouter",
     "Remove" : "Retirer",
-    "Update Students" : "Mettre à Jour les Étudiants"
+    "Update Students" : "Mettre à Jour les Étudiants",
+    "Update Teachers" : "Mettre à Jour les Professeurs",
+    "Start Update" : "Démarrer la Mise à Jour",
+    "Processing" : "En Traitement",
+    "Update Completed!" : "Mise à Jour Terminée!",
+    "Add New Admin" : "Ajouter un Nouvel Administrateur",
+    "Student or Teacher" : "Étudiant ou Professeur",
+    "Select User Type" : "Sélectionner Utilisateur"
 }

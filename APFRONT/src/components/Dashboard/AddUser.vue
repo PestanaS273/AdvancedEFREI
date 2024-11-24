@@ -8,17 +8,14 @@ const { t } = useI18n()
 
 const showAddUserMenu = ref(false);
 
+const selectedUser = ref('');
+// const students = ref([]);
+// const teachers = ref([]);
+
 function toggleAddUserMenu() {
     showAddUserMenu.value = !showAddUserMenu.value;
 }
 
-const courses = [
-  { name: 'Matemáticas' },
-  { name: 'Física' },
-  { name: 'Historia' },
-  { name: 'Literatura' },
-  { name: 'Química' }
-];
 
 const teachers = [
   { name: 'Profesor A' },
@@ -42,19 +39,33 @@ const teachers = [
                 <h2 class="text-4xl mb-4">{{ t('Update Users') }}</h2>
                 <h3 class="text-2xl mb-4 text-gray-700">{{ t('Update Students') }}</h3>
                 <AddUserListBtn />
+                <h3 class="text-2xl mb-4 text-gray-700">{{ t('Update Teachers') }}</h3>
                 <AddTeacherListBtn />
                 <form @submit.prevent="submitForm">
-                    <div class="mb-6">
-                        <label for="course" class="block text-2xl font-medium text-gray-700">{{  t('Lesson') }}</label>
-                        <select id="course" class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md">
-                        <option v-for="course in courses" :key="course.name" :value="course.name">{{ course.name }}</option>
-                        </select>
-                    </div>
-                    <div class="mb-6">
-                        <label for="teacher" class="block text-2xl font-medium text-gray-700">{{ t('Teacher') }}</label>
-                        <select id="teacher" class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md">
+                    <div class="my-6">
+                        <h3 class="text-2xl mb-4 font-medium text-gray-700">{{ t('Add New Admin') }}</h3>
+                        <div class="mb-6">
+                            <div class="mt-2">
+                                <label class="inline-flex items-center text-xl mb-4 mx-4">
+                                    <input type="radio" name="user" value="basic" v-model="selectedUser" class="form-radio text-indigo-500">
+                                    <span class="ml-2">{{ t('Student') }}</span>
+                                </label>
+                                <label class="inline-flex items-center text-xl mb-4 mx-4">
+                                    <input type="radio" name="user" value="long" v-model="selectedUser" class="form-radio text-indigo-500">
+                                    <span class="ml-2">{{ t('Teacher') }}</span>
+                                </label>
+                            </div>
+                        </div>
+                        <label class="inline-flex items-center text-xl mb-4 mx-4">{{ ('Select User') }}</label>
+                        <select id="course" class="mt-2 block w-full mx-4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md">
                         <option v-for="teacher in teachers" :key="teacher.name" :value="teacher.name">{{ teacher.name }}</option>
                         </select>
+                        <!-- <select v-if="selectedUser === 'student' && students.length > 0" id="student" class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md">
+                            <option v-for="student in students" :key="student.id" :value="student.id">{{ student.name }}</option>
+                        </select>
+                        <select v-if="selectedUser === 'teacher' && teachers.length > 0" id="teacher" class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md">
+                            <option v-for="teacher in teachers" :key="teacher.id" :value="teacher.id">{{ teacher.name }}</option>
+                        </select> --> 
                     </div>
                     <!-- Agrega más campos según sea necesario -->
                     <div class="flex justify-end">
@@ -68,6 +79,7 @@ const teachers = [
 </template>
 
 <script>
+import apiClient from '../../services/api'
 
 export default {
     name: 'AddUser',
@@ -76,9 +88,32 @@ export default {
 
         }
     },
+    watch: {
+        selectedUser() {
+            this.fetchSudents()
+            this.fetchTeachers()
+        }
+    },
 
     methods: {
+        async fetchSudents() {
+            try {
+                const response = await apiClient.get('/students')
+                this.students = response.data
 
+            } catch (error) {
+                console.error(error)
+            }
+        },
+        async fetchTeachers() {
+            try {
+                const response = await apiClient.get('/teachers')
+                this.teachers = response.data
+
+            } catch (error) {
+                console.error(error)
+            }
+        },
     }
 }
 

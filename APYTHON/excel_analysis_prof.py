@@ -2,10 +2,15 @@ import pandas as pd
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
+from sqlalchemy.exc import SQLAlchemyError
 
 from dotenv import load_dotenv
 from database_class import Base, Utilisateur, Cours, Intervenant, Role, IntervenantCours, UtilisateurRoles
 import pymysql
+
+import logging
+
+
 
 load_dotenv()
 
@@ -81,6 +86,10 @@ def update_database(teacher_array):
         port=port
     )
 
+    logging.basicConfig()
+    logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+    logging.getLogger('sqlalchemy.orm').setLevel(logging.DEBUG)
+
     engine = create_engine('mysql+pymysql://', creator=lambda: connection)
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
@@ -102,7 +111,8 @@ def update_database(teacher_array):
         print("Teacher Role ID:", teacher_role_id)
 
         for teacher_data in teacher_array:
-            utilisateur = session.query(Utilisateur).filter_by(email=teacher_data["email"]).first()
+            print(f"Searching for utilisateur with email: {teacher_data['email']}")
+            utilisateur = session.query(Utilisateur).filter(Utilisateur.email == teacher_data["email"]).first()
 
             if not utilisateur:
                 utilisateur = Utilisateur(
@@ -132,21 +142,21 @@ def update_database(teacher_array):
                 session.flush()
 
             else :
-                print(f"Updating teacher: {utilisateur.id}")
+                print(f"Updating utilisateur ID: {utilisateur.id}, Email: {utilisateur.email}")
                 if utilisateur:
                     utilisateur.prenom = teacher_data["prenom"]
                     utilisateur.nom = teacher_data["nom"]
-                    utilisateur.date_naissance = teacher_data["date_naissance"]
                     utilisateur.num_tel = teacher_data["num_tel"]
                     utilisateur.statut = utilisateur.password != "pass202234"
-                    session.add(utilisateur)  # Asegúrate de que el objeto esté gestionado por la sesión
                     print("teacher updated")
+                    print(vars(utilisateur))
                     print(utilisateur.id)
+                    session.flush()
+                    
 
                     teacher = session.query(Intervenant).filter_by(id=utilisateur.id).first()
                     if teacher:
                         teacher.specialiste = teacher_data["specialiste"]
-                        session.add(teacher)  # Asegúrate de que el objeto esté gestionado por la sesión
 
                         print("teacher updated")
                 else:
@@ -178,9 +188,14 @@ def update_database(teacher_array):
 
         session.commit()
 
-    except Exception as e:
-        print(f"Error processing teacher {teacher_data.get('email', 'Unknown')}: {e}")
-        session.rollback()
+    # except Exception as e:
+    #     print(f"Error processing teacher {teacher_data.get('email', 'Unknown')}: {e}")
+    #     session.rollback()
+    except pymysql.IntegrityError as e:
+        print(f"Database integrity error: {e}")
+    except SQLAlchemyError as e:
+        print(f"SQLAlchemy error: {e}")
+    
     finally:
         print("Database update complete")
         progress_status["step"] = 3

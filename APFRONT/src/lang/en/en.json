@@ -8,6 +8,7 @@
     "Dashboard": "Dashboard",
     "Create New Form": "Create New Form",
     "Lesson": "Lesson",
+    "Student": "Student",
     "Teacher": "Teacher",
     "Teachers": "Teachers",
     "Cancel": "Cancel",
@@ -23,5 +24,12 @@
     "Basic Template": "Basic Template",
     "Add" : "Add",
     "Remove" : "Remove",
-    "Update Students": "Update Students"
+    "Update Students": "Update Students",
+    "Update Teachers": "Update Teachers",
+    "Start Update": "Start Update",
+    "Processing": "Processing",
+    "Update Completed!": "Update Completed!",
+    "Add New Admin": "Add New Admin",
+    "Student or Teacher": "Student or Teacher",
+    "Select User Type": "Select User Type"
 }

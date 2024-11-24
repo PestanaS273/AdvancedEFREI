@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import apiClient from "../services/index.js";
+import apiClient from "../services/api";
 
 export default {
   data() {

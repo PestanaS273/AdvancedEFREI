@@ -127,7 +127,6 @@ def update_database(student_array):
                 if utilisateur:
                     utilisateur.prenom = student_data["prenom"]
                     utilisateur.nom = student_data["nom"]
-                    utilisateur.date_naissance = student_data["date_naissance"]
                     utilisateur.email = student_data["email"]
                     utilisateur.num_tel = student_data["num_tel"]
                     utilisateur.statut = utilisateur.password != "pass202234"

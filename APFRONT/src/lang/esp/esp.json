@@ -8,6 +8,7 @@
     "Dashboard": "Tablero",
     "Create New Form": "Crear Nuevo Formulario",
     "Lesson": "Lección",
+    "Student": "Estudiante",
     "Teacher": "Profesor",
     "Teachers": "Profesores",
     "Evaluations": "Evaluaciones",
@@ -23,5 +24,12 @@
     "Basic Template": "Plantilla Básica",
     "Add" : "Añadir",
     "Remove" : "Eliminar",
-    "Update Students": "Actualizar Estudiantes"
+    "Update Students": "Actualizar Estudiantes",
+    "Update Teachers": "Actualizar Profesores",
+    "Start Update": "Iniciar Actualización",
+    "Processing": "Procesando",
+    "Update Completed!": "¡Actualización Completada!",
+    "Add New Admin": "Añadir Nuevo Administrador",
+    "Student or Teacher": "Estudiante o Profesor",
+    "Select User Type": "Seleccionar Usuario"
 }
