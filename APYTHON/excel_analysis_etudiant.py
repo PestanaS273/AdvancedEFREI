@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 import os
 
 from dotenv import load_dotenv
-from database_class import Base, Utilisateur, Etudiant, Cours, EtudiantCours
+from database_class import Base, Utilisateur, Etudiant, Cours, EtudiantCours, Role
 import pymysql
 
 load_dotenv()
@@ -90,6 +90,16 @@ def update_database(student_array):
     processed_students = 0
 
     try:
+        student_role = session.query(Role).filter_by(role='student').first()
+        if not student_role:
+            student_role = Role(
+                role='student'
+            )
+            session.add(student_role)
+            session.flush()
+
+        student_role = student_role.id
+        print("Teacher Role ID:", student_role)
         for student_data in student_array:
             etudiant = session.query(Etudiant).filter_by(num_etudiant=student_data["num_etudiant"]).first()
 
@@ -130,7 +140,7 @@ def update_database(student_array):
                         nom_cours=course_data["coursNom"],
                         forme_id=None
                     )
-                    session.add(cours)
+                    session.add(cours) 
                     session.flush() 
 
                 etudiant_cours = EtudiantCours(
