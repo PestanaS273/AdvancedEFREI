@@ -1,7 +1,14 @@
+<script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
+
 <template>
   <div class="p-6 bg-gray-100 min-h-screen">
+    
       <!-- Título del Dashboard -->
-      <h1 class="text-3xl font-bold text-gray-800 mb-6">Dashboard</h1>
+      <h1 class="text-3xl font-bold text-gray-800 mb-6">{{ t('Dashboard') }}</h1>
   
       <!-- Sección de estadísticas -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
@@ -28,14 +35,20 @@
       <!-- Tabla de encuestas -->
       <DataTable :data="surveys" />
   </div>
+
+  <AddForm />
+  <AddUser />
   </template>
   
   <script>
-  import StatsCard from "../components/Dashboard/StatsCard.vue";
-  import DataTable from "../components/Dashboard/DataTable.vue";
+import StatsCard from "../components/Dashboard/StatsCard.vue";
+import DataTable from "../components/Dashboard/DataTable.vue";
+import AddForm from '../components/Dashboard/AddForm.vue';
+import AddUser from '../components/Dashboard/AddUser.vue';
+
 
   export default {
-  components: { StatsCard, DataTable },
+  components: { StatsCard, DataTable, AddForm },
   data() {
       return {
       surveys: [

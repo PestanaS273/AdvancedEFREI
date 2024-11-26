@@ -1,0 +1,12 @@
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+ARG JAR_FILE=target/Apro-0.0.1-SNAPSHOT.jar
+COPY ${JAR_FILE} /app.jar
+
+COPY src/main/resources/application.properties /app/application.properties
+
+EXPOSE 8095
+
+ENTRYPOINT ["java", "-jar", "/app.jar"]
