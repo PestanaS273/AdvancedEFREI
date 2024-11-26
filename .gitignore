@@ -29,10 +29,8 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-<<<<<<< HEAD
-### VS Code ###
-.vscode/
-=======
+.vscode
+
 # Runtime data
 pids
 *.pid
@@ -412,5 +410,9 @@ pyrightconfig.json
 pyvenv.cfg
 pip-selfcheck.json
 
+
+# properties of java back
+
+APBACK/src/main/resources/application.properties
+
 # End of https://www.toptal.com/developers/gitignore/api/python,venv
->>>>>>> main
