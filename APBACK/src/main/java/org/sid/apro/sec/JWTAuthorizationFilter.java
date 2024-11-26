@@ -43,6 +43,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             // prendre le token apartir du bearer
             String jwt = jwtToken.substring(securityParams.HEADER_PREFIX.length());
             DecodedJWT decodedJWT = verifier.verify(jwt);
+            System.out.println("JWT: " +jwt);
             String username = decodedJWT.getSubject();
 //			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByEmail(username);
 //			Boolean statutUtilisateur = utilisateur.isStatut();

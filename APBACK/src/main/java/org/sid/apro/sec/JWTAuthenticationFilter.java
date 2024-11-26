@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.sid.apro.entities.Utilisateur;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,8 +30,9 @@ import org.springframework.stereotype.Component;
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private  AuthenticationManager authenticationManager;
 
-
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    @Autowired
+    public JWTAuthenticationFilter(@Qualifier("authenticationManager") AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
         super.setAuthenticationManager(authenticationManager);
         setFilterProcessesUrl("/login");
 
