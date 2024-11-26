@@ -1,27 +1,23 @@
+<script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
 <template>
     <div class= "lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
-        <h1 class="text-2xl font-semibold mb-2">First Connection</h1>
-        <h2 class="font-semibold mb-5"> Use your EFREI account </h2>
+        <h1 class="text-2xl font-semibold mb-2">{{t('First Connection')}}</h1>
+        <h2 class="font-semibold mb-5"> {{t('Use your EFREI Email')}} </h2>
         <form action="#" method="POST">
         <!-- Username Input -->
         <div class="mb-4">
-            <label for="username" class="block text-gray-800">Username</label>
+            <label for="username" class="block text-gray-800">{{t('Email')}}</label>
             <input type="text" id="username" name="username" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
-        <!-- Password Input -->
-        <div class="mb-4">
-            <label for="password" class="block text-gray-800">Password</label>
-            <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
-        </div>
         <div class="mb-6">
-            <span class="text-sm mr-2 "><p class="inline">Forgot Password?</p></span>
-            <span class="text-sm"> <p class="underline inline">Please contact +33 188 289 250</p></span>
-        </div>
-        <div class="mb-6">
-            <button @click="handleClick"><p class="inline underline text-sm">First Connection?</p></button>
+            <button @click="handleClick"><p class="inline underline text-sm">{{t('Back to Login')}}</p></button>
         </div>
         <!-- Login Button -->
-        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full">Login</button>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full">{{t('Check Email')}}</button>
         </form>
         <!-- Sign up  Link -->
         <!-----

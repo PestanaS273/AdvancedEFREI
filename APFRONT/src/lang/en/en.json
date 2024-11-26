@@ -32,5 +32,17 @@
     "Add New Admin": "Add New Admin",
     "Student or Teacher": "Student or Teacher",
     "Select User Type": "Select User Type",
-    "Login": "Login"
+    "Login": "Login",
+    "Use your EFREI account": "Use your EFREI account",
+    "Username": "Username",
+    "Password": "Password",
+    "Email": "Email",
+    "Forgot Password?": "Forgot Password?",
+    "Please contact": "Please contact",
+    "First Connection?": "First Connection?",
+    "First Connection": "First Connection",
+    "Use your EFREI Email": "Use your EFREI Email",
+    "Back to Login": "Back to login",
+    "Check Email": "Check Email"
+    
 }
