@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   mysql:
-    image: mysql:8.0
+    image: pestana273/mysql:8.0
     container_name: mysql-container
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -20,10 +20,8 @@ services:
       timeout: 5s
       retries: 3
     
-  backend:
-    build: 
-      context: ./APBACK
-      dockerfile: Dockerfile
+  backend: 
+    image: pestana273/backend:1
     container_name: backend-container
     depends_on:
       - mysql
@@ -37,12 +35,21 @@ services:
       - app-network
 
   frontend:
-    build:
-      context: ./APFRONT
-      dockerfile: Dockerfile
+    image: pestana273/frontend:1
     container_name: frontend-container
     ports:
       - "4173:4173"
+    networks:
+      - app-network
+
+  python-api:
+    image: pestana273/python-api:1
+    container_name: python-api-container
+    depends_on:
+      - frontend
+      - mysql
+    ports:
+      - "8000:8000"
     networks:
       - app-network
 

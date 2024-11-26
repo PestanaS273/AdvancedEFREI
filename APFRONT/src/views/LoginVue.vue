@@ -36,3 +36,33 @@
 </div>
 
 </template>
+
+<script>
+import apiClient from "../services/api";
+
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await apiClient.post.login({
+          email: this.email,
+          password: this.password,
+        })
+        const user = response.data;
+        console.log(user);
+        this.$store.dispatch("login", user);
+        this.$router.push("/dashboard");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+}
+
+</script>

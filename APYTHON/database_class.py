@@ -16,6 +16,8 @@ class Utilisateur(Base):
     password = Column(String)
     prenom = Column(String(255))
     etudiant = relationship("Etudiant", back_populates="utilisateur", cascade="all, delete-orphan", uselist=False)
+    intervenant = relationship("Intervenant", back_populates="utilisateur", cascade="all, delete-orphan", uselist=False)
+    roles = relationship("UtilisateurRoles", back_populates="utilisateur", cascade="all, delete-orphan")
 
 class Etudiant(Base):
     __tablename__ = 'etudiant'
@@ -31,8 +33,8 @@ class Cours(Base):
     nom_cours = Column(String(255), nullable=False, unique=True)
     forme_id = Column(BigInteger, ForeignKey('forme.id'), nullable=True)
     etudiants = relationship("EtudiantCours", back_populates="cours")
+    intervenants = relationship("IntervenantCours", back_populates="cours")
     forme = relationship("Forme", back_populates="cours")
-
 
 class EtudiantCours(Base):
     __tablename__ = 'etudiant_cours'
@@ -41,10 +43,37 @@ class EtudiantCours(Base):
     etudiant = relationship("Etudiant", back_populates="cours")
     cours = relationship("Cours", back_populates="etudiants")
 
-
 class Forme(Base):
     __tablename__ = 'forme'
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     question_id = Column(BigInteger, ForeignKey('question.id'))
     reponse_id = Column(BigInteger, ForeignKey('reponse.id'))
     cours = relationship("Cours", back_populates="forme")
+
+class Intervenant(Base):
+    __tablename__ = 'intervenant'
+    id = Column(BigInteger, ForeignKey('utilisateur.id'), primary_key=True)
+    specialiste = Column(String(255), nullable=True)
+    utilisateur = relationship("Utilisateur", back_populates="intervenant", uselist=False)
+    cours = relationship("IntervenantCours", back_populates="intervenant", cascade="all, delete-orphan")
+
+class IntervenantCours(Base):
+    __tablename__ = 'intervenant_cours'
+    intervenant_id = Column(BigInteger, ForeignKey('intervenant.id'), primary_key=True)
+    cours_id = Column(BigInteger, ForeignKey('cours.id'), primary_key=True)
+    intervenant = relationship("Intervenant", back_populates="cours")
+    cours = relationship("Cours", back_populates="intervenants")
+
+
+class Role(Base):
+    __tablename__ = 'role'
+    id = Column(BigInteger, primary_key=True, autoincrement=True)
+    role = Column(String(255), nullable=False, unique=True)
+    utilisateurs = relationship("UtilisateurRoles", back_populates="role")
+
+class UtilisateurRoles(Base):
+    __tablename__ = 'utilisateur_roles'
+    utilisateur_id = Column(BigInteger, ForeignKey('utilisateur.id'), primary_key=True)
+    roles_id = Column(BigInteger, ForeignKey('role.id'), primary_key=True)
+    utilisateur = relationship("Utilisateur", back_populates="roles")
+    role = relationship("Role", back_populates="utilisateurs")

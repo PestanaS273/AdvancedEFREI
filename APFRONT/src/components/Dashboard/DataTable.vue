@@ -1,12 +1,16 @@
+<script setup>
+  import { useI18n } from 'vue-i18n'
+  const { t } = useI18n()
+</script>
 <template>
     <div class="bg-white shadow rounded-lg overflow-hidden">
       <table class="min-w-full border-collapse">
         <thead class="bg-gray-200">
           <tr>
             <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase">ID</th>
-            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase">Título</th>
-            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase">Respuestas</th>
-            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase">Fecha Creación</th>
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase"> {{ t('Title') }}</th>
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase">{{ t('Answers') }}</th>
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase">{{ t('Creation Date') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -26,6 +30,10 @@
   </template>
   
   <script>
+
+
+
+
   export default {
     props: {
       data: {
