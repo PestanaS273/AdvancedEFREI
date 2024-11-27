@@ -86,9 +86,6 @@ def update_database(teacher_array):
         port=port
     )
 
-    logging.basicConfig()
-    logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
-    logging.getLogger('sqlalchemy.orm').setLevel(logging.DEBUG)
 
     engine = create_engine('mysql+pymysql://', creator=lambda: connection)
     Base.metadata.create_all(engine)
