@@ -66,6 +66,27 @@ const router = createRouter({
     name: 'teacher-dashboard',
     component: () => import('../views/teacher/DashboardView.vue'),
     meta: { requiersAuth: true, role: 'teacher' },
+  },
+  {
+    path: '/student-feedback-answer/:id',
+    name: 'student-feedback-answer',
+    component: () => import('../views/student/FeedbackAnswerView.vue'),
+
+  },
+  {
+    path: '/teacher-feedback-answer/:id',
+    name: 'teacher-feedback-answer',
+    component: () => import('../views/teacher/FeedbackAnswerView.vue'),
+  },
+  {
+    path: '/admin-feedback-review/:id',
+    name: 'admin-feedback-review',
+    component: () => import('../views/admin/FormsReviewView.vue'),
+  },
+  {
+    path: '/admin-answer-review/:id',
+    name: 'admin-answer-review',
+    component: () => import('../views/admin/AnswerReviewView.vue'),
   }
   ]
 })
