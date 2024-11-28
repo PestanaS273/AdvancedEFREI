@@ -49,6 +49,10 @@
     "Change Password" : "Changer Mot de Passe",
     "Update your passeword" : "Mettez à jour votre mot de passe",
     "New password" : "Nouveau mot de passe",
-    "Confirm password" : "Confirmer le mot de passe"
+    "Confirm password" : "Confirmer le mot de passe",
+    "Data Engineering student" : "Étudiant en Data Engineering",
+    "Profile informations" : "Informations profil",
+    "Phone number" : "Numéro de téléphone",
+    "Location" : "Adresse"
 
 }

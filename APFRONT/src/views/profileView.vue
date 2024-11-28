@@ -1,3 +1,9 @@
+<script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
+
 <template>
 <body>
     <div class="container mx-auto my-60">
@@ -10,27 +16,27 @@
                 
                 <div class="mt-16">
                     <h1 class="font-bold text-center text-3xl text-gray-900">Jean Dupont</h1>
-                    <p class="text-center text-sm text-gray-400 font-medium">Data Engineering student</p>
+                    <p class="text-center text-sm text-gray-400 font-medium">{{t('Data Engineering student')}}</p>
                     <p>
                         <span>
                             
                         </span>
                     </p>
                     <div class="w-full">
-                        <h3 class="font-medium text-gray-900 text-left px-6">Profile informations</h3>
+                        <h3 class="font-medium text-gray-900 text-left px-6">{{t('Profile informations')}}</h3>
                         <div class="mt-5 w-full flex flex-col items-center overflow-hidden text-sm">
                             <span class="w-full border-t border-gray-100 text-gray-900 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150 inline">
-                                    <p class= "inline">Email: </p>
+                                    <p class= "inline">{{t('Email')}}: </p>
                                     <p class="inline">jean.dupont@efrei.net </p>
                             </span>
 
                             <span class="w-full border-t border-gray-100 text-gray-900 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150 inline">
-                                    <p class= "inline">Phone number: </p>
+                                    <p class= "inline">{{t('Phone number')}}: </p>
                                     <p class="inline">07 12 34 56 78</p>
                             </span>
 
                             <span class="w-full border-t border-gray-100 text-gray-900 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150 inline">
-                                    <p class= "inline">Location: </p>
+                                    <p class= "inline">{{t('Address')}}: </p>
                                     <p class="inline">25 boulevard champagne, Paris</p>
                             </span>
                         </div>
