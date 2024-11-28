@@ -43,6 +43,10 @@
     "First Connection" : "Première Connexion",
     "Use your EFREI Email" : "Utilisez votre Email EFREI",
     "Back to Login" : "Vous avez déjà un compte ?",
-    "Check Email" : "Vérifiez votre Email"
+    "Check Email" : "Vérifiez votre Email",
+    "Change Password" : "Changer Mot de Passe",
+    "Update your passeword" : "Mettez à jour votre mot de passe",
+    "New password" : "Nouveau mot de passe",
+    "Confirm password" : "Confirmer le mot de passe"
 
 }

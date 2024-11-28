@@ -17,12 +17,14 @@
 import LoginForm from "../components/LoginForm.vue";
 import FirstConnectionLogin from "../components/FirstConnectionLogin.vue";
 import LanguageSwitcher from "../components/LanguageSwitcher.vue";
+import ChangePassword from "../components/ChangePassword.vue";
 
 export default {
   components: {
     LoginForm,
     FirstConnectionLogin,
     LanguageSwitcher,
+    ChangePassword,
   },
   data() {
     return {
