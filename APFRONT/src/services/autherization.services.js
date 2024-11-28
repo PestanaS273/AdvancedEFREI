@@ -1,9 +1,12 @@
 import axios from 'axios';
-import jwtDecode from 'jsonwebtoken';
+import { jwtDecode } from 'jwt-decode';
+
+
+
 
 class ConnexionService {
     constructor() {
-        this.host = "http://localhost:8090";
+        this.host = "http://localhost:8095";
         this.jwt = null;
         this.email = null;
         this.roles = [];
@@ -29,7 +32,7 @@ class ConnexionService {
     }
 
     // Appeler l'API pour se connecter (patient ou médecin)
-    loginPatient(data) {
+    loginAny(data) {
         return axios.post(`${this.host}/login`, data, { observe: 'response' });
     }
 
@@ -37,7 +40,7 @@ class ConnexionService {
     parseJWT() {
         if (this.jwt) {
             try {
-                const decodedToken = jwtDecode.decode(this.jwt);
+                const decodedToken = jwtDecode(this.jwt);
                 console.log('Decoded JWT:', decodedToken);
                 this.email = decodedToken.sub;
                 this.roles = decodedToken.roles || [];
@@ -47,12 +50,12 @@ class ConnexionService {
         }
     }
 
-    // Vérifier si l'utilisateur est un médecin
+    // Vérifier si l'utilisateur est un professeur
     isProfesseur() {
         return this.roles.includes('Prof');
     }
 
-    // Vérifier si l'utilisateur est un patient
+    // Vérifier si l'utilisateur est un etudiant
     isEtudiant() {
         return this.roles.includes('etudiant');
     }
