@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.List;
+
 
 @Service
 @Transactional
@@ -54,5 +56,11 @@ public class AproInitServiceImpl implements IAproIniService{
         Utilisateur user = utilisateurRepository.findByEmail(email);
         Role roles = roleRepository.findByRole(role);
         user.getRoles().add(roles);
+    }
+
+    @Override
+    public List<Utilisateur> getAllUtilisateurs() {
+        List<Utilisateur> utilisateurs = utilisateurRepository.findAll();
+        return utilisateurs;
     }
 }
