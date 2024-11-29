@@ -38,8 +38,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/medecin/**").permitAll()
                         .requestMatchers("/login/**", "/inscrire/**", "/forgot_password/**", "/resetPassword/**").permitAll()
-                        .requestMatchers("/Utilisateur/**", "/Medecin/**", "/initCreneau/**").hasAuthority("Medecin")
-                        .requestMatchers("/afficherCreneau/**", "/listMedecins/**").hasAuthority("Patient")
+                        .requestMatchers("/Utilisateur/**", "/Medecin/**", "/initCreneau/**").hasAuthority("etudiant")
+                        .requestMatchers("/afficherCreneau/**", "/listMedecins/**").hasAuthority("etudiant")
                         .anyRequest().authenticated()
                 )
                 .addFilter(new JWTAuthenticationFilter(authenticationManager))

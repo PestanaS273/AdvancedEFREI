@@ -31,7 +31,7 @@ class ConnexionService {
         return axios.post(`${this.host}/inscrire`, data);
     }
 
-    // Appeler l'API pour se connecter (patient ou médecin)
+    // Appeler l'API pour se connecter
     loginAny(data) {
         return axios.post(`${this.host}/login`, data, { observe: 'response' });
     }
@@ -57,7 +57,7 @@ class ConnexionService {
 
     // Vérifier si l'utilisateur est un etudiant
     isEtudiant() {
-        return this.roles.includes('etudiant');
+        return this.roles.includes('student');
     }
 
     // Vérifier si l'utilisateur est un administrateur

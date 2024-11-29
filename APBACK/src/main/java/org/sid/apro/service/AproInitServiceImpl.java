@@ -27,15 +27,15 @@ public class AproInitServiceImpl implements IAproIniService{
 
 
     @Override
-    public Utilisateur saveUtilisateur(String email, String password, String confirmedPaswword) {
+    public Utilisateur saveUtilisateur(String email, String password) {
         Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
         if(utilisateur != null) throw new RuntimeException("Utilisateur exist");
-        if(!password.equals(confirmedPaswword)) throw new RuntimeException("Passwords do not match");
         Utilisateur newUtilisateur = new Utilisateur();
         newUtilisateur.setEmail(email);
         newUtilisateur.setPassword(bCryptPasswordEncoder.encode(password));
+        newUtilisateur.setStatut(true);
         utilisateurRepository.save(newUtilisateur);
-        addRoleToUser(email,"etudiant");
+        addRoleToUser(email,"student");
 
         return newUtilisateur;
     }
@@ -62,5 +62,12 @@ public class AproInitServiceImpl implements IAproIniService{
     public List<Utilisateur> getAllUtilisateurs() {
         List<Utilisateur> utilisateurs = utilisateurRepository.findAll();
         return utilisateurs;
+    }
+
+    @Override
+    public boolean CheckEmailExist(String email) {
+        Utilisateur user = utilisateurRepository.findByEmail(email);
+        if(user == null) return false;
+        return true;
     }
 }
