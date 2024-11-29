@@ -1,37 +1,38 @@
 const state = {
     user: null,
     isAuthenticated: false,
-}
+};
 
-const mutation = {
+const mutations = {
     setUser(state, user) {
         state.user = user;
+        console.log('User:', user);
         state.isAuthenticated = true;
     },
     logout(state) {
         state.user = null;
-        state.isAuthenticated = !!user;
+        state.isAuthenticated = false;
     },
 };
 
 const actions = {
-    login ({ commit }, user) {
+    login({ commit }, user) {
         commit('setUser', user);
     },
-    logout ({ commit }) {
+    logout({ commit }) {
         commit('logout');
     },
 };
 
 const getters = {
-    isAuthenticated: state => state.isAuthenticated, 
-    getUser: (state) => state.user,
-}
+    isAuthenticated: state => state.isAuthenticated,
+    getUser: state => state.user,
+};
 
 export default {
-    state, 
-    mutation,
+    namespaced: true,
+    state,
+    mutations,
     actions,
     getters,
-}
-
+};

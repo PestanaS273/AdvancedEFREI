@@ -37,18 +37,24 @@ const router = createRouter({
       meta: { requiersAuth: true },
       props: true
   },
-  // {
-  //   path: '/dashboard',
-  //   name: 'dashboard',
-  //   meta: { requiersAuth: true },
-  //   beforeEnter: (to, from, next) => {
-  //     const userRole = store.user.getters.getUser.role;
-  //     if (userRole === 'admin') next({ name: 'admin-dashboard' });
-  //     else if (userRole === 'student') next({name: 'student-dashboard'});
-  //     else if (userRole ==='teacher') next({name: 'teacher-dashboard'});
-  //     else next({name: 'login'});
-  //   }
-  // },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    meta: { requiresAuth: true },
+    beforeEnter: (to, from, next) => {
+      const user = store.getters['user/getUser'];
+      if (user && user.roles && user.roles.length > 0) {
+        const userRole = user.roles[0];
+        console.log(userRole);
+        if (userRole === 'admin') next({ name: 'admin-dashboard' });
+        else if (userRole === 'student') next({ name: 'student-dashboard' });
+        else if (userRole === 'teacher') next({ name: 'teacher-dashboard' });
+        else next({ name: 'login' });
+      } else {
+        next({ name: 'login' });
+      }
+    }
+  },
   {
     path: '/admin-dashboard',
     name: 'admin-dashboard',

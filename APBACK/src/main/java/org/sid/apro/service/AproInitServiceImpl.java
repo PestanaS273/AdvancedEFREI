@@ -35,7 +35,7 @@ public class AproInitServiceImpl implements IAproIniService{
         newUtilisateur.setEmail(email);
         newUtilisateur.setPassword(bCryptPasswordEncoder.encode(password));
         utilisateurRepository.save(newUtilisateur);
-        addRoleToUser(email,"etudiant");
+        addRoleToUser(email,"student");
 
         return newUtilisateur;
     }
