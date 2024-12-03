@@ -11,6 +11,7 @@ public interface IAproIniService {
     public Role saveRole(Role role);
     public Utilisateur getUtilisateurByEmail(String email);
     public void addRoleToUser(String email, String role);
+    public void inscrireAdmin(String email);
     public List<Utilisateur> getAllUtilisateurs();
     public boolean CheckEmailExist(String email);
 

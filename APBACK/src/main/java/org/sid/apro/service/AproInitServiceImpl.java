@@ -72,6 +72,18 @@ public class AproInitServiceImpl implements IAproIniService{
     }
 
     @Override
+    public void inscrireAdmin(String email) {
+        Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
+        if(utilisateur != null) throw new RuntimeException("Utilisateur exist");
+        Utilisateur newUtilisateur = new Utilisateur();
+        newUtilisateur.setEmail(email);
+        newUtilisateur.setStatut(true);
+        utilisateurRepository.save(newUtilisateur);
+        addRoleToUser(email,"admin");
+
+    }
+
+    @Override
     public List<Utilisateur> getAllUtilisateurs() {
         List<Utilisateur> utilisateurs = utilisateurRepository.findAll();
         return utilisateurs;
