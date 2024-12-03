@@ -1,27 +1,42 @@
 <script setup>
-import FormsTable from '../../components/Dashboard/FormsTable.vue';
+import AnswerTable from '../../components/Dashboard/AnswerTable.vue';
+import Breadcrumb from '../../components/Breadcrumb.vue';
+import { useI18n } from 'vue-i18n'
 
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
+
+const breadcrumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Dashboard', path: '/dashboard' },
+  { name: 'Review Form', path: route.path },
+
+];
+const { t } = useI18n()
 
 </script>
 
 <template>
-    <h1 class="text-3xl font-bold text-gray-800 mb-6">Dashboard</h1>
+    <Breadcrumb :breadcrumbs="breadcrumbs" />
+    <h1 class="text-3xl mx-4 font-bold text-gray-800 mb-6">Sebastian - English Form</h1>
+    
 
-    <FormsTable :data="forms" />
+    <AnswerTable :data="forms" />
 </template>
 
 <script>
 export default {
-    components: { FormsTable },
+    components: { AnswerTable, Breadcrumb },
     data() {
       return {
       forms: [
-          { id: 1, student: "Sebastian", created: "2024-11-01" },
-          { id: 2, student: "Adam", created: "2024-11-05" },
+          { id: 1, question: "Points", answer: "5"  },
+          { id: 2, question: "Grade", answer: "4" },
         ],
       };
   },
+
 };
 
 
