@@ -33,7 +33,10 @@ const { t } = useI18n()
       </div>
   
       <!-- Tabla de encuestas -->
-      <DataTable :data="surveys" />
+      <!--<DataTable :data="surveys" /> -->
+      <DataTableToComplete :data="dataToComplete" />
+
+    
   </div>
 
   <AddForm />
@@ -45,6 +48,7 @@ import StatsCard from "../components/Dashboard/StatsCard.vue";
 import DataTable from "../components/Dashboard/DataTable.vue";
 import AddForm from '../components/Dashboard/AddForm.vue';
 import AddUser from '../components/Dashboard/AddUser.vue';
+import DataTableToComplete from '../components/Dashboard/DataTableToComplete.vue';
 
 
   export default {
@@ -54,6 +58,10 @@ import AddUser from '../components/Dashboard/AddUser.vue';
       surveys: [
           { id: 1, title: "Encuesta de Satisfacción", responses: 150, created: "2024-11-01" },
           { id: 2, title: "Opinión sobre Productos", responses: 200, created: "2024-11-05" },
+      ],
+      dataToComplete: [
+          //{ id: 1, title: "Enquête sur le crous", responses: 150, created: "2024-11-01" },
+          //{ id: 2, title: "Opinion sur les locaux", responses: 200, created: "2024-11-05" },
       ],
       };
   },
