@@ -9,13 +9,9 @@ const checkEmailExist = async (email) => {
     return response.data;
 }
 
-const inscrire = async (email, password) => {
-    const response = await apiClient.post('/inscrire', {
-        params: {
-            email: email,
-            password: password,
-        }
-    });
+const inscrire = async (user) => {
+    console.log(user);
+    const response = await apiClient.post('/inscrire', user);
     return response.data;
 }
 

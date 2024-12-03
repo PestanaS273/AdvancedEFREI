@@ -48,14 +48,22 @@ export default {
 
       const email = this.$store.getters['user/getUser'].email
       console.log(email)
+      const user = {
+        email: email,
+        password: this.newPassword
+      }
+      console.log(user)
       try {
-        const response = await utilisateurServices.inscrire({ email: email, password: this.newPassword })
+        const response = await utilisateurServices.inscrire(user)
         console.log(response)
-        // Redirigir al dashboard o mostrar un mensaje de éxito
+        this.$emit('change-component', 'LoginForm')
       } catch (error) {
         console.error(error)
       }
-    }
+    },
+    // handleClick() {
+    //   this.$emit('change-component', 'LoginForm'); 
+    // },
   }
 }
 </script>
