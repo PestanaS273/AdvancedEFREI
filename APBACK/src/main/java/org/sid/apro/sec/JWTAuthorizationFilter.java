@@ -19,8 +19,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Logger;
+
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
+
+    private static final Logger logger = Logger.getLogger(JWTAuthorizationFilter.class.getName());
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -29,8 +34,11 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             return;
         }
 
+
         String jwtToken = request.getHeader(securityParams.JWTheaderName);
+        logger.info("JWT Token: " + jwtToken);
         if (jwtToken == null || !jwtToken.startsWith(securityParams.HEADER_PREFIX)) {
+            logger.warning("JWT Token is missing or does not start with the correct prefix");
             filterChain.doFilter(request, response);
             return;
         }
@@ -40,6 +48,9 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         DecodedJWT decodedJWT = verifier.verify(jwt);
         String username = decodedJWT.getSubject();
         List<String> roles = decodedJWT.getClaims().get("roles").asList(String.class);
+
+        logger.info("Username: " + username);
+        logger.info("Roles: " + roles);
 
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));

@@ -38,21 +38,21 @@ function submitForm() {
   toggleAddFormMenu();
 }
 
-const courses = [
-  { name: 'Matemáticas' },
-  { name: 'Física' },
-  { name: 'Historia' },
-  { name: 'Literatura' },
-  { name: 'Química' }
-];
+// const courses = [
+//   { name: 'Matemáticas' },
+//   { name: 'Física' },
+//   { name: 'Historia' },
+//   { name: 'Literatura' },
+//   { name: 'Química' }
+// ];
 
-const teachers = [
-  { name: 'Profesor A' },
-  { name: 'Profesor B' },
-  { name: 'Profesor C' },
-  { name: 'Profesor D' },
-  { name: 'Profesor E' }
-];
+// const teachers = [
+//   { name: 'Profesor A' },
+//   { name: 'Profesor B' },
+//   { name: 'Profesor C' },
+//   { name: 'Profesor D' },
+//   { name: 'Profesor E' }
+// ];
 
 const templates = {
   basic: [
@@ -83,7 +83,7 @@ const templates = {
                         <div class="mb-6 w-1/2">
                             <label for="course" class="block text-2xl font-medium text-gray-700">{{ t('Lesson') }} :</label>
                             <select id="course" class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md">
-                                <option v-for="course in courses" :key="course.name" :value="course.name">{{ course.name }}</option>
+                                <option v-for="course in cours" :key="course.nomCours" :value="course.nomCours">{{ course.nomCours }}</option>
                             </select>
                         </div>
                         <div class="mb-6 w-1/2">
@@ -138,19 +138,45 @@ const templates = {
 </template>
 
 <script>
+import coursServices from '../../services/cours.services';
+import utilisateurServices from '../../services/utilisateur.services';
 
 export default {
     name: 'AddForm',
     data() {
         return {
-            AddFormMenu: false
+            AddFormMenu: false,
+            cours: [],
+            teachers: [],
         }
     },
 
     methods: {
         showAddForm() {
             this.AddFormMenu = !this.AddFormMenu
+        },
+        async getAllCours() {
+            try {
+                const response = await coursServices.getAllCours();
+                console.log(response);
+                this.cours = response;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getAllTeachers() {
+            try {
+                const response = await utilisateurServices.getAllTeachers();
+                console.log(response);
+                this.teachers = response;
+            } catch (error) {
+                console.error(error);
+            }
         }
+    },
+    async created() {
+        this.getAllCours();
+        this.getAllTeachers();
     }
 }
 

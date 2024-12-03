@@ -19,7 +19,7 @@ const { t } = useI18n()
                 bgColor="bg-green-500"
             />
             <StatsCard
-                title="Total de Encuestas"
+                :title="t('Total de Encuestas')"
                 value="120"
                 icon="📋"
                 bgColor="bg-blue-500"
@@ -32,7 +32,10 @@ const { t } = useI18n()
             />
         </div>
 
-        <!-- Tabla de encuestas -->
+        <h1 class="text-xl font-bold text-gray-800 my-6">{{ t('Forms To Complete') }}</h1>
+        <DataTableToComplete :data="dataToComplete" />
+        <br>
+        <h1 class="text-xl font-bold text-gray-800 my-6">{{ t('Completed Forms') }}</h1>
         <DataTable :data="surveys" />
     </div>
 
@@ -41,16 +44,21 @@ const { t } = useI18n()
 <script>
 import StatsCard from "../../components/Dashboard/StatsCard.vue";
 import DataTable from "../../components/Dashboard/DataTable.vue";
+import DataTableToComplete from "../../components/Dashboard/DataTableToComplete.vue";
 
 
 export default {
-components: { StatsCard, DataTable },
+components: { StatsCard, DataTable, DataTableToComplete },
 data() {
     return {
         surveys: [
             { id: 1, title: "Encuesta de Satisfacción", responses: 150, created: "2024-11-01" },
             { id: 2, title: "Opinión sobre Productos", responses: 200, created: "2024-11-05" },
         ],
+        dataToComplete: [
+          //{ id: 1, title: "Enquête sur le crous", responses: 150, created: "2024-11-01" },
+          //{ id: 2, title: "Opinion sur les locaux", responses: 200, created: "2024-11-05" },
+      ],
     };
     },
 };

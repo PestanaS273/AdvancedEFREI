@@ -33,8 +33,12 @@ const { t } = useI18n()
       </div>
   
       <!-- Tabla de encuestas -->
-      <!--<DataTable :data="surveys" /> -->
+      <h1 class="text-xl font-bold text-gray-800 my-6">{{ t('Forms To Complete') }}</h1>
       <DataTableToComplete :data="dataToComplete" />
+      <br>
+      <h1 class="text-xl font-bold text-gray-800 my-6">{{ t('Completed Forms') }}</h1>
+      <DataTable :data="surveys" />
+      
 
     
   </div>
@@ -65,6 +69,7 @@ import DataTableToComplete from '../components/Dashboard/DataTableToComplete.vue
       ],
       };
   },
+
   };
   </script>
   
