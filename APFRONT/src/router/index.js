@@ -101,7 +101,7 @@ const router = createRouter({
         if (user && user.roles && user.roles.length > 0) {
           const userRole = user.roles[0];
           if (userRole === 'admin') next({ name: 'admin-collection-feedback', params: { id: to.params.id } });
-          else if (userRole === 'student') next({ name: 'student-collection-feedback', params: { id: to.params.id } });
+          else if (userRole === 'student') next({ name: 'student-feedback-review', params: { id: to.params.id } });
           else if (userRole === 'teacher') next({ name: 'teacher-collection-feedback', params: { id: to.params.id } });
           else next({ name: 'login' });
         } else {
@@ -109,6 +109,11 @@ const router = createRouter({
         }
       }
     }
+  },
+  {
+    path: '/teacher-collection-feedback-review/:id',
+    name: 'teacher-collection-feedback-review',
+    component: () => import('../views/teacher/CollectionFeedbackView.vue'),
   },
   {
     path: '/admin-collection-feedback-review/:id',
