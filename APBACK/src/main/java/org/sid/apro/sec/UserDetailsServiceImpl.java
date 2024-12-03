@@ -2,7 +2,6 @@ package org.sid.apro.sec;
 
 import org.sid.apro.dao.UtilisateurRepository;
 import org.sid.apro.entities.Utilisateur;
-import org.sid.apro.service.AproInitServiceImpl;
 import org.sid.apro.service.IAproIniService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
