@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 
 @Service
@@ -39,12 +40,13 @@ public class AproInitServiceImpl implements IAproIniService{
     private QuestionRepository questionRepository;
 
 
+
     @Override
     public Utilisateur saveUtilisateur(String email, String password) {
-//        Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
-//        if(utilisateur != null) throw new RuntimeException("Utilisateur exist");
-//        Utilisateur newUtilisateur = new Utilisateur();
-//        newUtilisateur.setEmail(email);
+       // Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
+       // if(utilisateur != null) throw new RuntimeException("Utilisateur exist");
+       // Utilisateur newUtilisateur = new Utilisateur();
+        //newUtilisateur.setEmail(email);
         Utilisateur newUtilisateur =  utilisateurRepository.findByEmail(email);
         newUtilisateur.setPassword(bCryptPasswordEncoder.encode(password));
         newUtilisateur.setStatut(true);
@@ -152,4 +154,53 @@ public class AproInitServiceImpl implements IAproIniService{
         List<Cours> cours = coursRepository.findAll();
         return cours;
     }
+
+    @Override
+    public void initCours() {
+        Stream.of("Spring boot basics", "Advanced JPA", "RESTful APIs", "Microservices Architecture", "Hibernate Deep Dive")
+                .forEach(cours -> {
+                    Cours newCours = new Cours();
+                    newCours.setNomCours(cours);
+                    coursRepository.save(newCours);
+                });
+    }
+
+    @Override
+    public void initQuestions() {
+        Stream.of("What is Spring Boot?", "Explain JPA relationships.", "How to secure a REST API?",
+                        "What is a microservice?", "What are HTTP status codes?")
+                .forEach(questionText -> {
+                    Question question = new Question();
+                    question.setQuestion(questionText);
+                    questionRepository.save(question);
+                });
+    }
+
+    @Override
+    public void initFormes() {
+        coursRepository.findAll().forEach(cours -> {
+            for (int i = 0; i < 3; i++) { // 3 formes par cours
+                Forme forme = new Forme();
+
+                // Associer une question aléatoire
+                Question question = questionRepository.findById((long) (1 + Math.random() * 5)).orElse(null);
+                if (question != null) {
+                    forme.setQuestion(question);
+                }
+
+                // Associer une réponse aléatoire (optionnel, à modifier selon votre structure)
+                Reponse reponse = reponseRepository.findById((long) (1 + Math.random() * 5)).orElse(null);
+                if (reponse != null) {
+                    forme.setReponse(reponse);
+                }
+
+                formRepository.save(forme);
+                cours.getFormes().add(forme); // Associer la forme au cours
+            }
+            coursRepository.save(cours); // Sauvegarder le cours avec ses formes
+        });
+    }
+
+
+
 }
