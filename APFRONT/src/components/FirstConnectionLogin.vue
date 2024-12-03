@@ -13,12 +13,13 @@ const { t } = useI18n()
             <label for="email" class="block text-gray-800">{{t('Email')}}</label>
             <input type="text" id="email" name="email" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
-        <div class="mb-6">
-            <button @click="handleClick"><p class="inline underline text-sm">{{t('Back to Login')}}</p></button>
-        </div>
+
         <!-- Login Button -->
         <button @click="ChangePassword" type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full">{{t('Check Email')}}</button>
         </form>
+        <div class="mb-6">
+            <button @click="handleClick"><p class="inline underline text-sm">{{t('Back to Login')}}</p></button>
+        </div>
         <!-- Sign up  Link -->
         <!-----
         <div class="mt-6 text-green-500 text-center">

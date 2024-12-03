@@ -24,7 +24,7 @@
             <td class="px-6 py-4 text-sm text-gray-700">{{ survey.title }}</td>
             <td class="px-6 py-4 text-sm text-gray-700">{{ survey.responses }}</td>
             <td class="px-6 py-4 text-sm text-gray-700">{{ survey.created }}</td>
-            <td><RouterLink :to="{ name: 'admin-feedback-review', params: { id: survey.id}}" class="text-sm font-medium text-gray-600 uppercase">Review Answers</RouterLink></td>
+            <td><RouterLink :to="{ name: 'admin-collection-feedback-review', params: { id: survey.id}}" class="text-sm font-medium text-gray-600 uppercase">Review Answers</RouterLink></td>
           </tr>
         </tbody>
       </table>
