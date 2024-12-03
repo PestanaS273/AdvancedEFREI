@@ -71,6 +71,7 @@ export default {
             email: ConnexionService.email,
             roles: ConnexionService.roles,
           });
+          console.log("Connexion réussie");
 
 
           this.$router.push("/dashboard");
