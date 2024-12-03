@@ -24,6 +24,10 @@ public interface IAproIniService {
     public Intervenant getIntervenantByEmail(String email);
     public List<Question> allQuestions(Cours cours);
     public List<Cours> allCours();
+    public void initCours();
+    public void initQuestions();
+    public void initFormes();
+
 
 
 

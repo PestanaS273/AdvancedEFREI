@@ -30,10 +30,20 @@ public class AproApplication {
             aproIniService.saveRole(new Role(2, "professor"));
             aproIniService.saveRole(new Role(3, "admin"));
             Stream.of("user4@gmail.com", "user2@gmail.com", "user3@gmail.com", "admin@gmail.com").forEach(un -> {
-                aproIniService.saveUtilisateur(un, "1234", "1234");
+                aproIniService.saveUtilisateur(un, "1234");
             });
             aproIniService.addRoleToUser("admin@gmail.com", "admin");
+
+            // Initialisation des cours
+            aproIniService.initCours();
+
+            // Initialisation des questions
+            aproIniService.initQuestions();
+
+            // Initialisation des formes
+            aproIniService.initFormes();
         };
+
     }*/
 
 }
