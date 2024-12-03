@@ -50,7 +50,7 @@ const router = createRouter({
           const userRole = user.roles[0];
           console.log(userRole);
           if (userRole === 'admin') next({ name: 'admin-dashboard' });
-          else if (userRole === 'student') next({ name: 'student-dashboard' });
+          else if (userRole === 'etudiant') next({ name: 'student-dashboard' });
           else if (userRole === 'teacher') next({ name: 'teacher-dashboard' });
           else next({ name: 'login' });
         } else {
@@ -101,7 +101,7 @@ const router = createRouter({
         if (user && user.roles && user.roles.length > 0) {
           const userRole = user.roles[0];
           if (userRole === 'admin') next({ name: 'admin-collection-feedback', params: { id: to.params.id } });
-          else if (userRole === 'student') next({ name: 'student-feedback-review', params: { id: to.params.id } });
+          else if (userRole === 'etudiant') next({ name: 'student-feedback-review', params: { id: to.params.id } });
           else if (userRole === 'teacher') next({ name: 'teacher-collection-feedback', params: { id: to.params.id } });
           else next({ name: 'login' });
         } else {
