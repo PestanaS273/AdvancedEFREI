@@ -31,5 +31,6 @@
     "Update Completed!" : "Mise à Jour Terminée!",
     "Add New Admin" : "Ajouter un Nouvel Administrateur",
     "Student or Teacher" : "Étudiant ou Professeur",
-    "Select User Type" : "Sélectionner Utilisateur"
+    "Select User Type" : "Sélectionner Utilisateur",
+    "Login" : "Connexion"
 }
