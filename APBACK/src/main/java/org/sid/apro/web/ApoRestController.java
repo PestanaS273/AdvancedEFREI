@@ -18,10 +18,18 @@ public class ApoRestController {
     private IAproIniService service;
     @PostMapping("/inscrire")
     public Utilisateur saveUser(@RequestBody User user) {
-        return service.saveUtilisateur(user.getEmail(), user.getPassword(), user.getConfirmPassword()) ;
+        return service.saveUtilisateur(user.getEmail(), user.getPassword()) ;
     }
     @GetMapping("/users")
     public List<Utilisateur> getAllUsers() {
         return service.getAllUtilisateurs();
+    }
+    @GetMapping("/getMailUser")
+    public Utilisateur getUtilisateurByEmail(@RequestParam String email) {
+        return service.getUtilisateurByEmail(email);
+    }
+    @GetMapping("/checkEmailExist")
+    public boolean CheckEmailExist(@RequestParam String email) {
+        return service.CheckEmailExist(email);
     }
 }
