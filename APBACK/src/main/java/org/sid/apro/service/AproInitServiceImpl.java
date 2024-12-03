@@ -93,7 +93,8 @@ public class AproInitServiceImpl implements IAproIniService{
     @Override
     public boolean CheckEmailExist(String email) {
         Utilisateur user = utilisateurRepository.findByEmail(email);
-        if(user == null) return false;
+        if(user.isStatut())  throw new RuntimeException("Utilisateur exist");
+        if(user == null) throw new RuntimeException("Utilisateur null");
         return true;
     }
 
