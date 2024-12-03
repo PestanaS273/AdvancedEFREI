@@ -5,15 +5,18 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
 public class Cours implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(unique = true, nullable = false)
     private String nomCours;
-    @ManyToOne
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    private Forme forme;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Forme> formes = new ArrayList<>();
 
 
 

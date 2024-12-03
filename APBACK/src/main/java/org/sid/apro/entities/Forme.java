@@ -12,8 +12,6 @@ import java.util.Collection;
 public class Forme implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToMany(cascade = CascadeType.MERGE ,mappedBy = "forme")
-    private Collection<Cours> cours;
     @ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.MERGE)
     private Question question;
     @ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.MERGE)
