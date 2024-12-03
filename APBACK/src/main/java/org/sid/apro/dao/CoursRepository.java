@@ -8,5 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @RepositoryRestResource
 @CrossOrigin("*")
 public interface CoursRepository extends JpaRepository<Cours, Long> {
+    Cours findBynomCours(String name);
 
 }

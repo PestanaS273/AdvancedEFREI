@@ -20,6 +20,7 @@ public class Utilisateur implements Serializable {
     private boolean statut;
     private String nom;
     private String prenom;
+    @Column(unique = true, nullable = false)
     private String email;
     private String numTel;
     private String imageProfile;
