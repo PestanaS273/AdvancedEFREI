@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class Cours implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(unique = true, nullable = false)
     private String nomCours;
     @ManyToOne
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
