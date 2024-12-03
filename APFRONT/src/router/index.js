@@ -111,6 +111,11 @@ const router = createRouter({
     }
   },
   {
+    path: '/teacher-collection-feedback-review/:id',
+    name: 'teacher-collection-feedback-review',
+    component: () => import('../views/teacher/CollectionFeedbackView.vue'),
+  },
+  {
     path: '/admin-collection-feedback-review/:id',
     name: 'admin-collection-feedback-review',
     component: () => import('../views/admin/CollectionFeedbackView.vue'),
