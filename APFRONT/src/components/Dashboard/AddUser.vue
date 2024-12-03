@@ -33,9 +33,9 @@ const teachers = [
             <span class="text-md">Add New Users</span>
         </button>
 
-        <div v-if="showAddUserMenu" class="fixed inset-0 flex items-center justify-center z-50">
+        <div v-if="showAddUserMenu" class="fixed inset-0 flex items-center justify-center z-50 ">
             <div class="fixed inset-0 bg-black opacity-50"></div>
-            <div class="bg-white p-8 rounded-lg shadow-lg z-10 w-3/4 max-w-3xl h-3/4">
+            <div class="bg-white p-8 rounded-lg shadow-lg z-10 w-3/4 max-w-3xl h-3/4 overflow-auto">
                 <h2 class="text-4xl mb-4">{{ t('Update Users') }}</h2>
                 <h3 class="text-2xl mb-4 text-gray-700">{{ t('Update Students') }}</h3>
                 <AddUserListBtn />

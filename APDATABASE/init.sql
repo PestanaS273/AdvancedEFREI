@@ -7,6 +7,9 @@
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
+CREATE DATABASE IF NOT EXISTS `APDATA` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -18,7 +21,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `db_apro`
+-- Base de données : `APDATA`
 --
 
 -- --------------------------------------------------------

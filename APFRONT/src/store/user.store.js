@@ -1,37 +1,42 @@
 const state = {
-    user: null,
-    isAuthenticated: false,
-}
+    user: JSON.parse(localStorage.getItem('user')) || null,
+    isAuthenticated: !!localStorage.getItem('user'),
+};
 
-const mutation = {
+const mutations = {
     setUser(state, user) {
         state.user = user;
+        console.log('User:', user);
         state.isAuthenticated = true;
+        localStorage.setItem('user', JSON.stringify(user));
     },
     logout(state) {
         state.user = null;
-        state.isAuthenticated = !!user;
+        console.log('User logged out');
+        state.isAuthenticated = false;
+        localStorage.removeItem('user');
+
     },
 };
 
 const actions = {
-    login ({ commit }, user) {
+    login({ commit }, user) {
         commit('setUser', user);
     },
-    logout ({ commit }) {
+    logout({ commit }) {
         commit('logout');
     },
 };
 
 const getters = {
-    isAuthenticated: state => state.isAuthenticated, 
-    getUser: (state) => state.user,
-}
+    isAuthenticated: state => state.isAuthenticated,
+    getUser: state => state.user,
+};
 
 export default {
-    state, 
-    mutation,
+    namespaced: true,
+    state,
+    mutations,
     actions,
     getters,
-}
-
+};
