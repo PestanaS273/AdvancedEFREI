@@ -1,3 +1,30 @@
+<script setup>
+import { ref } from 'vue'
+import { Dialog, DialogPanel } from '@headlessui/vue'
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import LanguageSwitcher from './LanguageSwitcher.vue'
+import { useI18n } from 'vue-i18n'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import ConnexionService from '../services/autherization.services'
+
+const { t } = useI18n()
+const store = useStore()
+const router = useRouter()
+
+const mobileMenuOpen = ref(false)
+
+const logout = async () => {
+  try {
+    await ConnexionService.logout();
+    store.dispatch('user/logout');
+    router.push({ name: 'login' });
+  } catch (error) {
+    console.error(error);
+  }
+}
+</script>
+
 <template>
     <header class=" inset-x-0 top-0 z-50">
         <nav class="flex items-center justify-between p-6 lg:px-8 bg-white" aria-label="Global">
@@ -14,13 +41,13 @@
             </button>
           </div>
           <div class="hidden lg:flex lg:gap-x-12">
-            <RouterLink to="/" class="text-sm/6 font-semibold text-gray-900">{{ t('Lesson') }}</RouterLink>
+            <RouterLink to="/dashboard" class="text-sm/6 font-semibold text-gray-900">{{ t('Dashboard') }}</RouterLink>
             <RouterLink to="/" class="text-sm/6 font-semibold text-gray-900">{{ t('Evaluations') }}</RouterLink>
             <RouterLink to="/" class="text-sm/6 font-semibold text-gray-900">{{ t('Teachers') }}</RouterLink>
             <RouterLink to="/profile" class="text-sm/6 font-semibold text-gray-900">{{ t('Profile') }}</RouterLink>
           </div>
           <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" class="text-sm/6 font-semibold text-gray-900">{{ t('Logout')}}</a>
+            <button @click="logout()" class="text-sm/6 font-semibold text-gray-900">{{ t('Logout')}}</button>
           </div>
           <div class="hidden lg:flex lg:flex-1 lg:justify-end overflow">
             <LanguageSwitcher />
@@ -52,7 +79,7 @@
                   <LanguageSwitcher />
                 </div>
                 <div class="py-6">
-                  <a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">{{ t('Logout')}}</a>
+                  <button @click="logout" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">{{ t('Logout')}}</button>
                 </div>
               </div>
             </div>
@@ -61,18 +88,5 @@
     </header>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import { Dialog, DialogPanel } from '@headlessui/vue'
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
-import LanguageSwitcher from './LanguageSwitcher.vue'
-import { useI18n } from 'vue-i18n'
 
 
-const { t } = useI18n()
-
-const mobileMenuOpen = ref(false)
-
-
-
-</script>

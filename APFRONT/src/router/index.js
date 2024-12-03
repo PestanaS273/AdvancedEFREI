@@ -13,16 +13,17 @@ const router = createRouter({
       props: true
     },
     {
-        path: '/test',
-        name: 'test',
-        component: () => import('../views/TestPythonVue.vue'),
-        
-    },
-    {
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginVue.vue'),
-      meta: { requiersAuth: false },
+      meta: { requiresAuth: false },
+      beforeEnter: (to, from, next) => {
+        if (store.getters['user/isAuthenticated']) {
+          next({ name: 'dashboard' });
+        } else {
+          next();
+        }
+      }
     },
     {
       path: '/loginTest',
@@ -42,15 +43,21 @@ const router = createRouter({
     name: 'dashboard',
     meta: { requiresAuth: true },
     beforeEnter: (to, from, next) => {
-      const user = store.getters['user/getUser'];
-      if (user && user.roles && user.roles.length > 0) {
-        const userRole = user.roles[0];
-        console.log(userRole);
-        if (userRole === 'admin') next({ name: 'admin-dashboard' });
-        else if (userRole === 'student') next({ name: 'student-dashboard' });
-        else if (userRole === 'teacher') next({ name: 'teacher-dashboard' });
-        else next({ name: 'login' });
+      if (store.getters['user/isAuthenticated']) {
+        console.log("User is authenticated");
+        const user = store.getters['user/getUser'];
+        if (user && user.roles && user.roles.length > 0) {
+          const userRole = user.roles[0];
+          console.log(userRole);
+          if (userRole === 'admin') next({ name: 'admin-dashboard' });
+          else if (userRole === 'student') next({ name: 'student-dashboard' });
+          else if (userRole === 'teacher') next({ name: 'teacher-dashboard' });
+          else next({ name: 'login' });
+        } else {
+          next({ name: 'login' });
+        }
       } else {
+        console.log("User is not authenticated");
         next({ name: 'login' });
       }
     }
@@ -74,9 +81,9 @@ const router = createRouter({
     meta: { requiersAuth: true, role: 'teacher' },
   },
   {
-    path: '/student-feedback-answer/:id',
-    name: 'student-feedback-answer',
-    component: () => import('../views/student/FeedbackAnswerView.vue'),
+    path: '/student-feedback-review/:id',
+    name: 'student-feedback-review',
+    component: () => import('../views/student/FormsReviewView.vue'),
 
   },
   {
@@ -85,15 +92,34 @@ const router = createRouter({
     component: () => import('../views/teacher/FeedbackAnswerView.vue'),
   },
   {
+    path: '/collection-feedback/:id',
+    name: 'collection-feedback',
+    meta: { requiresAuth: true },
+    beforeEnter: (to, from, next) => {
+      if (store.getters['user/isAuthenticated']) {
+        const user = store.getters['user/getUser'];
+        if (user && user.roles && user.roles.length > 0) {
+          const userRole = user.roles[0];
+          if (userRole === 'admin') next({ name: 'admin-collection-feedback', params: { id: to.params.id } });
+          else if (userRole === 'student') next({ name: 'student-collection-feedback', params: { id: to.params.id } });
+          else if (userRole === 'teacher') next({ name: 'teacher-collection-feedback', params: { id: to.params.id } });
+          else next({ name: 'login' });
+        } else {
+          next({ name: 'login' });
+        }
+      }
+    }
+  },
+  {
+    path: '/admin-collection-feedback-review/:id',
+    name: 'admin-collection-feedback-review',
+    component: () => import('../views/admin/CollectionFeedbackView.vue'),
+  },
+  {
     path: '/admin-feedback-review/:id',
     name: 'admin-feedback-review',
     component: () => import('../views/admin/FormsReviewView.vue'),
   },
-  {
-    path: '/admin-answer-review/:id',
-    name: 'admin-answer-review',
-    component: () => import('../views/admin/AnswerReviewView.vue'),
-  }
   ]
 })
 

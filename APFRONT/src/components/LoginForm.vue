@@ -59,24 +59,14 @@ export default {
   methods: {
     async login() {
       try {
-        // Appel à l'API de ConnexionService
-        console.log(this.email, this.password);
         const response = await ConnexionService.loginAny({
           email: this.email,
           password: this.password,
         });
 
-        // Récupérer le JWT depuis les en-têtes
         const jwt = response.headers.authorization;
-        console.log("jwt: ", jwt)
         if (jwt) {
           ConnexionService.saveToken(jwt);
-
-          // Affichage des informations utilisateur
-          console.log("Email:", ConnexionService.email);
-          console.log("Rôles:", ConnexionService.roles);
-          
-          // Mettre à jour le store avec les informations utilisateur
           this.$store.dispatch('user/login', {
             email: ConnexionService.email,
             roles: ConnexionService.roles,

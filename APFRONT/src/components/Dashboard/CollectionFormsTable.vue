@@ -22,7 +22,7 @@
             <td class="px-6 py-4 text-sm text-gray-700">{{ form.id }}</td>
             <td class="px-6 py-4 text-sm text-gray-700">{{ form.student }}</td>
             <td class="px-6 py-4 text-sm text-gray-700">{{ form.created }}</td>
-            <td><RouterLink :to="{ name: 'admin-answer-review', params: { id: form.id}}" class="text-sm font-medium text-gray-600 uppercase">Review Answers</RouterLink></td>
+            <td><RouterLink :to="{ name: 'admin-feedback-review', params: { id: form.id}}" class="text-sm font-medium text-gray-600 uppercase">Review Answers</RouterLink></td>
           </tr>
         </tbody>
       </table>

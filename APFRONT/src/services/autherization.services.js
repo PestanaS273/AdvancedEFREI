@@ -41,7 +41,6 @@ class ConnexionService {
         if (this.jwt) {
             try {
                 const decodedToken = jwtDecode(this.jwt);
-                console.log('Decoded JWT:', decodedToken);
                 this.email = decodedToken.sub;
                 this.roles = decodedToken.roles || [];
             } catch (error) {

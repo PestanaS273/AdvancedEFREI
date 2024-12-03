@@ -1,6 +1,6 @@
 const state = {
-    user: null,
-    isAuthenticated: false,
+    user: JSON.parse(localStorage.getItem('user')) || null,
+    isAuthenticated: !!localStorage.getItem('user'),
 };
 
 const mutations = {
@@ -8,10 +8,14 @@ const mutations = {
         state.user = user;
         console.log('User:', user);
         state.isAuthenticated = true;
+        localStorage.setItem('user', JSON.stringify(user));
     },
     logout(state) {
         state.user = null;
+        console.log('User logged out');
         state.isAuthenticated = false;
+        localStorage.removeItem('user');
+
     },
 };
 
