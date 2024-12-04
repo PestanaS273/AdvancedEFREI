@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -42,18 +44,22 @@ public class AproInitServiceImpl implements IAproIniService{
 
 
 
+
     @Override
-    public Utilisateur saveUtilisateur(String email, String password) {
-        /*Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
+    public Utilisateur saveUtilisateur(String email, String password, String role) {
+        Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
         if(utilisateur != null) throw new RuntimeException("Utilisateur exist");
         Utilisateur newUtilisateur = new Utilisateur();
-        newUtilisateur.setEmail(email);*/
-        Utilisateur newUtilisateur =  utilisateurRepository.findByEmail(email);
+        newUtilisateur.setEmail(email);
+        //Utilisateur newUtilisateur =  utilisateurRepository.findByEmail(email);
         newUtilisateur.setPassword(bCryptPasswordEncoder.encode(password));
         newUtilisateur.setStatut(true);
         utilisateurRepository.save(newUtilisateur);
-        addRoleToUser(email,"etudiant");
-
+        if(role == null){
+            addRoleToUser(email,"etudiant");
+        }else {
+            addRoleToUser(email,role);
+        }
         return newUtilisateur;
     }
 
@@ -162,7 +168,14 @@ public class AproInitServiceImpl implements IAproIniService{
                 .forEach(cours -> {
                     Cours newCours = new Cours();
                     newCours.setNomCours(cours);
-                    coursRepository.save(newCours);
+                    Etudiant etudiant = etudiantRepository.findByEmail("user4@gmail.com");;
+                    System.out.println("je suis l'etudiant: "+ etudiant.getNom());
+                    if(etudiant != null){
+                        etudiant.getCours().add(newCours);
+                        etudiantRepository.save(etudiant);
+                        coursRepository.save(newCours);
+                    } else throw new RuntimeException("etudiant not found");
+
                 });
     }
 
@@ -176,8 +189,8 @@ public class AproInitServiceImpl implements IAproIniService{
                     questionRepository.save(question);
                 });
     }
-/*
-    @Override
+
+ /*   @Override
     public void initFormes() {
         coursRepository.findAll().forEach(cours -> {
             for (int i = 0; i < 3; i++) { // 3 formes par cours
@@ -209,22 +222,50 @@ public class AproInitServiceImpl implements IAproIniService{
 
     @Override
     public int NombreEtudiantsActif() {
-        return 0;
-    }
+        List<Utilisateur> etudiantsActive = new ArrayList<>();
+        int c = 0;
+        for (Utilisateur e : utilisateurRepository.findAll()) {
+            System.out.println("mon c'est le role :"+e.getRoles());
+            Role role = e.getRoles().iterator().next();
+            String r = role.getRole();
+            System.out.println(r);
+            if(r.equals("etudiant")){
+                System.out.println(e.isStatut());
+                if(e.isStatut()){etudiantsActive.add(e);}
+            }
+        }
+        c = etudiantsActive.size();
+        return c;
+        }
 
     @Override
-    public Cours getAllCours(long idIntervenant) {
+    public List<Cours> getAllCours(long idIntervenant) {
+
         return null;
     }
 
     @Override
-    public Cours getAllCoursEtudiants(long idEtudiant) {
-        return null;
+    public List<Cours> getAllCoursEtudiants(long idEtudiant) {
+        Etudiant etudiant = etudiantRepository.findById(idEtudiant);
+        List<Cours> cours = new ArrayList<>();
+        etudiant.getCours().forEach(cour -> {
+            cours.add(cour);
+        });
+        return cours;
     }
 
     @Override
-    public Forme getAllForme(long id) {
-        return null;
+    public List<Forme> getAllForme(long idCours, long idEtudiant) {
+        List<Forme> formes = new ArrayList<>();
+        Etudiant etudiant = etudiantRepository.findById(idEtudiant);
+        etudiant.getCours().forEach(cours -> {
+            if(idCours == cours.getId()){
+                cours.getFormes().forEach(forme -> {
+                    formes.add(forme);
+                });
+            }
+        });
+        return formes;
     }
 
 
