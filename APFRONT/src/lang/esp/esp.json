@@ -33,7 +33,7 @@
     "Update Completed!": "¡Actualización Completada!",
     "Add New Admin": "Añadir Nuevo Administrador",
     "Student or Teacher": "Estudiante o Profesor",
-    "Select User Type": "Seleccionar Usuario",
+    "Select User": "Seleccionar Usuario",
     "Login": "Iniciar Sesión",
     "Use your EFREI account": "Utiliza tu cuenta EFREI",
     "Username": "Nombre de Usuario",
@@ -58,5 +58,9 @@
     "Forms To Complete": "Formularios por Completar",
     "Completed Forms": "Formularios Completados",
     "Update your password": "Actualiza tu contraseña",
-    "Review Answers": "Revisar Respuestas"
+    "Review Answers": "Revisar Respuestas",
+    "Active Users": "Usuarios Activos",
+    "Answer Percentage": "Porcentaje de Respuestas",
+    "Total Forms": "Formularios Totales",
+    "Anonym Survey": "Encuesta Anónima"
 }

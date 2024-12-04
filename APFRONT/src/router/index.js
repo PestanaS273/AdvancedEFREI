@@ -92,9 +92,11 @@ const router = createRouter({
     beforeEnter: (to, from, next) => {
       if (store.getters['user/isAuthenticated']) {
         const user = store.getters['user/getUser'];
+        console.log(user);
         if (user && user.roles && user.roles.length > 0) {
           const userRole = user.roles[0];
-          if (userRole === 'admin') next({ name: 'admin-collection-feedback', params: { id: to.params.id } });
+          console.log(userRole);
+          if (userRole === 'admin') next({ name: 'admin-collection-feedback-review', params: { id: to.params.id } });
           else if (userRole === 'etudiant') next({ name: 'student-feedback-review', params: { id: to.params.id } });
           else if (userRole === 'teacher') next({ name: 'teacher-collection-feedback', params: { id: to.params.id } });
           else next({ name: 'login' });

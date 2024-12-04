@@ -13,19 +13,19 @@ const { t } = useI18n()
         <!-- Sección de estadísticas -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             <StatsCard
-                title="Porcentaje de Respuestas"
+                :title="t('Answer Percentage')"
                 value="85%"
                 icon="📊"
                 bgColor="bg-green-500"
             />
             <StatsCard
-                :title="t('Total de Encuestas')"
+                :title="t('Total Forms')"
                 value="120"
                 icon="📋"
                 bgColor="bg-blue-500"
             />
             <StatsCard
-                title="Usuarios Activos"
+                :title="t('Active Users')"
                 value="350"
                 icon="👥"
                 bgColor="bg-purple-500"

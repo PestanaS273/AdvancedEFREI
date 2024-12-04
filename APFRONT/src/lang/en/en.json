@@ -33,7 +33,7 @@
     "Update Completed!": "Update Completed!",
     "Add New Admin": "Add New Admin",
     "Student or Teacher": "Student or Teacher",
-    "Select User Type": "Select User Type",
+    "Select User": "Select User",
     "Login": "Login",
     "Use your EFREI account": "Use your EFREI account",
     "Username": "Username",
@@ -47,7 +47,7 @@
     "Back to Login": "Back to login",
     "Check Email": "Check Email",
     "Change Password": "Change Password",
-    "Update your passeword": "Update your password",
+    "Update your password": "Update your password",
     "New password": "New password",
     "Confirm password": "Confirm password",
     "Data Engineering student": "Data Engineering student",
@@ -57,6 +57,11 @@
     "All forms have been completed": "All forms have been completed",
     "Forms To Complete": "Forms To Complete",
     "Completed Forms": "Completed Forms",
-    "Review Answers": "Review Answers"
+    "Review Answers": "Review Answers",
+    "Active Users": "Active Users",
+    "Answer Percentage": "Answer Percentage",
+    "Total Forms": "Total Forms",
+    "Anonym Survey": "Anonym Survey"
+    
     
 }

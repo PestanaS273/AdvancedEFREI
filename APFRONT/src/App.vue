@@ -22,4 +22,7 @@ computed: {
 </script>
 
 <style>
+#app {
+  background-color: aliceblue;
+}
 </style>

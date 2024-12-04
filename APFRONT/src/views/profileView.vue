@@ -51,8 +51,5 @@ const { t } = useI18n()
 </template>
 
 <style>
-html {
-    height: 100%;
-    background-color: rgb(22, 55, 103);
-}
+
 </style>

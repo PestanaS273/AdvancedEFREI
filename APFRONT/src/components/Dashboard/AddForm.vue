@@ -9,6 +9,7 @@ const selectedTemplate = ref('');
 const supplementaryQuestions = ref([]);
 const newQuestion = ref('');
 const showSupplementaryQuestions = ref(false);
+const anonymSurvey = ref(false);
 
 function toggleAddFormMenu() {
   showAddFormMenu.value = !showAddFormMenu.value;
@@ -37,22 +38,6 @@ function submitForm() {
   // Aquí puedes enviar formData al backend usando una solicitud HTTP
   toggleAddFormMenu();
 }
-
-// const courses = [
-//   { name: 'Matemáticas' },
-//   { name: 'Física' },
-//   { name: 'Historia' },
-//   { name: 'Literatura' },
-//   { name: 'Química' }
-// ];
-
-// const teachers = [
-//   { name: 'Profesor A' },
-//   { name: 'Profesor B' },
-//   { name: 'Profesor C' },
-//   { name: 'Profesor D' },
-//   { name: 'Profesor E' }
-// ];
 
 const templates = {
   basic: [
@@ -89,7 +74,7 @@ const templates = {
                         <div class="mb-6 w-1/2">
                             <label for="teacher" class="block text-2xl font-medium text-gray-700">{{ t('Teacher') }} :</label>
                             <select id="teacher" class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md">
-                                <option v-for="teacher in teachers" :key="teacher.name" :value="teacher.name">{{ teacher.name }}</option>
+                                <option v-for="teacher in teachers" :key="teacher.nom" :value="teacher.nom">{{ teacher.prenom }} {{ teacher.nom }}</option>
                             </select>
                         </div>
                     </div>
@@ -106,6 +91,15 @@ const templates = {
                         </label>
                         </div>
                     </div>
+                    <div class="flex space-x-4">
+                        <div class="mb-6 w-max">
+                            <label class="inline-flex items-center cursor-pointer" > {{ t('Anonym Survey') }} ?
+                                <input type="checkbox" v-model="anonymSurvey" value="" class="sr-only peer ">
+                                <div class=" ml-10 relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-600"></div>
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="flex space-x-4">
                         <div class="mb-6 w-max">
                             <label class="inline-flex items-center cursor-pointer" > {{ t('Add Supplementary Questions') }} ?
