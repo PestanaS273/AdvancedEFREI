@@ -26,11 +26,12 @@ public class AproApplication {
     @Bean
     CommandLineRunner start(IAproIniService aproIniService) {
         return args -> {
+
             aproIniService.saveRole(new Role(1, "etudiant"));
             aproIniService.saveRole(new Role(2, "professor"));
             aproIniService.saveRole(new Role(3, "admin"));
             Stream.of("user4@gmail.com", "user2@gmail.com", "user3@gmail.com", "admin@gmail.com").forEach(un -> {
-                aproIniService.saveUtilisateur(un, "1234");
+                aproIniService.saveUtilisateur(un, "1234", "etudiant");
             });
             aproIniService.addRoleToUser("admin@gmail.com", "admin");
 
@@ -45,6 +46,6 @@ public class AproApplication {
         };
 
     }
-*/
 
+*/
 }
