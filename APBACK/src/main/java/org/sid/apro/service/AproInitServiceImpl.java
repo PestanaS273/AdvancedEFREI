@@ -3,6 +3,7 @@ package org.sid.apro.service;
 import jakarta.transaction.Transactional;
 import org.sid.apro.dao.*;
 import org.sid.apro.entities.*;
+import org.sid.apro.vo.ReponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -43,10 +44,10 @@ public class AproInitServiceImpl implements IAproIniService{
 
     @Override
     public Utilisateur saveUtilisateur(String email, String password) {
-       // Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
-       // if(utilisateur != null) throw new RuntimeException("Utilisateur exist");
-       // Utilisateur newUtilisateur = new Utilisateur();
-        //newUtilisateur.setEmail(email);
+        /*Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
+        if(utilisateur != null) throw new RuntimeException("Utilisateur exist");
+        Utilisateur newUtilisateur = new Utilisateur();
+        newUtilisateur.setEmail(email);*/
         Utilisateur newUtilisateur =  utilisateurRepository.findByEmail(email);
         newUtilisateur.setPassword(bCryptPasswordEncoder.encode(password));
         newUtilisateur.setStatut(true);
@@ -175,7 +176,7 @@ public class AproInitServiceImpl implements IAproIniService{
                     questionRepository.save(question);
                 });
     }
-
+/*
     @Override
     public void initFormes() {
         coursRepository.findAll().forEach(cours -> {
@@ -200,7 +201,31 @@ public class AproInitServiceImpl implements IAproIniService{
             coursRepository.save(cours); // Sauvegarder le cours avec ses formes
         });
     }
+*/
+    @Override
+    public Reponse saveReponse(ReponseVO reponseVO) {
+        return null;
+    }
 
+    @Override
+    public int NombreEtudiantsActif() {
+        return 0;
+    }
+
+    @Override
+    public Cours getAllCours(long idIntervenant) {
+        return null;
+    }
+
+    @Override
+    public Cours getAllCoursEtudiants(long idEtudiant) {
+        return null;
+    }
+
+    @Override
+    public Forme getAllForme(long id) {
+        return null;
+    }
 
 
 }

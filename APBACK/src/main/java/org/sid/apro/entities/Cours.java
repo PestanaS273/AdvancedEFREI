@@ -16,6 +16,7 @@ public class Cours implements Serializable {
     @Column(unique = true, nullable = false)
     private String nomCours;
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Collection<Forme> formes = new ArrayList<>();
 
 

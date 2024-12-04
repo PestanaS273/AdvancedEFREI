@@ -8,4 +8,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @RepositoryRestResource
 @CrossOrigin("*")
 public interface FormRepository extends JpaRepository<Forme, Long> {
+    Forme findById(long id);
 }
