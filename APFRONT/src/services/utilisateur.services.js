@@ -30,6 +30,15 @@ const getAllAdmin = async () => {
     return response.data;
 }
 
+const getUser = async (email) => {
+    const response = await apiClient.get('/getMailUser', {
+        params: {
+            email: email
+        }
+    });
+    return response.data;
+}
+
 
 
 export default {
@@ -37,6 +46,7 @@ export default {
     inscrire,
     getAllStudents,
     getAllTeachers,
-    getAllAdmin
+    getAllAdmin,
+    getUser,
 
 }
