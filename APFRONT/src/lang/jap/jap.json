@@ -50,5 +50,19 @@
     "Update your password": "パスワードを更新",
     "New password": "新しいパスワード",
     "Confirm password": "パスワードを確認",
-    "Data Engineering student": "データエンジニアリングの"
+    "Data Engineering student": "データエンジニアリングの学生",
+    "Profile informations": "プロフィール情報",
+    "Phone number": "電話番号",
+    "Address": "住所",
+    "All forms have been completed": "すべてのフォームが完了しました",
+    "Forms To Complete": "完了するフォーム",
+    "Completed Forms": "完了したフォーム",
+    "Review Answers": "回答を確認",
+    "Active Users": "アクティブユーザー",
+    "Answer Percentage": "回答率",
+    "Total Forms": "フォーム総数",
+    "Anonym Survey": "匿名アンケート",
+    "Add New Users": "新しいユーザーを追加",
+    "Start Survey": "アンケートを開始",
+    "Your answer": "あなたの回答"
 }
