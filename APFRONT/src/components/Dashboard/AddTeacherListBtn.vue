@@ -19,7 +19,7 @@ const { t } = useI18n()
             </button>
             <div class="relative m-6 inline-flex w-fit">
 
-</div>
+            </div>
         </div>
 
         <div class="flex-row">

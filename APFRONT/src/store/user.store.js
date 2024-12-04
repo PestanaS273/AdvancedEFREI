@@ -26,6 +26,9 @@ const actions = {
     logout({ commit }) {
         commit('logout');
     },
+    setUser({ commit }, user) {
+        commit('setUser', user);
+    }
 };
 
 const getters = {

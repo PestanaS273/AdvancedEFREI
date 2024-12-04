@@ -52,8 +52,14 @@ components: { StatsCard, DataTable, AddForm },
 data() {
     return {
         surveys: [
-            { id: 1, title: "Encuesta de Satisfacción", responses: 150, created: "2024-11-01" },
-            { id: 2, title: "Opinión sobre Productos", responses: 200, created: "2024-11-05" },
+            { id: 1, title: "DevOps", responses: 150, created: "2024-11-01" },
+            { id: 2, title: "Advanced Programming", responses: 200, created: "2024-11-05" },
+            { id: 3, title: "Rest APIs", responses: 150, created: "2024-11-01" },
+            { id: 4, title: "Docker", responses: 200, created: "2024-11-05" },
+            { id: 5, title: "Web Services", responses: 150, created: "2024-11-01" },
+            { id: 6, title: "Java Programming", responses: 200, created: "2024-11-05" },
+            { id: 7, title: "Software Architecture", responses: 150, created: "2024-11-01" },
+            { id: 8, title: "English", responses: 200, created: "2024-11-05" },
         ],
     };
     },

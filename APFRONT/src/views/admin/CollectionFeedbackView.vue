@@ -6,7 +6,6 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const breadcrumbs = [
-  { name: 'Home', path: '/' },
   { name: 'Dashboard', path: '/dashboard' },
   { name: 'Collection Forms', path: route.path },
 ];

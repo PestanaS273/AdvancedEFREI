@@ -8,8 +8,8 @@
 -- Version de PHP : 8.2.0
 
 
-CREATE DATABASE IF NOT EXISTS APDATA;
-USE APDATA;
+CREATE DATABASE IF NOT EXISTS APDATATEST;
+USE APDATATEST;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -74,9 +74,10 @@ INSERT INTO `cours` (`id`, `nom_cours`) VALUES
 -- Structure de la table `cours_formes`
 --
 
-CREATE TABLE `cours_formes` (
+CREATE TABLE `etudiant_cours_forme` (
   `cours_id` bigint(20) NOT NULL,
-  `formes_id` bigint(20) NOT NULL
+  `formes_id` bigint(20) NOT NULL,
+  `etudiant_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -510,6 +511,18 @@ ALTER TABLE `intervenant_cours`
 ALTER TABLE `utilisateur_roles`
   ADD CONSTRAINT `FK9lop304xtodorgho9w56lpjhn` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateur` (`id`),
   ADD CONSTRAINT `FKgvjufa2i7moss3i9eh2i9yoaq` FOREIGN KEY (`roles_id`) REFERENCES `role` (`id`);
+
+
+ALTER TABLE `etudiant_cours_forme`
+  ADD KEY `FK_cours` (`cours_id`),
+  ADD KEY `FK_formes` (`formes_id`),
+  ADD KEY `FK_etudiant` (`etudiant_id`);
+
+ALTER TABLE `etudiant_cours_forme`
+  ADD CONSTRAINT `FK_cours` FOREIGN KEY (`cours_id`) REFERENCES `cours` (`id`),
+  ADD CONSTRAINT `FK_formes` FOREIGN KEY (`formes_id`) REFERENCES `forme` (`id`),
+  ADD CONSTRAINT `FK_etudiant` FOREIGN KEY (`etudiant_id`) REFERENCES `etudiant` (`id`);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
