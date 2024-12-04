@@ -17,7 +17,7 @@ function toggleAddUserMenu() {
     <div>
         <button @click="toggleAddUserMenu" class="fixed bottom-4 left-6 flex flex-col items-center justify-center w-35 h-35 text-black">
             <img src="../../assets/user.svg" alt="Create new Form" class="w-20 h-20 mb-1" />
-            <span class="text-md">Add New Users</span>
+            <span class="text-md">{{t('Add New Users')}}</span>
         </button>
 
         <div v-if="showAddUserMenu" class="fixed inset-0 flex items-center justify-center z-50 ">
