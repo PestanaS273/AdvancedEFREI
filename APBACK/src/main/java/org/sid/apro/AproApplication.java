@@ -22,8 +22,8 @@ public class AproApplication {
     BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    /*@Bean
+/*
+    @Bean
     CommandLineRunner start(IAproIniService aproIniService) {
         return args -> {
             aproIniService.saveRole(new Role(1, "etudiant"));
@@ -44,6 +44,7 @@ public class AproApplication {
             aproIniService.initFormes();
         };
 
-    }*/
+    }
+*/
 
 }
