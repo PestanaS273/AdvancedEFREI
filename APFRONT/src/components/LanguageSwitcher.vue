@@ -19,6 +19,9 @@
           <MenuItem v-slot="{ active }">
             <button @click="setLanguage('esp')" :class="[active ? 'bg-gray-100 text-gray-900 outline-none' : 'text-gray-700', 'block px-4 py-2 text-sm']">Español</button>
           </MenuItem>
+          <MenuItem v-slot="{ active }">
+            <button @click="setLanguage('jap')" :class="[active ? 'bg-gray-100 text-gray-900 outline-none' : 'text-gray-700', 'block px-4 py-2 text-sm']">日本語</button>
+          </MenuItem>
         </div>
       </MenuItems>
     </transition>
