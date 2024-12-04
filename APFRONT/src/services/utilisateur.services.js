@@ -15,7 +15,38 @@ const inscrire = async (user) => {
     return response.data;
 }
 
+const getAllStudents = async () => {
+    const response = await apiClient.get('/getAllStudents');
+    return response.data;
+}
+
+const getAllTeachers = async () => {
+    const response = await apiClient.get('/getAllTeachers');
+    return response.data;
+}
+
+const getAllAdmin = async () => {
+    const response = await apiClient.get('/getAllAdmin');
+    return response.data;
+}
+
+const getUser = async (email) => {
+    const response = await apiClient.get('/getMailUser', {
+        params: {
+            email: email
+        }
+    });
+    return response.data;
+}
+
+
+
 export default {
     checkEmailExist,
     inscrire,
+    getAllStudents,
+    getAllTeachers,
+    getAllAdmin,
+    getUser,
+
 }

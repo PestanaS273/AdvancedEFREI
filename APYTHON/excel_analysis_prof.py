@@ -168,7 +168,6 @@ def update_database(teacher_array):
                 if not cours:
                     cours = Cours(
                         nom_cours=course_data["coursNom"],
-                        forme_id=None
                     )
                     session.add(cours)
                     print("cours added")

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n'
 import AddUserListBtn from './AddUserListBtn.vue'
 import AddTeacherListBtn from './AddTeacherListBtn.vue'
@@ -8,22 +8,9 @@ const { t } = useI18n()
 
 const showAddUserMenu = ref(false);
 
-const selectedUser = ref('');
-// const students = ref([]);
-// const teachers = ref([]);
-
 function toggleAddUserMenu() {
     showAddUserMenu.value = !showAddUserMenu.value;
 }
-
-
-const teachers = [
-  { name: 'Profesor A' },
-  { name: 'Profesor B' },
-  { name: 'Profesor C' },
-  { name: 'Profesor D' },
-  { name: 'Profesor E' }
-];
 </script>
 
 <template>
@@ -47,30 +34,24 @@ const teachers = [
                         <div class="mb-6">
                             <div class="mt-2">
                                 <label class="inline-flex items-center text-xl mb-4 mx-4">
-                                    <input type="radio" name="user" value="basic" v-model="selectedUser" class="form-radio text-indigo-500">
+                                    <input type="radio" name="user" value="student" v-model="selectedUser" class="form-radio text-indigo-500">
                                     <span class="ml-2">{{ t('Student') }}</span>
                                 </label>
                                 <label class="inline-flex items-center text-xl mb-4 mx-4">
-                                    <input type="radio" name="user" value="long" v-model="selectedUser" class="form-radio text-indigo-500">
+                                    <input type="radio" name="user" value="teacher" v-model="selectedUser" class="form-radio text-indigo-500">
                                     <span class="ml-2">{{ t('Teacher') }}</span>
                                 </label>
                             </div>
                         </div>
-                        <label class="inline-flex items-center text-xl mb-4 mx-4">{{ ('Select User') }}</label>
-                        <select id="course" class="mt-2 block w-full mx-4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md">
-                        <option v-for="teacher in teachers" :key="teacher.name" :value="teacher.name">{{ teacher.name }}</option>
+                        <label class="inline-flex items-center text-xl mb-4 mx-4">{{ t('Select User') }}</label>
+                        <select id="user" class="mt-2 block w-full mx-4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md">
+                            <option v-for="user in userList" :key="user.id" :value="user.id">{{ user.prenom }} {{ user.nom }}</option>
                         </select>
-                        <!-- <select v-if="selectedUser === 'student' && students.length > 0" id="student" class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md">
-                            <option v-for="student in students" :key="student.id" :value="student.id">{{ student.name }}</option>
-                        </select>
-                        <select v-if="selectedUser === 'teacher' && teachers.length > 0" id="teacher" class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md">
-                            <option v-for="teacher in teachers" :key="teacher.id" :value="teacher.id">{{ teacher.name }}</option>
-                        </select> --> 
                     </div>
                     <!-- Agrega más campos según sea necesario -->
                     <div class="flex justify-end">
-                        <button type="button" @click="toggleAddUserMenu" class="mr-4 bg-gray-500 text-white px-4 py-2 rounded-md">{{t('Cancel')}}</button>
-                        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md">{{ t('Submit')}}</button>
+                        <button type="button" @click="toggleAddUserMenu" class="mr-4 bg-gray-500 text-white px-4 py-2 rounded-md">{{ t('Cancel') }}</button>
+                        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md">{{ t('Submit') }}</button>
                     </div>
                 </form>
             </div>
@@ -79,46 +60,55 @@ const teachers = [
 </template>
 
 <script>
-import apiClient from '../../services/api'
+import utilisateurServices from '../../services/utilisateur.services';
 
 export default {
     name: 'AddUser',
+    components: { AddUserListBtn, AddTeacherListBtn },
     data() {
         return {
-
+            teachers: [],
+            students: [],
+            selectedUser: 'student',
         }
     },
-    watch: {
-        selectedUser() {
-            this.fetchSudents()
-            this.fetchTeachers()
+    computed: {
+        userList() {
+            return this.selectedUser === 'student' ? this.students : this.teachers;
         }
     },
-
     methods: {
-        async fetchSudents() {
+        async getAllStudents() {
             try {
-                const response = await apiClient.get('/students')
-                this.students = response.data
-
+                const response = await utilisateurServices.getAllStudents();
+                console.log(response);
+                this.students = response;
             } catch (error) {
-                console.error(error)
+                console.error(error);
             }
         },
-        async fetchTeachers() {
+        async getAllTeachers() {
             try {
-                const response = await apiClient.get('/teachers')
-                this.teachers = response.data
-
+                const response = await utilisateurServices.getAllTeachers();
+                console.log(response);
+                this.teachers = response;
             } catch (error) {
-                console.error(error)
+                console.error(error);
             }
         },
+        toggleAddUserMenu() {
+            this.showAddUserMenu = !this.showAddUserMenu;
+        },
+        async submitForm() {
+            // Lógica para enviar el formulario
+        }
+    },
+    created() {
+        this.getAllStudents();
+        this.getAllTeachers();
     }
 }
-
 </script>
 
 <style scoped>
-
 </style>

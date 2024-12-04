@@ -1,6 +1,7 @@
 package org.sid.apro.service;
 
 import org.sid.apro.entities.*;
+import org.sid.apro.vo.ReponseVO;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,15 @@ public interface IAproIniService {
     public Intervenant getIntervenantByEmail(String email);
     public List<Question> allQuestions(Cours cours);
     public List<Cours> allCours();
+    public void initCours();
+    public void initQuestions();
+    //public void initFormes();
+    public Reponse saveReponse(ReponseVO reponseVO);
+    public int NombreEtudiantsActif();
+    public Cours getAllCours(long idIntervenant);
+    public Cours getAllCoursEtudiants(long idEtudiant);
+    public Forme getAllForme(long id);
+
 
 
 

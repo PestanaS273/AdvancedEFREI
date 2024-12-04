@@ -12,6 +12,7 @@ import java.util.Collection;
 public class Forme implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private boolean anonyme;
     @ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.MERGE)
     private Question question;
     @ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.MERGE)

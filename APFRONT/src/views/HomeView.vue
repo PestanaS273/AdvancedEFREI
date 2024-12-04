@@ -12,29 +12,33 @@ const { t } = useI18n()
   
       <!-- Sección de estadísticas -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <StatsCard
-            title="Porcentaje de Respuestas"
-            value="85%"
-            icon="📊"
-            bgColor="bg-green-500"
-        />
-        <StatsCard
-            title="Total de Encuestas"
-            value="120"
-            icon="📋"
-            bgColor="bg-blue-500"
-        />
-        <StatsCard
-            title="Usuarios Activos"
-            value="350"
-            icon="👥"
-            bgColor="bg-purple-500"
-        />
-      </div>
+            <StatsCard
+                :title="t('Answer Percentage')"
+                value="85%"
+                icon="📊"
+                bgColor="bg-green-500"
+            />
+            <StatsCard
+                :title="t('Total Forms')"
+                value="120"
+                icon="📋"
+                bgColor="bg-blue-500"
+            />
+            <StatsCard
+                :title="t('Active Users')"
+                value="350"
+                icon="👥"
+                bgColor="bg-purple-500"
+            />
+        </div>
   
       <!-- Tabla de encuestas -->
-      <!--<DataTable :data="surveys" /> -->
+      <h1 class="text-xl font-bold text-gray-800 my-6">{{ t('Forms To Complete') }}</h1>
       <DataTableToComplete :data="dataToComplete" />
+      <br>
+      <h1 class="text-xl font-bold text-gray-800 my-6">{{ t('Completed Forms') }}</h1>
+      <DataTable :data="surveys" />
+      
 
     
   </div>
@@ -65,6 +69,7 @@ import DataTableToComplete from '../components/Dashboard/DataTableToComplete.vue
       ],
       };
   },
+
   };
   </script>
   

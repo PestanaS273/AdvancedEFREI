@@ -1,6 +1,10 @@
 import apiClient from './api';
 
-export const getAllCours = async () => {
-    const response = await apiClient.get('/cours');
+const getAllCours = async () => {
+    const response = await apiClient.get('/getAllCours');
     return response.data;
+}
+
+export default {
+    getAllCours,
 }

@@ -31,10 +31,9 @@ class Cours(Base):
     __tablename__ = 'cours'
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     nom_cours = Column(String(255), nullable=False, unique=True)
-    forme_id = Column(BigInteger, ForeignKey('forme.id'), nullable=True)
     etudiants = relationship("EtudiantCours", back_populates="cours")
     intervenants = relationship("IntervenantCours", back_populates="cours")
-    forme = relationship("Forme", back_populates="cours")
+    formes = relationship("CoursFormes", back_populates="cours")
 
 class EtudiantCours(Base):
     __tablename__ = 'etudiant_cours'
@@ -48,7 +47,7 @@ class Forme(Base):
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     question_id = Column(BigInteger, ForeignKey('question.id'))
     reponse_id = Column(BigInteger, ForeignKey('reponse.id'))
-    cours = relationship("Cours", back_populates="forme")
+    cours = relationship("CoursFormes", back_populates="forme")
 
 class Intervenant(Base):
     __tablename__ = 'intervenant'
@@ -77,3 +76,11 @@ class UtilisateurRoles(Base):
     roles_id = Column(BigInteger, ForeignKey('role.id'), primary_key=True)
     utilisateur = relationship("Utilisateur", back_populates="roles")
     role = relationship("Role", back_populates="utilisateurs")
+
+class CoursFormes(Base):
+    __tablename__ = 'cours_formes'
+    cours_id = Column(BigInteger, ForeignKey('cours.id'), primary_key=True)
+    forme_id = Column(BigInteger, ForeignKey('forme.id'), primary_key=True)
+    cours = relationship("Cours", back_populates="formes")
+    forme = relationship("Forme", back_populates="cours")
+
