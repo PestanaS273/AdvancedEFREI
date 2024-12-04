@@ -15,6 +15,7 @@ import lombok.ToString;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
 public class Utilisateur implements Serializable {
+    public boolean getStatut;
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private boolean statut;
@@ -30,4 +31,7 @@ public class Utilisateur implements Serializable {
     private Date dateNaissance;
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
+
+
+
 }
