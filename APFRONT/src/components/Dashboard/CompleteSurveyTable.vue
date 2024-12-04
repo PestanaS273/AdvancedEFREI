@@ -15,7 +15,7 @@ const answers = ref({});
 
 const fetchQuestions = async () => {
   try {
-    const response = await apiClient.get('/questions'); // Ajusta la URL según tu backend
+    const response = await apiClient.get('/questions'); 
     questions.value = response.data;
   } catch (error) {
     console.error('Error fetching questions:', error);
@@ -28,12 +28,10 @@ const setAnswer = (id, value) => {
 
 const submitAnswers = async () => {
   try {
-    const response = await apiClient.post('/submit-answers', answers.value); // Ajusta la URL según tu backend
+    const response = await apiClient.post('/submit-answers', answers.value); 
     console.log('Answers submitted successfully:', response.data);
-    // Puedes mostrar un mensaje de éxito aquí
   } catch (error) {
     console.error('Error submitting answers:', error);
-    // Puedes mostrar un mensaje de error aquí
   }
 };
 
@@ -75,11 +73,17 @@ onMounted(() => {
                   :key="n"
                   @click="setAnswer(question.id, n)"
                   :class="{
-                    'w-8 h-8 border border-gray-300 rounded-md cursor-pointer': true,
-                    'bg-blue-500': answers[question.id] === n,
+                    'w-8 h-8 border border-gray-300 rounded-md cursor-pointer flex items-center justify-center': true,
+                    'bg-blue-100': answers[question.id] === 1,
+                    'bg-blue-200': answers[question.id] === 2,
+                    'bg-blue-300': answers[question.id] === 3,
+                    'bg-blue-400': answers[question.id] === 4,
+                    'bg-blue-500': answers[question.id] === 5,
                     'bg-gray-200': answers[question.id] !== n
                   }"
-                ></div>
+                >
+                  {{ n }}
+                </div>
               </div>
             </template>
           </td>
@@ -112,5 +116,8 @@ export default {
   },
 };
 </script>
+
+
+
 
 
