@@ -5,7 +5,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-<body>
+    <div class="min-h-screen bg-aliceblue">
     <div class="container mx-auto my-60">
         <div>
 
@@ -44,8 +44,7 @@ const { t } = useI18n()
 
         </div>
     </div>
-</body>
-
+</div>
 </template>
 
 <script>
@@ -83,5 +82,12 @@ export default {
 </script>
 
 <style>
-
+    html, body {
+  background-color: aliceblue;
+  height: 100%;
+  margin: 0;
+}
+.bg-aliceblue {
+  background-color: aliceblue;
+}
 </style>
