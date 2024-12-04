@@ -86,6 +86,12 @@ const router = createRouter({
     component: () => import('../views/teacher/FeedbackAnswerView.vue'),
   },
   {
+    path: '/student-feedback-answer/:id',
+    name: 'student-feedback-answer',
+    component: () => import('../views/student/FeedbackAnswerView.vue'),
+    
+  },
+  {
     path: '/collection-feedback/:id',
     name: 'collection-feedback',
     meta: { requiresAuth: true },

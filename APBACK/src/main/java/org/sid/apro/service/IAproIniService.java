@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface IAproIniService {
 
-    public Utilisateur saveUtilisateur(String email, String password);
+    public Utilisateur saveUtilisateur(String email, String password, String role);
     public Role saveRole(Role role);
     public Utilisateur getUtilisateurByEmail(String email);
     public void addRoleToUser(String email, String role);
@@ -30,9 +30,9 @@ public interface IAproIniService {
     //public void initFormes();
     public Reponse saveReponse(ReponseVO reponseVO);
     public int NombreEtudiantsActif();
-    public Cours getAllCours(long idIntervenant);
-    public Cours getAllCoursEtudiants(long idEtudiant);
-    public Forme getAllForme(long id);
+    public List<Cours> getAllCours(long idIntervenant);
+    public List<Cours> getAllCoursEtudiants(long idEtudiant);
+    public List<Forme> getAllForme(long idCours, long idEtudiant);
 
 
 

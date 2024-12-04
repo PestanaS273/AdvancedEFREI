@@ -3,6 +3,7 @@ package org.sid.apro.web;
 import jakarta.transaction.Transactional;
 import org.sid.apro.entities.*;
 import org.sid.apro.service.IAproIniService;
+import org.sid.apro.vo.FormeVO;
 import org.sid.apro.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class ApoRestController {
     private IAproIniService service;
     @PostMapping("/inscrire")
     public Utilisateur saveUser(@RequestBody User user) {
-        return service.saveUtilisateur(user.getEmail(), user.getPassword()) ;
+        return service.saveUtilisateur(user.getEmail(), user.getPassword(), user.getRole()) ;
     }
     @GetMapping("/users")
     public List<Utilisateur> getAllUsers() {
@@ -53,4 +54,17 @@ public class ApoRestController {
     public List<Question> getAllQuestions(@RequestParam Cours cours) {
         return service.allQuestions(cours);
     }
+    @GetMapping("/getNombreEtudiantActive")
+    public int NombreUserActive(){
+        return service.NombreEtudiantsActif();
+    }
+    @GetMapping("/getAllForme")
+    public List<Forme> getAllForme(@RequestParam FormeVO formeVO) {
+        return service.getAllForme(formeVO.getIdCours(), formeVO.getIdEtudiant());
+    }
+    @GetMapping("/getAllCoursEtudiants")
+    public List<Cours> getAllCoursEtudiants(@RequestParam int id){
+        return service.getAllCoursEtudiants(id);
+    }
+
 }
