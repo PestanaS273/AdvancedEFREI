@@ -18,4 +18,7 @@ public class Etudiant extends Utilisateur{
     private Long NumEtudiant;
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Cours> cours = new ArrayList<>();
+    @OneToMany(mappedBy = "etudiant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Collection<EtudiantCoursForm> etudiantCoursForms = new ArrayList<>();
+
 }

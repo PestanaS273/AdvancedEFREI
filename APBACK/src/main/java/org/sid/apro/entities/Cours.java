@@ -18,6 +18,9 @@ public class Cours implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Collection<Forme> formes = new ArrayList<>();
+    @OneToMany(mappedBy = "cours", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Collection<EtudiantCoursForm> etudiantCoursForms = new ArrayList<>();
+
 
 
 
