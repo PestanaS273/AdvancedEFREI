@@ -5,7 +5,7 @@ ENV MYSQL_DATABASE=APDATA
 ENV MYSQL_USER=apdata
 ENV MYSQL_PASSWORD=apdata
 
-COPY init.sql /docker-entrypoint-initdb.d/
+COPY ./data/db_aproV5.sql /docker-entrypoint-initdb.d/
 
 
 EXPOSE 3006

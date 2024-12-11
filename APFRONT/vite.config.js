@@ -11,4 +11,10 @@ export default defineConfig({
     host: true, // Permite aceptar conexiones externas
     port: 4173, // Puerto usado en tu Dockerfile
   },
+
+  test: {
+    globals: true,
+},
+
+  
 })

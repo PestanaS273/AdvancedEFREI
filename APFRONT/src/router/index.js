@@ -3,7 +3,7 @@ import store from '../store'
 
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
@@ -18,9 +18,14 @@ const router = createRouter({
       component: () => import('../views/LoginVue.vue'),
       meta: { requiresAuth: false },
       beforeEnter: (to, from, next) => {
-        if (store.getters['user/isAuthenticated']) {
-          next({ name: 'dashboard' });
-        } else {
+        try {
+          if (store.getters['user/isAuthenticated']) {
+            next({ name: 'dashboard' });
+          } else {
+            next();
+          }
+        } catch (error) {
+          console.log("Error: ", error);
           next();
         }
       }
@@ -30,31 +35,51 @@ const router = createRouter({
       name: 'profile',
       component: () => import('../views/profileView.vue'),
       meta: { requiersAuth: true },
-      props: true
+      props: true,
+      beforeEnter: (to, from, next) => {
+        try {
+          if (store.getters['user/isAuthenticated']) {
+            next({ name: 'dashboard' });
+          } else {
+            next();
+          }
+        } catch (error) {
+          console.log("Error: ", error);
+          next();
+        }
+      }
   },
   {
     path: '/dashboard',
     name: 'dashboard',
     meta: { requiresAuth: true },
     beforeEnter: (to, from, next) => {
-      if (store.getters['user/isAuthenticated']) {
-        console.log("User is authenticated");
-        const user = store.getters['user/getUser'];
-        if (user && user.roles && user.roles.length > 0) {
-          const userRole = user.roles[0];
-          console.log(userRole);
-          if (userRole === 'admin') next({ name: 'admin-dashboard' });
-          else if (userRole === 'etudiant') next({ name: 'student-dashboard' });
-          else if (userRole === 'teacher') next({ name: 'teacher-dashboard' });
-          else next({ name: 'login' });
+
+      try {
+        if (store.getters['user/isAuthenticated']) {
+          console.log("User is authenticated");
+          const user = store.getters['user/getUser'];
+          if (user && user.roles && user.roles.length > 0) {
+            const userRole = user.roles[0];
+            console.log(userRole);
+            if (userRole === 'admin') next({ name: 'admin-dashboard' });
+            else if (userRole === 'etudiant') next({ name: 'student-dashboard' });
+            else if (userRole === 'teacher') next({ name: 'teacher-dashboard' });
+            else next({ name: 'login' });
+          } else {
+            next({ name: 'login' });
+          }
         } else {
+          console.log("User is not authenticated");
           next({ name: 'login' });
         }
-      } else {
-        console.log("User is not authenticated");
+
+      } catch (error) {
+        console.log("Error: ", error);
         next({ name: 'login' });
       }
-    }
+      
+    } 
   },
   {
     path: '/admin-dashboard',

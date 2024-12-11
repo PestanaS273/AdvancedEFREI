@@ -1,15 +1,14 @@
 version: '3.8'
 services:
   mysql:
-    image: pestana273/mysql:8.0
+    build: ./APDATABASE
+    # image: pestana273/mysql:8.0
     container_name: mysql-container
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=APDATA
       - MYSQL_USER=apdata
       - MYSQL_PASSWORD=apdata
-    volumes:
-      - ./APDATABASE/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3006:3306"
     networks:
@@ -21,7 +20,8 @@ services:
       retries: 3
     
   backend: 
-    image: pestana273/backend:1
+    build: ./APBACK
+    # image: pestana273/backend:1
     container_name: backend-container
     depends_on:
       - mysql
@@ -35,7 +35,9 @@ services:
       - app-network
 
   frontend:
-    image: pestana273/frontend:1
+    build: ./APFRONT
+
+    # image: pestana273/frontend:1
     container_name: frontend-container
     ports:
       - "4173:4173"
@@ -43,7 +45,8 @@ services:
       - app-network
 
   python-api:
-    image: pestana273/python-api:1
+    build: ./APYTHON
+    # image: pestana273/python-api:1
     container_name: python-api-container
     depends_on:
       - frontend

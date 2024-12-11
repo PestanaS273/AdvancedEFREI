@@ -1,15 +1,15 @@
--- Active: 1728999821499@@localhost@3306-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 04 déc. 2024 à 09:05
+-- Généré le : mer. 04 déc. 2024 à 16:50
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
+CREATE DATABASE IF NOT EXISTS APDATA;
+USE APDATA;
 
-CREATE DATABASE IF NOT EXISTS APDATATEST;
-USE APDATATEST;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -74,10 +74,9 @@ INSERT INTO `cours` (`id`, `nom_cours`) VALUES
 -- Structure de la table `cours_formes`
 --
 
-CREATE TABLE `etudiant_cours_forme` (
+CREATE TABLE `cours_formes` (
   `cours_id` bigint(20) NOT NULL,
-  `formes_id` bigint(20) NOT NULL,
-  `etudiant_id` bigint(20) NOT NULL
+  `formes_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -127,6 +126,19 @@ CREATE TABLE `etudiant_cours` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `etudiant_cours_form`
+--
+
+CREATE TABLE `etudiant_cours_form` (
+  `cours_id` bigint(20) NOT NULL,
+  `etudiant_id` bigint(20) NOT NULL,
+  `forme_id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `fiche_data`
 --
 
@@ -155,21 +167,21 @@ CREATE TABLE `forme` (
 --
 
 INSERT INTO `forme` (`anonyme`, `id`, `question_id`, `reponse_id`) VALUES
-(b'0', 1, 2, NULL),
-(b'0', 2, 5, NULL),
-(b'0', 3, 1, NULL),
-(b'0', 4, 2, NULL),
-(b'0', 5, 5, NULL),
+(b'0', 1, 5, NULL),
+(b'0', 2, 4, NULL),
+(b'0', 3, 3, NULL),
+(b'0', 4, 3, NULL),
+(b'0', 5, 1, NULL),
 (b'0', 6, 2, NULL),
-(b'0', 7, 2, NULL),
-(b'0', 8, 5, NULL),
+(b'0', 7, 4, NULL),
+(b'0', 8, 4, NULL),
 (b'0', 9, 2, NULL),
-(b'0', 10, 1, NULL),
-(b'0', 11, 5, NULL),
-(b'0', 12, 2, NULL),
-(b'0', 13, 3, NULL),
-(b'0', 14, 4, NULL),
-(b'0', 15, 3, NULL);
+(b'0', 10, 2, NULL),
+(b'0', 11, 1, NULL),
+(b'0', 12, 1, NULL),
+(b'0', 13, 5, NULL),
+(b'0', 14, 2, NULL),
+(b'0', 15, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -255,6 +267,7 @@ INSERT INTO `role` (`id`, `role`) VALUES
 
 CREATE TABLE `utilisateur` (
   `date_naissance` date DEFAULT NULL,
+  `get_statut` bit(1) NOT NULL,
   `statut` bit(1) NOT NULL,
   `id` bigint(20) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -269,12 +282,11 @@ CREATE TABLE `utilisateur` (
 -- Déchargement des données de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`date_naissance`, `statut`, `id`, `email`, `image_profile`, `nom`, `num_tel`, `password`, `prenom`) VALUES
-(NULL, b'0', 1, 'user4@gmail.com', NULL, 'user4', '0626374732', '$2a$10$0fN5Te4yLradvNpw5Q.a0.P1sVMVGVjVFOaOdEHqv6L.RD3oxazmO', 'student'),
-(NULL, b'0', 2, 'user2@gmail.com', NULL, 'user2', '0626374762', '$2a$10$7H3e0rwiLVsUQvXEHk9LLOpsGK.As3IKgSUTxb/85EPmAXcUxiRW2', 'student'),
-(NULL, b'0', 3, 'user3@gmail.com', NULL, 'user3', '0626376255', '$2a$10$ZxcBeo1ZYs7IHd0loo3uQua2.eBC13EW1NOuTDkVuT2k5.PC8jvwG', 'student'),
-(NULL, b'0', 4, 'admin@gmail.com', NULL, 'admin', '0626308246', '$2a$10$GtrTK6SGDZLhm.IMpr.JR.9K/1n0KLBBt5JT1gCth2U.Z5brPu6.a', 'admin');
-(NULL, b'0', 5, 'teacher@gmail.com', NULL, 'teacher', '0625208246', '$2a$10$GtrTK6SGDZLhm.IMpr.JR.9K/1n0KLBBt5JT1gCth2U.Z5brPu6.a', 'teacher');
+INSERT INTO `utilisateur` (`date_naissance`, `get_statut`, `statut`, `id`, `email`, `image_profile`, `nom`, `num_tel`, `password`, `prenom`) VALUES
+(NULL, b'0', b'1', 1, 'user9@gmail.com', NULL, NULL, NULL, '$2a$10$epKSomMVjOFDXS8KOGa7XedVMhx90y1h3kqOyun3qicFkyB4IVVz.', NULL),
+(NULL, b'0', b'1', 2, 'user2@gmail.com', NULL, NULL, NULL, '$2a$10$6hAiy/DRPhoz3NyTydOVEu420dCbnV.seq1Xwyme7BEiwH5zDTyja', NULL),
+(NULL, b'0', b'1', 3, 'user3@gmail.com', NULL, NULL, NULL, '$2a$10$oe30JPKkK6kafWt8XU5YkOmwc35KaQStrQjAgx9rPe6jpGiOS9yRq', NULL),
+(NULL, b'0', b'1', 4, 'admin@gmail.com', NULL, NULL, NULL, '$2a$10$6NYCv3UeNhAt0zUmCPrNV.I4R4JGls1O6rZUT2bPZWyHbMHKM13HK', NULL);
 
 -- --------------------------------------------------------
 
@@ -292,12 +304,7 @@ CREATE TABLE `utilisateur_roles` (
 --
 
 INSERT INTO `utilisateur_roles` (`roles_id`, `utilisateur_id`) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4),
 (3, 4);
-(2, 5);
 
 --
 -- Index pour les tables déchargées
@@ -342,6 +349,15 @@ ALTER TABLE `etudiant`
 ALTER TABLE `etudiant_cours`
   ADD KEY `FK8xoxpcrl5quoan1pdgv8mvrdi` (`cours_id`),
   ADD KEY `FKqtsuuvn21mdkme0gwu7cp0dyd` (`etudiant_id`);
+
+--
+-- Index pour la table `etudiant_cours_form`
+--
+ALTER TABLE `etudiant_cours_form`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKjtmp78dctvw71n19qqj9c75j7` (`cours_id`),
+  ADD KEY `FKd30t2risinfg48l691f0j6qmy` (`etudiant_id`),
+  ADD KEY `FKt9pb74a9irahwnmhx0vcosdl` (`forme_id`);
 
 --
 -- Index pour la table `fiche_data`
@@ -411,6 +427,12 @@ ALTER TABLE `utilisateur_roles`
 --
 ALTER TABLE `cours`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT pour la table `etudiant_cours_form`
+--
+ALTER TABLE `etudiant_cours_form`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `fiche_data`
@@ -486,6 +508,14 @@ ALTER TABLE `etudiant_cours`
   ADD CONSTRAINT `FKqtsuuvn21mdkme0gwu7cp0dyd` FOREIGN KEY (`etudiant_id`) REFERENCES `etudiant` (`id`);
 
 --
+-- Contraintes pour la table `etudiant_cours_form`
+--
+ALTER TABLE `etudiant_cours_form`
+  ADD CONSTRAINT `FKd30t2risinfg48l691f0j6qmy` FOREIGN KEY (`etudiant_id`) REFERENCES `etudiant` (`id`),
+  ADD CONSTRAINT `FKjtmp78dctvw71n19qqj9c75j7` FOREIGN KEY (`cours_id`) REFERENCES `cours` (`id`),
+  ADD CONSTRAINT `FKt9pb74a9irahwnmhx0vcosdl` FOREIGN KEY (`forme_id`) REFERENCES `forme` (`id`);
+
+--
 -- Contraintes pour la table `forme`
 --
 ALTER TABLE `forme`
@@ -511,18 +541,6 @@ ALTER TABLE `intervenant_cours`
 ALTER TABLE `utilisateur_roles`
   ADD CONSTRAINT `FK9lop304xtodorgho9w56lpjhn` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateur` (`id`),
   ADD CONSTRAINT `FKgvjufa2i7moss3i9eh2i9yoaq` FOREIGN KEY (`roles_id`) REFERENCES `role` (`id`);
-
-
-ALTER TABLE `etudiant_cours_forme`
-  ADD KEY `FK_cours` (`cours_id`),
-  ADD KEY `FK_formes` (`formes_id`),
-  ADD KEY `FK_etudiant` (`etudiant_id`);
-
-ALTER TABLE `etudiant_cours_forme`
-  ADD CONSTRAINT `FK_cours` FOREIGN KEY (`cours_id`) REFERENCES `cours` (`id`),
-  ADD CONSTRAINT `FK_formes` FOREIGN KEY (`formes_id`) REFERENCES `forme` (`id`),
-  ADD CONSTRAINT `FK_etudiant` FOREIGN KEY (`etudiant_id`) REFERENCES `etudiant` (`id`);
-
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
