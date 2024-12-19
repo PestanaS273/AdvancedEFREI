@@ -16,9 +16,16 @@ import java.util.Collection;
 public class Etudiant extends Utilisateur{
     private Boolean etat;
     private Long NumEtudiant;
-    @ManyToMany(fetch = FetchType.EAGER)
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "etudiant_cours", // Table de jointure
+            joinColumns = @JoinColumn(name = "etudiant_id"),
+            inverseJoinColumns = @JoinColumn(name = "cours_id")
+    )
     private Collection<Cours> cours = new ArrayList<>();
-    @OneToMany(mappedBy = "etudiant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "etudiant", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<EtudiantCoursForm> etudiantCoursForms = new ArrayList<>();
 
 }

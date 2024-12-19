@@ -185,22 +185,29 @@ public class AproInitServiceImpl implements IAproIniService{
         List<Cours> cours = coursRepository.findAll();
         return cours;
     }
-
+    @Transactional
     @Override
     public void initCours() {
         Stream.of("Spring boot basics", "Advanced JPA", "RESTful APIs", "Microservices Architecture", "Hibernate Deep Dive")
-                .forEach(cours -> {
+                .forEach(coursName -> {
+                    // Créer et sauvegarder un cours
                     Cours newCours = new Cours();
-                    newCours.setNomCours(cours);
+                    newCours.setNomCours(coursName);
                     coursRepository.save(newCours);
-                    /*Utilisateur etudiant = etudiantRepository.findByEmail("user4@gmail.com");;
-                    System.out.println("je suis l'etudiant: "+ etudiant.getNom());
-                    if(etudiant != null){
-                        ((Etudiant) etudiant).getCours().add(newCours);
+
+                    // Rechercher l'étudiant dans la base
+                    Etudiant etudiant = (Etudiant) etudiantRepository.findByEmail("user9@gmail.com");
+                    if (etudiant != null) {
+                        // Ajouter le cours à l'étudiant et vice-versa
+                        etudiant.getCours().add(newCours);
+                        newCours.getEtudiants().add(etudiant);
+
+                        // Sauvegarder les deux entités
                         utilisateurRepository.save(etudiant);
                         coursRepository.save(newCours);
-                    } else throw new RuntimeException("etudiant not found");*/
-
+                    } else {
+                        throw new RuntimeException("Etudiant not found");
+                    }
                 });
     }
 
