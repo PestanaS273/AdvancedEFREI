@@ -196,19 +196,21 @@ public class AproInitServiceImpl implements IAproIniService{
                     coursRepository.save(newCours);
 
                     // Rechercher l'étudiant dans la base
-                    Etudiant etudiant = (Etudiant) etudiantRepository.findByEmail("user9@gmail.com");
-                    if (etudiant != null) {
-                        // Ajouter le cours à l'étudiant et vice-versa
-                        etudiant.getCours().add(newCours);
-                        newCours.getEtudiants().add(etudiant);
+                    etudiantRepository.findAll().forEach(etudiant -> {
+                        if (etudiant != null) {
+                            // Ajouter le cours à l'étudiant et vice-versa
+                            etudiant.getCours().add(newCours);
+                            newCours.getEtudiants().add(etudiant);
 
-                        // Sauvegarder les deux entités
-                        utilisateurRepository.save(etudiant);
-                        coursRepository.save(newCours);
-                    } else {
-                        throw new RuntimeException("Etudiant not found");
-                    }
+                            // Sauvegarder les deux entités
+                            utilisateurRepository.save(etudiant);
+                            coursRepository.save(newCours);
+                        } else {
+                            throw new RuntimeException("Etudiant not found");
+                        }
+                    });
                 });
+
     }
 
     @Override
