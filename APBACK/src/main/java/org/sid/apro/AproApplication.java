@@ -22,7 +22,7 @@ public class AproApplication {
     BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+/*
     @Bean
     CommandLineRunner start(IAproIniService aproIniService) {
         return args -> {
@@ -45,7 +45,7 @@ public class AproApplication {
             aproIniService.initFormes();
         };
 
-    }
+    }*/
 
 
 
