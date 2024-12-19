@@ -19,6 +19,7 @@ public class Forme implements Serializable {
     @ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.MERGE)
     private Reponse reponse;
     @OneToMany(mappedBy = "forme", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Collection<EtudiantCoursForm> etudiantCoursForms = new ArrayList<>();
 
 

@@ -8,6 +8,7 @@ import org.sid.apro.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -59,12 +60,16 @@ public class ApoRestController {
         return service.NombreEtudiantsActif();
     }
     @GetMapping("/getAllForme")
-    public List<Forme> getAllForme(@RequestParam FormeVO formeVO) {
-        return service.getAllForme(formeVO.getIdCours(), formeVO.getIdEtudiant());
+    public List<Forme> getAllForme(@RequestParam int idCours, @RequestParam int idStudent) {
+        return service.getAllForme(idCours, idStudent);
     }
     @GetMapping("/getAllCoursEtudiants")
     public List<Cours> getAllCoursEtudiants(@RequestParam int id){
         return service.getAllCoursEtudiants(id);
+    }
+    @PostMapping("/saveReponse")
+    public ArrayList<Forme> saveReponse(@RequestBody FormeVO formeVO){
+        return service.saveQuestion(formeVO);
     }
 
 }

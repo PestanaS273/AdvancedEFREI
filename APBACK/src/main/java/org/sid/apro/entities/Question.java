@@ -1,5 +1,6 @@
 package org.sid.apro.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,5 +14,6 @@ public class Question implements Serializable {
     private long id;
     private String question;
     @OneToMany(mappedBy="question")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Collection<Forme> formes;
 }

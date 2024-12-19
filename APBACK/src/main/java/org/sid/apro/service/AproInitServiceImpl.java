@@ -3,6 +3,7 @@ package org.sid.apro.service;
 import jakarta.transaction.Transactional;
 import org.sid.apro.dao.*;
 import org.sid.apro.entities.*;
+import org.sid.apro.vo.FormeVO;
 import org.sid.apro.vo.ReponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,8 +40,7 @@ public class AproInitServiceImpl implements IAproIniService{
     private IntervenantRepository intervenantRepository;
     @Autowired
     private QuestionRepository questionRepository;
-
-
+    private ArrayList<Forme> formes;
 
 
     @Override
@@ -300,6 +300,26 @@ public class AproInitServiceImpl implements IAproIniService{
             }
         });
         return formes;
+    }
+
+    @Override
+    public ArrayList<Forme> saveQuestion(FormeVO formeVO) {
+        Etudiant etudiant = etudiantRepository.findById(formeVO.getIdEtudiant());
+        // tous les cours d'un étudiant!
+        ArrayList<Cours> cours = (ArrayList<Cours>) getAllCoursEtudiants(formeVO.getIdEtudiant());
+        cours.forEach(cour -> {
+                Question question = questionRepository.findByQuestion(formeVO.getQuestion());
+                System.out.println("la question est: "+question.getQuestion());
+                long idQuestion = question.getId();
+                System.out.println("l'id de la question: "+idQuestion);
+                Reponse reponse = new Reponse();
+                reponse.setReponse(formeVO.getReponse());
+                List<Forme> forme = formRepository.findByQuestion(question);
+                forme.get(0).setReponse(reponse);
+                formRepository.save(forme.get(0));
+        });
+
+        return null;
     }
 
 

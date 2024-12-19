@@ -26,6 +26,7 @@ public class Etudiant extends Utilisateur{
     private Collection<Cours> cours = new ArrayList<>();
 
     @OneToMany(mappedBy = "etudiant", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Collection<EtudiantCoursForm> etudiantCoursForms = new ArrayList<>();
 
 }
