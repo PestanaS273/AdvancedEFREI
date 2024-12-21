@@ -37,6 +37,7 @@ public interface IAproIniService {
     public List<Cours> getAllCoursEtudiants(long idEtudiant);
     public List<Forme> getAllForme(long idCours, long idEtudiant);
     public ArrayList<Forme> saveQuestion(FormeVO formeVO);
+    public Etudiant getEtudiantFromResponse(long idForme, long idResponse);
 
 
 

@@ -3,6 +3,7 @@ package org.sid.apro.web;
 import jakarta.transaction.Transactional;
 import org.sid.apro.entities.*;
 import org.sid.apro.service.IAproIniService;
+import org.sid.apro.vo.EtudiantReponseVO;
 import org.sid.apro.vo.FormeVO;
 import org.sid.apro.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,10 @@ public class ApoRestController {
     @PostMapping("/saveReponse")
     public ArrayList<Forme> saveReponse(@RequestBody FormeVO formeVO){
         return service.saveQuestion(formeVO);
+    }
+    @GetMapping("/getEtudiantByReponse")
+    public Etudiant getEtudiantFromReponse(@RequestParam long idForme, @RequestParam long idResponse){
+        return service.getEtudiantFromResponse(idForme, idResponse);
     }
 
 }

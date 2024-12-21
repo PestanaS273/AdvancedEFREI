@@ -21,6 +21,8 @@ public class Forme implements Serializable {
     @OneToMany(mappedBy = "forme", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Collection<EtudiantCoursForm> etudiantCoursForms = new ArrayList<>();
+    @ManyToOne
+    private Etudiant etudiant;
 
 
 }

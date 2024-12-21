@@ -18,6 +18,7 @@ public class Etudiant extends Utilisateur{
     private Long NumEtudiant;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinTable(
             name = "etudiant_cours", // Table de jointure
             joinColumns = @JoinColumn(name = "etudiant_id"),
