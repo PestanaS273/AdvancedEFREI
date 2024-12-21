@@ -13,4 +13,7 @@ import lombok.*;
 public class FormeVO {
     private long idEtudiant;
     private long idCours;
+    private long idForme;
+    private String question;
+    private String reponse;
 }

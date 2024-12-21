@@ -3,23 +3,23 @@ package org.sid.apro.service;
 import jakarta.transaction.Transactional;
 import org.sid.apro.dao.*;
 import org.sid.apro.entities.*;
+import org.sid.apro.vo.FormeVO;
 import org.sid.apro.vo.ReponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 
 @Service
 @Transactional
 @CrossOrigin("*")
-public class AproInitServiceImpl implements IAproIniService{
+public class AproInitServiceImpl implements IAproIniService {
 
     @Autowired
     private UtilisateurRepository utilisateurRepository;
@@ -41,26 +41,51 @@ public class AproInitServiceImpl implements IAproIniService{
     private IntervenantRepository intervenantRepository;
     @Autowired
     private QuestionRepository questionRepository;
-
-
+    private ArrayList<Forme> formes;
 
 
     @Override
     public Utilisateur saveUtilisateur(String email, String password, String role) {
-        Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
-        if(utilisateur != null) throw new RuntimeException("Utilisateur exist");
-        Utilisateur newUtilisateur = new Utilisateur();
-        newUtilisateur.setEmail(email);
-        //Utilisateur newUtilisateur =  utilisateurRepository.findByEmail(email);
-        newUtilisateur.setPassword(bCryptPasswordEncoder.encode(password));
-        newUtilisateur.setStatut(true);
-        utilisateurRepository.save(newUtilisateur);
-        if(role == null){
-            addRoleToUser(email,"etudiant");
-        }else {
-            addRoleToUser(email,role);
+        // Vérifiez si l'utilisateur existe déjà par son email
+        Utilisateur existingUtilisateur = utilisateurRepository.findByEmail(email);
+        if (existingUtilisateur != null) {
+            throw new RuntimeException("L'utilisateur avec cet email existe déjà !");
         }
-        return newUtilisateur;
+        if (role != null && role.equalsIgnoreCase("etudiant")) {
+            Etudiant etudiant = new Etudiant();
+            etudiant.setEmail(email);
+            etudiant.setPassword(bCryptPasswordEncoder.encode(password));
+            etudiant.setStatut(true);
+            etudiant.setEtat(true); // Par défaut, actif
+            //etudiant.setNumEtudiant(utilisateur.getId());
+            // Sauvegarder l'étudiant
+            etudiantRepository.save(etudiant);
+            addRoleToUser(email, "etudiant");
+            return etudiant;
+        } else {
+            Admin admin = adminRepository.findByEmail(email);
+            if (admin != null) throw new RuntimeException("Admin exist");
+            Admin newAdmin = new Admin();
+            newAdmin.setEmail(email);
+            newAdmin.setStatut(true);
+            utilisateurRepository.save(newAdmin);
+            addRoleToUser(email, "admin");
+            return newAdmin;
+        }
+    }
+
+    @Override
+    public void createEtudiant(String email, String password, String role) {
+        // Créer l'entité Étudiant
+        Etudiant etudiant = new Etudiant();
+        etudiant.setEmail(email);
+        etudiant.setPassword(bCryptPasswordEncoder.encode(password));
+        etudiant.setStatut(true);
+        etudiant.setEtat(true); // Par défaut, actif
+        //etudiant.setNumEtudiant(utilisateur.getId());
+        // Sauvegarder l'étudiant
+        etudiantRepository.save(etudiant);
+        addRoleToUser(email, "etudiant");
     }
 
     @Override
@@ -83,13 +108,13 @@ public class AproInitServiceImpl implements IAproIniService{
 
     @Override
     public void inscrireAdmin(String email) {
-        Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
-        if(utilisateur != null) throw new RuntimeException("Utilisateur exist");
-        Utilisateur newUtilisateur = new Utilisateur();
-        newUtilisateur.setEmail(email);
-        newUtilisateur.setStatut(true);
-        utilisateurRepository.save(newUtilisateur);
-        addRoleToUser(email,"admin");
+        Admin admin = adminRepository.findByEmail(email);
+        if (admin != null) throw new RuntimeException("Admin exist");
+        Admin newAdmin = new Admin();
+        newAdmin.setEmail(email);
+        newAdmin.setStatut(true);
+        utilisateurRepository.save(newAdmin);
+        addRoleToUser(email, "admin");
 
     }
 
@@ -102,8 +127,8 @@ public class AproInitServiceImpl implements IAproIniService{
     @Override
     public boolean CheckEmailExist(String email) {
         Utilisateur user = utilisateurRepository.findByEmail(email);
-        if(user.isStatut())  throw new RuntimeException("Utilisateur Already Active");
-        if(user == null) throw new RuntimeException("Utilisateur null");
+        if (user.isStatut()) throw new RuntimeException("Utilisateur exist");
+        if (user == null) throw new RuntimeException("Utilisateur null");
         return true;
     }
 
@@ -134,7 +159,7 @@ public class AproInitServiceImpl implements IAproIniService{
     @Override
     public Admin getAdminByEmail(String email) {
         Admin admin = adminRepository.findByEmail(email);
-        if(admin == null) throw new RuntimeException("Utilisateur n'exist pas");
+        if (admin == null) throw new RuntimeException("Utilisateur n'exist pas");
         return admin;
     }
 
@@ -162,21 +187,32 @@ public class AproInitServiceImpl implements IAproIniService{
         return cours;
     }
 
+    @Transactional
     @Override
     public void initCours() {
         Stream.of("Spring boot basics", "Advanced JPA", "RESTful APIs", "Microservices Architecture", "Hibernate Deep Dive")
-                .forEach(cours -> {
+                .forEach(coursName -> {
+                    // Créer et sauvegarder un cours
                     Cours newCours = new Cours();
-                    newCours.setNomCours(cours);
-                    Etudiant etudiant = etudiantRepository.findByEmail("user4@gmail.com");;
-                    System.out.println("je suis l'etudiant: "+ etudiant.getNom());
-                    if(etudiant != null){
-                        etudiant.getCours().add(newCours);
-                        etudiantRepository.save(etudiant);
-                        coursRepository.save(newCours);
-                    } else throw new RuntimeException("etudiant not found");
+                    newCours.setNomCours(coursName);
+                    coursRepository.save(newCours);
 
+                    // Rechercher l'étudiant dans la base
+                    etudiantRepository.findAll().forEach(etudiant -> {
+                        if (etudiant != null) {
+                            // Ajouter le cours à l'étudiant et vice-versa
+                            etudiant.getCours().add(newCours);
+                            newCours.getEtudiants().add(etudiant);
+
+                            // Sauvegarder les deux entités
+                            utilisateurRepository.save(etudiant);
+                            coursRepository.save(newCours);
+                        } else {
+                            throw new RuntimeException("Etudiant not found");
+                        }
+                    });
                 });
+
     }
 
     @Override
@@ -190,7 +226,7 @@ public class AproInitServiceImpl implements IAproIniService{
                 });
     }
 
- /*   @Override
+    @Override
     public void initFormes() {
         coursRepository.findAll().forEach(cours -> {
             for (int i = 0; i < 3; i++) { // 3 formes par cours
@@ -209,12 +245,12 @@ public class AproInitServiceImpl implements IAproIniService{
                 }
 
                 formRepository.save(forme);
-                cours.getFormes().add(forme); // Associer la forme au cours
+                cours.getFormes().add(forme);
             }
-            coursRepository.save(cours); // Sauvegarder le cours avec ses formes
+            coursRepository.save(cours);
         });
     }
-*/
+
     @Override
     public Reponse saveReponse(ReponseVO reponseVO) {
         return null;
@@ -225,18 +261,20 @@ public class AproInitServiceImpl implements IAproIniService{
         List<Utilisateur> etudiantsActive = new ArrayList<>();
         int c = 0;
         for (Utilisateur e : utilisateurRepository.findAll()) {
-            System.out.println("mon c'est le role :"+e.getRoles());
+            System.out.println("mon c'est le role :" + e.getRoles());
             Role role = e.getRoles().iterator().next();
             String r = role.getRole();
             System.out.println(r);
-            if(r.equals("etudiant")){
+            if (r.equals("etudiant")) {
                 System.out.println(e.isStatut());
-                if(e.isStatut()){etudiantsActive.add(e);}
+                if (e.isStatut()) {
+                    etudiantsActive.add(e);
+                }
             }
         }
         c = etudiantsActive.size();
         return c;
-        }
+    }
 
     @Override
     public List<Cours> getAllCours(long idIntervenant) {
@@ -259,13 +297,49 @@ public class AproInitServiceImpl implements IAproIniService{
         List<Forme> formes = new ArrayList<>();
         Etudiant etudiant = etudiantRepository.findById(idEtudiant);
         etudiant.getCours().forEach(cours -> {
-            if(idCours == cours.getId()){
+            if (idCours == cours.getId()) {
                 cours.getFormes().forEach(forme -> {
                     formes.add(forme);
                 });
             }
         });
         return formes;
+    }
+
+    @Override
+    public ArrayList<Forme> saveQuestion(FormeVO formeVO) {
+        Etudiant etudiant = etudiantRepository.findById(formeVO.getIdEtudiant());
+        // tous les cours d'un étudiant!
+        ArrayList<Cours> cours = (ArrayList<Cours>) getAllCoursEtudiants(formeVO.getIdEtudiant());
+        //cours.forEach(cour -> {
+        Question question = questionRepository.findByQuestion(formeVO.getQuestion());
+        System.out.println("la question est: " + question.getQuestion());
+        long idQuestion = question.getId();
+        System.out.println("l'id de la question: " + idQuestion);
+        Reponse reponse = new Reponse();
+        reponse.setReponse(formeVO.getReponse());
+        Forme forme = formRepository.findByIdAndQuestion(formeVO.getIdForme(), idQuestion);
+        if (forme == null) throw new RuntimeException("Forme null");
+        forme.setEtudiant(etudiant);
+        forme.setReponse(reponse);
+        formRepository.save(forme);
+        //});
+
+        return null;
+    }
+
+    @Override
+    public Etudiant getEtudiantFromResponse(long idForme, long idResponse) {
+        Reponse reponse = reponseRepository.findById(idResponse).orElse(null);
+        if (reponse != null) {
+            List<Forme> formes = reponse.getFormes().stream().filter(forme -> idForme == forme.getId()).toList();
+            if (formes != null && formes.size() > 0) {
+                Forme forme = formes.get(0);
+                return forme.getEtudiant();
+            }
+        }
+
+        return null;
     }
 
 

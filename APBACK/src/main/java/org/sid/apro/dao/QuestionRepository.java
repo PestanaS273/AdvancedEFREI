@@ -8,5 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @RepositoryRestResource
 @CrossOrigin("*")
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-    Question findById(long id);
+    //Question findById(long id);
+    Question findByQuestion(String question);
+
 }
