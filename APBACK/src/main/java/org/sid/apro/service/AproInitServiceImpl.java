@@ -314,9 +314,9 @@ public class AproInitServiceImpl implements IAproIniService{
                 System.out.println("l'id de la question: "+idQuestion);
                 Reponse reponse = new Reponse();
                 reponse.setReponse(formeVO.getReponse());
-                List<Forme> forme = formRepository.findByQuestion(question);
-                forme.get(0).setReponse(reponse);
-                formRepository.save(forme.get(0));
+                Forme forme = formRepository.findByIdAndQuestion(formeVO.getIdForme(), question);
+                forme.setReponse(reponse);
+                formRepository.save(forme);
         });
 
         return null;

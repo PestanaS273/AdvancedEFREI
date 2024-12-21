@@ -14,5 +14,7 @@ import java.util.Optional;
 public interface FormRepository extends JpaRepository<Forme, Long> {
     Forme findById(long id);
     List<Forme> findByQuestion(Question question);
+    Forme findByIdAndQuestion(long id, Question question);
+
 
 }
