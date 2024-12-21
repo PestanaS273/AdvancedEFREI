@@ -23,6 +23,11 @@ public class ApoRestController {
     public Utilisateur saveUser(@RequestBody User user) {
         return service.saveUtilisateur(user.getEmail(), user.getPassword(), user.getRole()) ;
     }
+    @PostMapping("/create")
+    public Utilisateur createUser(@RequestBody User user) {
+        return service.createEtudiant(user.getEmail(), user.getPassword(), user.getRole());
+    }
+
     @GetMapping("/users")
     public List<Utilisateur> getAllUsers() {
         return service.getAllUtilisateurs();

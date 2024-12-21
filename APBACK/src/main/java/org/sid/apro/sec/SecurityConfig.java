@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/checkEmailExist/**").permitAll()
-                        .requestMatchers("/login/**", "/inscrire/**", "/forgot_password/**", "/resetPassword/**", "/checkEmailExist/**").permitAll()
+                        .requestMatchers("/login/**", "/inscrire/**", "/forgot_password/**", "/resetPassword/**", "/checkEmailExist/**", "/create/**").permitAll()
                         .requestMatchers("/Utilisateur/**", "/Medecin/**", "/initCreneau/**").hasAuthority("etudiant")
                         .requestMatchers("/afficherCreneau/**", "/listMedecins/**").hasAuthority("etudiant")
                         .anyRequest().authenticated()
