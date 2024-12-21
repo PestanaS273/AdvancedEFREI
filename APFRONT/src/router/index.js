@@ -39,9 +39,9 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         try {
           if (store.getters['user/isAuthenticated']) {
-            next({ name: 'dashboard' });
-          } else {
             next();
+          } else {
+            next({ name: 'login' });
           }
         } catch (error) {
           console.log("Error: ", error);

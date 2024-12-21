@@ -50,7 +50,8 @@ export default {
       console.log(email)
       const user = {
         email: email,
-        password: this.newPassword
+        password: this.newPassword,
+        role: 'etudiant'
       }
       console.log(user)
       try {
