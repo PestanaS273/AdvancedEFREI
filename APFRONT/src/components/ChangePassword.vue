@@ -54,7 +54,7 @@ export default {
       }
       console.log(user)
       try {
-        const response = await utilisateurServices.inscrire(user)
+        const response = await utilisateurServices.create(user)
         console.log(response)
         this.$emit('change-component', 'LoginForm')
       } catch (error) {

@@ -48,6 +48,9 @@ public class AproInitServiceImpl implements IAproIniService {
     public Utilisateur saveUtilisateur(String email, String password, String role) {
         // Vérifiez si l'utilisateur existe déjà par son email
         Utilisateur existingUtilisateur = utilisateurRepository.findByEmail(email);
+//        if (existingUtilisateur != null) {
+//            throw new RuntimeException("L'utilisateur avec cet email existe déjà !");
+//        }
         if (role != null && role.equalsIgnoreCase("etudiant")) {
             Etudiant etudiant = new Etudiant();
             etudiant.setEmail(email);
@@ -73,18 +76,18 @@ public class AproInitServiceImpl implements IAproIniService {
 
     @Override
     public Etudiant createEtudiant(String email, String password, String role) {
-        // Créer l'entité Étudiant
-        Etudiant etudiant = etudiantRepository.findByEmail(email);
-        //etudiant.setEmail(email);
-        etudiant.setPassword(bCryptPasswordEncoder.encode(password));
-        etudiant.setStatut(true);
-        etudiant.setEtat(true); // Par défaut, actif
-        //etudiant.setNumEtudiant(utilisateur.getId());
-        // Sauvegarder l'étudiant
-        etudiantRepository.save(etudiant);
-        addRoleToUser(email, "etudiant");
-        return etudiant;
-    }
+        //Créer l'entité Étudiant
+         Etudiant etudiant = etudiantRepository.findByEmail(email);
+         etudiant.setEmail(email);
+         etudiant.setPassword(bCryptPasswordEncoder.encode(password));
+         etudiant.setStatut(true);
+         etudiant.setEtat(true);
+         // Par défaut, actif
+         //etudiant.setNumEtudiant(utilisateur.getId());
+         // Sauvegarder l'étudiant
+         etudiantRepository.save(etudiant);
+         addRoleToUser(email, "etudiant");
+         return etudiant;}
 
     @Override
     public Role saveRole(Role role) {
@@ -125,6 +128,7 @@ public class AproInitServiceImpl implements IAproIniService {
     @Override
     public boolean CheckEmailExist(String email) {
         Utilisateur user = utilisateurRepository.findByEmail(email);
+//        if (user.isStatut()) throw new RuntimeException("Utilisateur exist");
         if (user == null) throw new RuntimeException("Utilisateur null");
         return true;
     }

@@ -15,6 +15,12 @@ const inscrire = async (user) => {
     return response.data;
 }
 
+const create = async (user) => {
+    console.log(user);
+    const response = await apiClient.post('/create', user);
+    return response.data;
+}
+
 const getAllStudents = async () => {
     const response = await apiClient.get('/getAllStudents');
     return response.data;
@@ -48,5 +54,6 @@ export default {
     getAllTeachers,
     getAllAdmin,
     getUser,
+    create,
 
 }
