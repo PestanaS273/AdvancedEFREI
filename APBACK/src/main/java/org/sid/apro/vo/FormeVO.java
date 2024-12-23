@@ -16,4 +16,5 @@ public class FormeVO {
     private long idForme;
     private String question;
     private String reponse;
+    private Boolean anonym;
 }

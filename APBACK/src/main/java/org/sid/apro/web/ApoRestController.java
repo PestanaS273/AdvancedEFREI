@@ -5,6 +5,7 @@ import org.sid.apro.entities.*;
 import org.sid.apro.service.IAproIniService;
 import org.sid.apro.vo.EtudiantReponseVO;
 import org.sid.apro.vo.FormeVO;
+import org.sid.apro.vo.NewFormeVO;
 import org.sid.apro.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -78,8 +79,12 @@ public class ApoRestController {
         return service.saveQuestion(formeVO);
     }
     @GetMapping("/getEtudiantByReponse")
-    public Etudiant getEtudiantFromReponse(@RequestParam long idForme, @RequestParam long idResponse){
-        return service.getEtudiantFromResponse(idForme, idResponse);
+    public Etudiant getEtudiantFromReponse(@RequestParam long idForme){
+        return service.getEtudiantFromResponse(idForme);
+    }
+    @PostMapping("addForme")
+    public Forme addForme(@RequestBody NewFormeVO NewformeVO){
+        return service.createForme(NewformeVO);
     }
 
 }

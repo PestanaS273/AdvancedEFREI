@@ -23,6 +23,8 @@ public class Forme implements Serializable {
     private Collection<EtudiantCoursForm> etudiantCoursForms = new ArrayList<>();
     @ManyToOne
     private Etudiant etudiant;
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+    private Collection<QuestionReponse> questionReponses = new ArrayList<>();
 
 
 }

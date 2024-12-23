@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.sid.apro.dao.*;
 import org.sid.apro.entities.*;
 import org.sid.apro.vo.FormeVO;
+import org.sid.apro.vo.NewFormeVO;
 import org.sid.apro.vo.ReponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,8 @@ public class AproInitServiceImpl implements IAproIniService {
     private IntervenantRepository intervenantRepository;
     @Autowired
     private QuestionRepository questionRepository;
-    private ArrayList<Forme> formes;
+    @Autowired
+    private QuestionReponseRepository questionReponseRepository;
 
 
     @Override
@@ -82,7 +84,7 @@ public class AproInitServiceImpl implements IAproIniService {
         //etudiant.setNumEtudiant(utilisateur.getId());
         // Sauvegarder l'étudiant
         etudiantRepository.save(etudiant);
-        addRoleToUser(email, "etudiant");
+        //addRoleToUser(email, "etudiant");
         return etudiant;
     }
 
@@ -217,9 +219,10 @@ public class AproInitServiceImpl implements IAproIniService {
         Stream.of("What is Spring Boot?", "Explain JPA relationships.", "How to secure a REST API?",
                         "What is a microservice?", "What are HTTP status codes?")
                 .forEach(questionText -> {
-                    Question question = new Question();
+                    QuestionReponse question = new QuestionReponse();
                     question.setQuestion(questionText);
-                    questionRepository.save(question);
+                    question.setReponse(null);
+                    questionReponseRepository.save(question);
                 });
     }
 
@@ -228,7 +231,7 @@ public class AproInitServiceImpl implements IAproIniService {
         coursRepository.findAll().forEach(cours -> {
             for (int i = 0; i < 3; i++) { // 3 formes par cours
                 Forme forme = new Forme();
-
+/*
                 // Associer une question aléatoire
                 Question question = questionRepository.findById((long) (1 + Math.random() * 5)).orElse(null);
                 if (question != null) {
@@ -240,7 +243,9 @@ public class AproInitServiceImpl implements IAproIniService {
                 if (reponse != null) {
                     forme.setReponse(reponse);
                 }
-
+*/
+                QuestionReponse questionReponse = questionReponseRepository.findByQuestionId((long) (1+ Math.random()*5));
+                forme.getQuestionReponses().add(questionReponse);
                 formRepository.save(forme);
                 cours.getFormes().add(forme);
             }
@@ -309,6 +314,7 @@ public class AproInitServiceImpl implements IAproIniService {
         // tous les cours d'un étudiant!
         ArrayList<Cours> cours = (ArrayList<Cours>) getAllCoursEtudiants(formeVO.getIdEtudiant());
         //cours.forEach(cour -> {
+        /*
         Question question = questionRepository.findByQuestion(formeVO.getQuestion());
         System.out.println("la question est: " + question.getQuestion());
         long idQuestion = question.getId();
@@ -320,13 +326,21 @@ public class AproInitServiceImpl implements IAproIniService {
         forme.setEtudiant(etudiant);
         forme.setReponse(reponse);
         formRepository.save(forme);
-        //});
-
+        //});*/
+        QuestionReponse questionReponse = new QuestionReponse();
+        questionReponse.setQuestion(formeVO.getQuestion());
+        questionReponse.setReponse(formeVO.getReponse());
+        questionReponseRepository.save(questionReponse);
+        Forme forme = formRepository.findById(formeVO.getIdForme());
+        forme.getQuestionReponses().add(questionReponse);
+        formRepository.save(forme);
         return null;
     }
 
+
     @Override
-    public Etudiant getEtudiantFromResponse(long idForme, long idResponse) {
+    public Etudiant getEtudiantFromResponse(long idForme) {
+        /*
         Reponse reponse = reponseRepository.findById(idResponse).orElse(null);
         if (reponse != null) {
             List<Forme> formes = reponse.getFormes().stream().filter(forme -> idForme == forme.getId()).toList();
@@ -335,8 +349,30 @@ public class AproInitServiceImpl implements IAproIniService {
                 return forme.getEtudiant();
             }
         }
+        */
+        Forme forme = formRepository.findById(idForme);
+        if (forme == null) throw new RuntimeException("Forme not found");
+        System.out.println("mon etudiant est : "+forme.getEtudiant());
+        Etudiant etudiant = forme.getEtudiant();
 
-        return null;
+
+        return etudiant;
+    }
+
+    @Override
+    public Forme createForme(NewFormeVO newFormeVO) {
+        ArrayList<String> questions = (ArrayList<String>) newFormeVO.getQuestions();
+        Forme forme = new Forme();
+        questions.forEach(question -> {
+           QuestionReponse questionReponse = new QuestionReponse();
+           questionReponse.setQuestion(question);
+           questionReponse.setReponse(null);
+           questionReponseRepository.save(questionReponse);
+           forme.getQuestionReponses().add(questionReponse);
+        });
+        formRepository.save(forme);
+        return forme;
+
     }
 
 

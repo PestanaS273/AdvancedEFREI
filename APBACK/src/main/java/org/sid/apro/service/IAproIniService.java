@@ -2,6 +2,7 @@ package org.sid.apro.service;
 
 import org.sid.apro.entities.*;
 import org.sid.apro.vo.FormeVO;
+import org.sid.apro.vo.NewFormeVO;
 import org.sid.apro.vo.ReponseVO;
 
 import java.util.ArrayList;
@@ -62,7 +63,9 @@ public interface IAproIniService {
 
     public ArrayList<Forme> saveQuestion(FormeVO formeVO);
 
-    public Etudiant getEtudiantFromResponse(long idForme, long idResponse);
+    public Etudiant getEtudiantFromResponse(long idForme);
+
+    public Forme createForme(NewFormeVO newFormeVO);
 
 
 }
