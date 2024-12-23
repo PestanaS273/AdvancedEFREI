@@ -12,7 +12,7 @@ import java.util.Collection;
 
 @PrimaryKeyJoinColumn(name = "id")
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor @ToString
+@Data @AllArgsConstructor @NoArgsConstructor
 public class Etudiant extends Utilisateur{
     private Boolean etat;
     private Long NumEtudiant;
@@ -24,6 +24,7 @@ public class Etudiant extends Utilisateur{
             joinColumns = @JoinColumn(name = "etudiant_id"),
             inverseJoinColumns = @JoinColumn(name = "cours_id")
     )
+
     private Collection<Cours> cours = new ArrayList<>();
 
     @OneToMany(mappedBy = "etudiant", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

@@ -15,7 +15,7 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 public class Intervenant extends Utilisateur{
     private String Specialiste;
     private String description;

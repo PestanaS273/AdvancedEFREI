@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.sid.apro.dao.*;
 import org.sid.apro.entities.*;
 import org.sid.apro.vo.FormeVO;
+import org.sid.apro.vo.NewFormeVO;
 import org.sid.apro.vo.ReponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,16 +42,14 @@ public class AproInitServiceImpl implements IAproIniService {
     private IntervenantRepository intervenantRepository;
     @Autowired
     private QuestionRepository questionRepository;
-    private ArrayList<Forme> formes;
+    @Autowired
+    private QuestionReponseRepository questionReponseRepository;
 
 
     @Override
     public Utilisateur saveUtilisateur(String email, String password, String role) {
         // Vérifiez si l'utilisateur existe déjà par son email
         Utilisateur existingUtilisateur = utilisateurRepository.findByEmail(email);
-//        if (existingUtilisateur != null) {
-//            throw new RuntimeException("L'utilisateur avec cet email existe déjà !");
-//        }
         if (role != null && role.equalsIgnoreCase("etudiant")) {
             Etudiant etudiant = new Etudiant();
             etudiant.setEmail(email);
@@ -76,18 +75,18 @@ public class AproInitServiceImpl implements IAproIniService {
 
     @Override
     public Etudiant createEtudiant(String email, String password, String role) {
-        //Créer l'entité Étudiant
-         Etudiant etudiant = etudiantRepository.findByEmail(email);
-         etudiant.setEmail(email);
-         etudiant.setPassword(bCryptPasswordEncoder.encode(password));
-         etudiant.setStatut(true);
-         etudiant.setEtat(true);
-         // Par défaut, actif
-         //etudiant.setNumEtudiant(utilisateur.getId());
-         // Sauvegarder l'étudiant
-         etudiantRepository.save(etudiant);
-         addRoleToUser(email, "etudiant");
-         return etudiant;}
+        // Créer l'entité Étudiant
+        Etudiant etudiant = etudiantRepository.findByEmail(email);
+        //etudiant.setEmail(email);
+        etudiant.setPassword(bCryptPasswordEncoder.encode(password));
+        etudiant.setStatut(true);
+        etudiant.setEtat(true); // Par défaut, actif
+        //etudiant.setNumEtudiant(utilisateur.getId());
+        // Sauvegarder l'étudiant
+        etudiantRepository.save(etudiant);
+        //addRoleToUser(email, "etudiant");
+        return etudiant;
+    }
 
     @Override
     public Role saveRole(Role role) {
@@ -128,7 +127,6 @@ public class AproInitServiceImpl implements IAproIniService {
     @Override
     public boolean CheckEmailExist(String email) {
         Utilisateur user = utilisateurRepository.findByEmail(email);
-//        if (user.isStatut()) throw new RuntimeException("Utilisateur exist");
         if (user == null) throw new RuntimeException("Utilisateur null");
         return true;
     }
@@ -221,9 +219,10 @@ public class AproInitServiceImpl implements IAproIniService {
         Stream.of("What is Spring Boot?", "Explain JPA relationships.", "How to secure a REST API?",
                         "What is a microservice?", "What are HTTP status codes?")
                 .forEach(questionText -> {
-                    Question question = new Question();
+                    QuestionReponse question = new QuestionReponse();
                     question.setQuestion(questionText);
-                    questionRepository.save(question);
+                    question.setReponse(null);
+                    questionReponseRepository.save(question);
                 });
     }
 
@@ -232,7 +231,7 @@ public class AproInitServiceImpl implements IAproIniService {
         coursRepository.findAll().forEach(cours -> {
             for (int i = 0; i < 3; i++) { // 3 formes par cours
                 Forme forme = new Forme();
-
+/*
                 // Associer une question aléatoire
                 Question question = questionRepository.findById((long) (1 + Math.random() * 5)).orElse(null);
                 if (question != null) {
@@ -244,7 +243,9 @@ public class AproInitServiceImpl implements IAproIniService {
                 if (reponse != null) {
                     forme.setReponse(reponse);
                 }
-
+*/
+                QuestionReponse questionReponse = questionReponseRepository.findByQuestionId((long) (1+ Math.random()*5));
+                forme.getQuestionReponses().add(questionReponse);
                 formRepository.save(forme);
                 cours.getFormes().add(forme);
             }
@@ -313,6 +314,7 @@ public class AproInitServiceImpl implements IAproIniService {
         // tous les cours d'un étudiant!
         ArrayList<Cours> cours = (ArrayList<Cours>) getAllCoursEtudiants(formeVO.getIdEtudiant());
         //cours.forEach(cour -> {
+        /*
         Question question = questionRepository.findByQuestion(formeVO.getQuestion());
         System.out.println("la question est: " + question.getQuestion());
         long idQuestion = question.getId();
@@ -324,13 +326,22 @@ public class AproInitServiceImpl implements IAproIniService {
         forme.setEtudiant(etudiant);
         forme.setReponse(reponse);
         formRepository.save(forme);
-        //});
-
+        //});*/
+        QuestionReponse questionReponse = new QuestionReponse();
+        questionReponse.setQuestion(formeVO.getQuestion());
+        questionReponse.setReponse(formeVO.getReponse());
+        questionReponseRepository.save(questionReponse);
+        Forme forme = formRepository.findById(formeVO.getIdForme());
+        forme.setEtudiant(etudiant);
+        forme.getQuestionReponses().add(questionReponse);
+        formRepository.save(forme);
         return null;
     }
 
+
     @Override
-    public Etudiant getEtudiantFromResponse(long idForme, long idResponse) {
+    public Etudiant getEtudiantFromResponse(long idForme) {
+        /*
         Reponse reponse = reponseRepository.findById(idResponse).orElse(null);
         if (reponse != null) {
             List<Forme> formes = reponse.getFormes().stream().filter(forme -> idForme == forme.getId()).toList();
@@ -339,8 +350,28 @@ public class AproInitServiceImpl implements IAproIniService {
                 return forme.getEtudiant();
             }
         }
+        */
+        Forme forme = formRepository.findById(idForme);
+        if (forme == null) throw new RuntimeException("Forme not found");
 
-        return null;
+
+        return forme.getEtudiant();
+    }
+
+    @Override
+    public Forme createForme(NewFormeVO newFormeVO) {
+        ArrayList<String> questions = (ArrayList<String>) newFormeVO.getQuestions();
+        Forme forme = new Forme();
+        questions.forEach(question -> {
+           QuestionReponse questionReponse = new QuestionReponse();
+           questionReponse.setQuestion(question);
+           questionReponse.setReponse(null);
+           questionReponseRepository.save(questionReponse);
+           forme.getQuestionReponses().add(questionReponse);
+        });
+        formRepository.save(forme);
+        return forme;
+
     }
 
 
