@@ -12,7 +12,6 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class QuestionReponse implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

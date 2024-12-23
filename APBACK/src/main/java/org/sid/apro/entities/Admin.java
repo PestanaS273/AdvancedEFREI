@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor @ToString
+@Data @AllArgsConstructor @NoArgsConstructor
 @PrimaryKeyJoinColumn(name = "id")
 public class Admin extends Utilisateur{
     @ManyToMany(fetch = FetchType.EAGER)

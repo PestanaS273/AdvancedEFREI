@@ -332,6 +332,7 @@ public class AproInitServiceImpl implements IAproIniService {
         questionReponse.setReponse(formeVO.getReponse());
         questionReponseRepository.save(questionReponse);
         Forme forme = formRepository.findById(formeVO.getIdForme());
+        forme.setEtudiant(etudiant);
         forme.getQuestionReponses().add(questionReponse);
         formRepository.save(forme);
         return null;
@@ -352,11 +353,9 @@ public class AproInitServiceImpl implements IAproIniService {
         */
         Forme forme = formRepository.findById(idForme);
         if (forme == null) throw new RuntimeException("Forme not found");
-        System.out.println("mon etudiant est : "+forme.getEtudiant());
-        Etudiant etudiant = forme.getEtudiant();
 
 
-        return etudiant;
+        return forme.getEtudiant();
     }
 
     @Override

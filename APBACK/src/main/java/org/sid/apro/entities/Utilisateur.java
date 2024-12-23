@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor @ToString
+@Data @AllArgsConstructor @NoArgsConstructor
 public class Utilisateur implements Serializable {
     public boolean getStatut;
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
