@@ -82,7 +82,7 @@ public class ApoRestController {
     public Etudiant getEtudiantFromReponse(@RequestParam long idForme){
         return service.getEtudiantFromResponse(idForme);
     }
-    @PostMapping("addForme")
+    @PostMapping("/addForme")
     public Forme addForme(@RequestBody NewFormeVO NewformeVO){
         return service.createForme(NewformeVO);
     }

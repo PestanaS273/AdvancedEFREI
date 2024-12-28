@@ -74,7 +74,7 @@ export default {
           console.log("Connexion réussie");
 
 
-          this.$router.push("/dashboard");
+          this.$router.push("/");
         }
       } catch (error) {
         console.error("Erreur de connexion :", error);

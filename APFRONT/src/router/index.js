@@ -5,13 +5,13 @@ import store from '../store'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: () => import('../views//HomeView.vue'),
-      meta: { requiersAuth: true },
-      props: true
-    },
+    // {
+    //   path: '/',
+    //   name: 'home',
+    //   component: () => import('../views//HomeView.vue'),
+    //   meta: { requiersAuth: true },
+    //   props: true
+    // },
     {
       path: '/login',
       name: 'login',
@@ -50,7 +50,7 @@ const router = createRouter({
       }
   },
   {
-    path: '/dashboard',
+    path: '/',
     name: 'dashboard',
     meta: { requiresAuth: true },
     beforeEnter: (to, from, next) => {

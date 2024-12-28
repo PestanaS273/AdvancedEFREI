@@ -42,10 +42,17 @@ const getBaseFormTemplate = async () => {
     return response.data;
 }
 
+const addForm = async (form) => {
+    const response = await apiClient.post('/addForme', form);
+    return response.data;
+}
+
 export default {
     getAllForms,
     getFormsForCourse,
     getForm,
     createForm,
-    getBaseFormTemplate
+    getBaseFormTemplate,
+    getFormsForUser,
+    addForm
 }

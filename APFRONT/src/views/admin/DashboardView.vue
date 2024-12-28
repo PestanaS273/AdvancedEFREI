@@ -26,7 +26,7 @@ const { t } = useI18n()
             />
             <StatsCard
                 :title="t('Active Users')"
-                value="350"
+                :value=activeUsers
                 icon="👥"
                 bgColor="bg-purple-500"
             />
@@ -45,6 +45,9 @@ import StatsCard from "../../components/Dashboard/StatsCard.vue";
 import DataTable from "../../components/Dashboard/DataTable.vue";
 import AddForm from '../../components/Dashboard/AddForm.vue';
 import AddUser from '../../components/Dashboard/AddUser.vue';
+import utilisateurServices from '../../services/utilisateur.services';
+
+
 
 
 export default {
@@ -61,8 +64,27 @@ data() {
             { id: 7, title: "Software Architecture", responses: 150, created: "2024-11-01" },
             { id: 8, title: "English", responses: 200, created: "2024-11-05" },
         ],
+        activeUsers: 0,
+
     };
     },
+
+    methods: {
+        async getActiveUsers() {
+            try {
+                const response = await utilisateurServices.getActiveUsers();
+                this.activeUsers = response;
+                console.log(this.activeUsers);
+                
+            } catch (error) {
+                console.error(error);
+            }
+
+        }
+    },
+    created() {
+        this.getActiveUsers();
+    }
 };
 </script>
 

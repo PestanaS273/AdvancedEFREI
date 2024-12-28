@@ -29,7 +29,7 @@ const logout = async () => {
     <header class=" inset-x-0 top-0 z-50">
         <nav class="flex items-center justify-between p-6 lg:px-8 bg-white" aria-label="Global">
           <div class="flex lg:flex-1">
-            <RouterLink to="/dashboard" class="-m-1.5 p-1.5">
+            <RouterLink to="/" class="-m-1.5 p-1.5">
               <span class="sr-only">EFREI</span>
               <img class="h-8 w-auto" src="../assets/efrei_logo.png" alt="" />
             </RouterLink>
@@ -41,9 +41,9 @@ const logout = async () => {
             </button>
           </div>
           <div class="hidden lg:flex lg:gap-x-12">
-            <RouterLink to="/dashboard" class="text-sm/6 font-semibold text-gray-900">{{ t('Dashboard') }}</RouterLink>
-            <RouterLink to="/dashboard" class="text-sm/6 font-semibold text-gray-900">{{ t('Evaluations') }}</RouterLink>
-            <RouterLink to="/dashboard" class="text-sm/6 font-semibold text-gray-900">{{ t('Teachers') }}</RouterLink>
+            <RouterLink to="/" class="text-sm/6 font-semibold text-gray-900">{{ t('Dashboard') }}</RouterLink>
+            <RouterLink to="/" class="text-sm/6 font-semibold text-gray-900">{{ t('Evaluations') }}</RouterLink>
+            <RouterLink to="/" class="text-sm/6 font-semibold text-gray-900">{{ t('Teachers') }}</RouterLink>
             <RouterLink to="/profile" class="text-sm/6 font-semibold text-gray-900">{{ t('Profile') }}</RouterLink>
           </div>
           <div class="hidden lg:flex lg:flex-1 lg:justify-end">

@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import formServices from '../../services/form.services';
 
 const { t } = useI18n();
 
@@ -26,17 +27,27 @@ function removeSupplementaryQuestion(index) {
   supplementaryQuestions.value.splice(index, 1);
 }
 
-function submitForm() {
-  // Lógica para enviar los datos del formulario al backend
+async function submitForm() {
+  const templateQuestions = templates[selectedTemplate.value].map(q => q.question);
+  const allQuestions = [...templateQuestions, ...supplementaryQuestions.value];
+
   const formData = {
     course: document.getElementById('course').value,
-    teacher: document.getElementById('teacher').value,
-    template: selectedTemplate.value,
-    supplementaryQuestions: supplementaryQuestions.value
+    teacher: 10,
+    questions: allQuestions,
+    anonymSurvey: anonymSurvey.value
   };
-  console.log('Form submitted:', formData);
-  // Aquí puedes enviar formData al backend usando una solicitud HTTP
-  toggleAddFormMenu();
+
+  try {
+    const response = await formServices.addForm(formData); 
+    const course = document.getElementById('course').value;
+    console.log('Course:', course);
+    console.log('Form submitted:', response);
+    toggleAddFormMenu();
+  } catch (error) {
+    console.error('Error submitting form:', error);
+  }
+
 }
 
 const templates = {
@@ -120,7 +131,7 @@ const templates = {
                         </div>
                     </div>
                     
-                    <!-- Agrega más campos según sea necesario -->
+
                     <div class="flex justify-end">
                         <button type="button" @click="toggleAddFormMenu" class="mr-4 bg-gray-500 text-white px-4 py-2 rounded-md">{{ t('Cancel') }}</button>
                         <button type="submit" class="bg-indigo-800 text-white px-4 py-2 rounded-md">{{ t('Submit') }}</button>
@@ -166,7 +177,8 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-        }
+        },
+
     },
     async created() {
         this.getAllCours();

@@ -45,6 +45,11 @@ const getUser = async (email) => {
     return response.data;
 }
 
+const getActiveUsers = async () => {
+    const response = await apiClient.get('/getNombreEtudiantActive');
+    return response.data;
+}
+
 
 
 export default {
@@ -55,5 +60,6 @@ export default {
     getAllAdmin,
     getUser,
     create,
+    getActiveUsers,
 
 }
