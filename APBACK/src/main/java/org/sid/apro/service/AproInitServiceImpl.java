@@ -213,6 +213,26 @@ public class AproInitServiceImpl implements IAproIniService {
                 });
 
     }
+/*
+    @Override
+    public int initProf() {
+        Stream.of("Clément@gmail.com", "Mathieu@gmail.com", "Arabi@gmail.com", "Saouane@gmail.com")
+                .forEach(profName -> {
+                    int i = 0;
+                    Utilisateur user = new Utilisateur();
+                    user.setEmail(profName);
+                    utilisateurRepository.save(user);
+                    Intervenant intervenant = new Intervenant();
+                    intervenant.setEmail(profName);
+                    intervenant.getCours().add(coursRepository.findById(i));
+                    intervenantRepository.save(intervenant);
+                    addRoleToUser(profName, "professor");
+                    i++;
+                });
+        return 0;
+    }
+    */
+
 
     @Override
     public void initQuestions() {
@@ -244,7 +264,7 @@ public class AproInitServiceImpl implements IAproIniService {
                     forme.setReponse(reponse);
                 }
 */
-                QuestionReponse questionReponse = questionReponseRepository.findByQuestionId((long) (1+ Math.random()*5));
+                QuestionReponse questionReponse = questionReponseRepository.findByQuestionId((long) (1 + Math.random() * 5));
                 forme.getQuestionReponses().add(questionReponse);
                 formRepository.save(forme);
                 cours.getFormes().add(forme);
@@ -363,11 +383,11 @@ public class AproInitServiceImpl implements IAproIniService {
         ArrayList<String> questions = (ArrayList<String>) newFormeVO.getQuestions();
         Forme forme = new Forme();
         questions.forEach(question -> {
-           QuestionReponse questionReponse = new QuestionReponse();
-           questionReponse.setQuestion(question);
-           questionReponse.setReponse(null);
-           questionReponseRepository.save(questionReponse);
-           forme.getQuestionReponses().add(questionReponse);
+            QuestionReponse questionReponse = new QuestionReponse();
+            questionReponse.setQuestion(question);
+            questionReponse.setReponse(null);
+            questionReponseRepository.save(questionReponse);
+            forme.getQuestionReponses().add(questionReponse);
         });
         formRepository.save(forme);
         return forme;
@@ -398,7 +418,7 @@ public class AproInitServiceImpl implements IAproIniService {
         Cours cours = coursRepository.findById(idCours);
         List<Forme> formes = new ArrayList<>();
         cours.getFormes().forEach(forme -> {
-           formes.add(forme);
+            formes.add(forme);
         });
         return formes;
     }

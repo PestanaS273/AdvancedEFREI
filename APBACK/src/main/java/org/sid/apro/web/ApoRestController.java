@@ -98,5 +98,9 @@ public class ApoRestController {
     public List<Forme> getAllFromsfromCours(@RequestParam long idCours){
         return service.getAllFromsFromCours(idCours);
     }
+    /*@GetMapping("/initProf")
+    public int initProf(){
+        return service.initProf();
+    }*/
 
 }
