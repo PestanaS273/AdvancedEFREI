@@ -86,5 +86,17 @@ public class ApoRestController {
     public Forme addForme(@RequestBody NewFormeVO NewformeVO){
         return service.createForme(NewformeVO);
     }
+    @GetMapping("/getAllEtudiantByCours")
+    public List<Etudiant> getEtudiantFromCours(@RequestParam long idCours){
+        return service.getEtudiantsFromCours(idCours);
+    }
+    @GetMapping("/getAllFoms")
+    public List<Forme> getAllFoms(){
+        return service.getAllFroms();
+    }
+    @GetMapping("/getAllFromsfromCours")
+    public List<Forme> getAllFromsfromCours(@RequestParam long idCours){
+        return service.getAllFromsFromCours(idCours);
+    }
 
 }

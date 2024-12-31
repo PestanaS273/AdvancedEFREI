@@ -374,5 +374,34 @@ public class AproInitServiceImpl implements IAproIniService {
 
     }
 
+    @Override
+    public List<Etudiant> getEtudiantsFromCours(long idCours) {
+        Cours cours = coursRepository.findById(idCours);
+        List<Etudiant> etudiants = new ArrayList<>();
+        cours.getEtudiants().forEach(etudiant -> {
+            etudiants.add(etudiant);
+        });
+        return etudiants;
+    }
+
+    @Override
+    public List<Forme> getAllFroms() {
+        List<Forme> formes = new ArrayList<>();
+        formRepository.findAll().forEach(forme -> {
+            formes.add(forme);
+        });
+        return formes;
+    }
+
+    @Override
+    public List<Forme> getAllFromsFromCours(long idCours) {
+        Cours cours = coursRepository.findById(idCours);
+        List<Forme> formes = new ArrayList<>();
+        cours.getFormes().forEach(forme -> {
+           formes.add(forme);
+        });
+        return formes;
+    }
+
 
 }

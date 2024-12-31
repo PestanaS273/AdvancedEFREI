@@ -67,5 +67,11 @@ public interface IAproIniService {
 
     public Forme createForme(NewFormeVO newFormeVO);
 
+    public List<Etudiant> getEtudiantsFromCours(long idCours);
+
+    public List<Forme> getAllFroms();
+
+    public List<Forme> getAllFromsFromCours(long idCours);
+
 
 }
