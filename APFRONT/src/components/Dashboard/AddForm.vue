@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import formServices from '../../services/form.services';
+import coursServices from '../../services/cours.services';
 
 const { t } = useI18n();
 
@@ -28,25 +29,32 @@ function removeSupplementaryQuestion(index) {
 }
 
 async function submitForm() {
-  const templateQuestions = templates[selectedTemplate.value].map(q => q.question);
-  const allQuestions = [...templateQuestions, ...supplementaryQuestions.value];
+    const templateQuestions = templates[selectedTemplate.value].map(q => q.question);
+    const allQuestions = [...templateQuestions, ...supplementaryQuestions.value];
 
-  const formData = {
-    course: document.getElementById('course').value,
-    teacher: 10,
-    questions: allQuestions,
-    anonymSurvey: anonymSurvey.value
-  };
+    const coursID = document.getElementById('course').value;
+    console.log('El cours id es', coursID);
 
-  try {
-    const response = await formServices.addForm(formData); 
-    const course = document.getElementById('course').value;
-    console.log('Course:', course);
-    console.log('Form submitted:', response);
-    toggleAddFormMenu();
-  } catch (error) {
-    console.error('Error submitting form:', error);
-  }
+    try {
+        const students = await coursServices.getStudentsFromCours(coursID);
+        console.log('Students:', students);
+        for (const studentId of students) {
+            const formData = {
+                course: coursID,
+                teacher: 10,
+                student: studentId,
+                questions: allQuestions,
+                anonymSurvey: anonymSurvey.value
+            };
+            const response = await formServices.addForm(formData);
+            console.log('Form submitted:', response);
+        }
+        toggleAddFormMenu();
+    } catch (error) {
+        console.error('Error submitting form: ',error);
+    }
+
+
 
 }
 
@@ -79,13 +87,13 @@ const templates = {
                         <div class="mb-6 w-1/2">
                             <label for="course" class="block text-2xl font-medium text-gray-700">{{ t('Lesson') }} :</label>
                             <select id="course" class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md">
-                                <option v-for="course in cours" :key="course.nomCours" :value="course.nomCours">{{ course.nomCours }}</option>
+                                <option v-for="course in cours" :key="course.nomCours" :value="course.id">{{ course.nomCours }}</option>
                             </select>
                         </div>
                         <div class="mb-6 w-1/2">
                             <label for="teacher" class="block text-2xl font-medium text-gray-700">{{ t('Teacher') }} :</label>
                             <select id="teacher" class="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md">
-                                <option v-for="teacher in teachers" :key="teacher.nom" :value="teacher.nom">{{ teacher.prenom }} {{ teacher.nom }}</option>
+                                <option v-for="teacher in teachers" :key="teacher.nom" :value="teacher.id">{{ teacher.prenom }} {{ teacher.nom }}</option>
                             </select>
                         </div>
                     </div>

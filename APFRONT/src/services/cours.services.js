@@ -5,6 +5,16 @@ const getAllCours = async () => {
     return response.data;
 }
 
+const getStudentsFromCours = async (idCours) => {
+    const response = await apiClient.get('/getAllEtudiantByCours', {
+        params: {
+            idCours: idCours
+        }
+    });
+    return response.data;
+}
+
 export default {
     getAllCours,
+    getStudentsFromCours
 }

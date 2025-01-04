@@ -8,7 +8,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const breadcrumbs = [
-  { name: 'Dashboard', path: '/dashboard' },
+  { name: 'Dashboard', path: '/' },
   { name: 'Review Form', path: route.path },
 
 ];

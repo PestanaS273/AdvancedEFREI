@@ -6,7 +6,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const breadcrumbs = [
-  { name: 'Dashboard', path: '/dashboard' },
+  { name: 'Dashboard', path: '/' },
   { name: 'Collection Forms', path: route.path },
 ];
 
@@ -20,6 +20,8 @@ const breadcrumbs = [
 </template>
 
 <script>
+import formServices from '../../services/form.services';
+
 export default {
     components: { CollectionFormsTable, Breadcrumb },
     data() {
@@ -30,6 +32,18 @@ export default {
         ],
       };
   },
+
+  methods: {
+    async getFormsForCourse() {
+      try {
+        const response = await formServices.getFormsForCourse();
+        console.log(response);
+        this.forms = response;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
 };
 
 

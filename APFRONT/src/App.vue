@@ -24,5 +24,6 @@ computed: {
 <style>
 #app {
   background-color: aliceblue;
+  margin-bottom: 15vh;
 }
 </style>

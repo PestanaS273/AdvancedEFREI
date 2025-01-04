@@ -9,7 +9,7 @@ import CompleteSurveyTable from '../../components/Dashboard/CompleteSurveyTable.
 const route = useRoute();
 
 const breadcrumbs = [
-  { name: 'Dashboard', path: '/dashboard' },
+  { name: 'Dashboard', path: '/' },
   { name: 'Review Form', path: route.path },
 
 ];
