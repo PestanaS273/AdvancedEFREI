@@ -1,4 +1,4 @@
-# Web Service Project for University Feedback : advanced EFREI
+# Web Service Project for University Feedback : Advanced EFREI
 
 ## Introduction
 This project is a comprehensive web service system designed to integrate with existing university services to streamline the process of class feedback. It provides a flexible and accessible environment for professors, students, and administrators to manage and respond to surveys efficiently. The application consists of a:
