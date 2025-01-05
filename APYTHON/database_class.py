@@ -8,6 +8,7 @@ class Utilisateur(Base):
     __tablename__ = 'utilisateur'
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     date_naissance = Column(Date)
+    get_statut = Column(Boolean)
     statut = Column(Boolean)
     email = Column(String(255))
     image_profile = Column(String)

@@ -119,7 +119,8 @@ def update_database(teacher_array):
                     date_naissance=teacher_data["date_naissance"],
                     num_tel=teacher_data["num_tel"],
                     password="pass202234",
-                    statut=False  
+                    statut=False,
+                    get_statut=False
                 )
                 session.add(utilisateur)
                 session.flush()
@@ -145,6 +146,7 @@ def update_database(teacher_array):
                     utilisateur.nom = teacher_data["nom"]
                     utilisateur.num_tel = teacher_data["num_tel"]
                     utilisateur.statut = utilisateur.password != "pass202234"
+                    utilisateur.get_statut = False
                     print("teacher updated")
                     print(vars(utilisateur))
                     print(utilisateur.id)

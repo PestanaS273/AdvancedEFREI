@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 import os
 
 from dotenv import load_dotenv
-from database_class import Base, Utilisateur, Etudiant, Cours, EtudiantCours, Role
+from database_class import Base, Utilisateur, Etudiant, Cours, EtudiantCours, Role, UtilisateurRoles
 import pymysql
 
 load_dotenv()
@@ -90,67 +90,89 @@ def update_database(student_array):
     processed_students = 0
 
     try:
-        student_role = session.query(Role).filter_by(role='student').first()
+        student_role = session.query(Role).filter_by(role='etudiant').first()
         if not student_role:
             student_role = Role(
-                role='student'
+                role='etudiant'
             )
             session.add(student_role)
             session.flush()
 
         student_role = student_role.id
-        print("Teacher Role ID:", student_role)
+        print("etudiant Role ID:", student_role)
         for student_data in student_array:
-            etudiant = session.query(Etudiant).filter_by(num_etudiant=student_data["num_etudiant"]).first()
+            try :
+                etudiant = session.query(Etudiant).filter_by(num_etudiant=student_data["num_etudiant"]).first()
 
-            if not etudiant:
-                utilisateur = Utilisateur(
-                    prenom=student_data["prenom"],
-                    nom=student_data["nom"],
-                    date_naissance=student_data["date_naissance"],
-                    email=student_data["email"],
-                    num_tel=student_data["num_tel"],
-                    password="pass202234",
-                    statut=False  
-                )
-                session.add(utilisateur)
-                session.flush()  
+                if not etudiant:
+                    utilisateur = Utilisateur(
+                        prenom=student_data["prenom"],
+                        nom=student_data["nom"],
+                        date_naissance=student_data["date_naissance"],
+                        email=student_data["email"],
+                        num_tel=student_data["num_tel"],
+                        password="pass202234",
+                        statut=False,
+                        get_statut=False
 
-                etudiant = Etudiant(
-                    id=utilisateur.id,
-                    num_etudiant=student_data["num_etudiant"],
-                    etat=False if utilisateur.password == "pass202234" else True
-                )
-                session.add(etudiant)
-            else:
-                utilisateur = session.query(Utilisateur).filter_by(id=etudiant.id).first()
-                if utilisateur:
-                    utilisateur.prenom = student_data["prenom"]
-                    utilisateur.nom = student_data["nom"]
-                    utilisateur.email = student_data["email"]
-                    utilisateur.num_tel = student_data["num_tel"]
-                    utilisateur.statut = utilisateur.password != "pass202234"
-
-            session.query(EtudiantCours).filter_by(etudiant_id=etudiant.id).delete()
-            for course_data in student_data["cours"]:
-                cours = session.query(Cours).filter_by(nom_cours=course_data["coursNom"]).first()
-                if not cours:
-                    cours = Cours(
-                        nom_cours=course_data["coursNom"],
                     )
-                    session.add(cours) 
-                    session.flush() 
+                    session.add(utilisateur)
+                    session.flush()  
 
-                etudiant_cours = EtudiantCours(
-                    etudiant_id=etudiant.id,
-                    cours_id=cours.id
-                )
-                session.add(etudiant_cours)
+                    etudiant = Etudiant(
+                        id=utilisateur.id,
+                        num_etudiant=student_data["num_etudiant"],
+                        etat=False if utilisateur.password == "pass202234" else True
+                    )
+                    session.add(etudiant)
 
-            processed_students += 1
-            progress_status["percentage"] = 60 + int((processed_students / total_students) * 40)
+                    roleEtudiant = UtilisateurRoles(
+                    utilisateur_id=utilisateur.id,
+                    role_id=student_role
+                    )
+                    session.add(roleEtudiant)
 
-        session.commit()
+                else:
+                    utilisateur = session.query(Utilisateur).filter_by(id=etudiant.id).first()
+                    if utilisateur:
+                        utilisateur.prenom = student_data["prenom"]
+                        utilisateur.nom = student_data["nom"]
+                        utilisateur.email = student_data["email"]
+                        utilisateur.num_tel = student_data["num_tel"]
+                        utilisateur.statut = utilisateur.password != "pass202234"
+                        utilisateur.get_statut = False
+
+                    roleEtudiant = UtilisateurRoles(
+                    utilisateur_id=utilisateur.id,
+                    roles_id=student_role
+                    )
+                    session.add(roleEtudiant)
+
+
+                session.query(EtudiantCours).filter_by(etudiant_id=etudiant.id).delete()
+                for course_data in student_data["cours"]:
+                    cours = session.query(Cours).filter_by(nom_cours=course_data["coursNom"]).first()
+                    if not cours:
+                        cours = Cours(
+                            nom_cours=course_data["coursNom"],
+                        )
+                        session.add(cours) 
+                        session.flush() 
+
+                    etudiant_cours = EtudiantCours(
+                        etudiant_id=etudiant.id,
+                        cours_id=cours.id
+                    )
+                    session.add(etudiant_cours)
+
+                processed_students += 1
+                progress_status["percentage"] = 60 + int((processed_students / total_students) * 40)
+
+                session.commit()
+            except Exception as e:
+                print(f"Error processing student {student_data.get('num_etudiant', 'Unknown')}: {e}")
+                session.rollback()
+        
 
 
     except Exception as e:
