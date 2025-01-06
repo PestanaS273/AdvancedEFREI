@@ -57,7 +57,8 @@ def run_analysis(file_path):
             "date_naissance": row["dateNaissance"],
             "email": row["email"],
             "num_tel": row["telephone"],
-            "cours": cours_teacher
+            "cours": cours_teacher,
+            "password": row["password"]
         }
 
         teacher_array.append(teacher)
@@ -96,10 +97,10 @@ def update_database(teacher_array):
     processed_teacher = 0
 
     try:
-        teacher_role = session.query(Role).filter_by(role='intervenant').first()
+        teacher_role = session.query(Role).filter_by(role='professor').first()
         if not teacher_role:
             teacher_role = Role(
-                role='intervenant'
+                role='professor'
             )
             session.add(teacher_role)
             session.flush()
@@ -118,9 +119,9 @@ def update_database(teacher_array):
                     email=teacher_data["email"],
                     date_naissance=teacher_data["date_naissance"],
                     num_tel=teacher_data["num_tel"],
-                    password="pass202234",
-                    statut=False,
-                    get_statut=False
+                    password=teacher_data["password"],
+                    statut=True,
+                    get_statut=True
                 )
                 session.add(utilisateur)
                 session.flush()
@@ -145,8 +146,8 @@ def update_database(teacher_array):
                     utilisateur.prenom = teacher_data["prenom"]
                     utilisateur.nom = teacher_data["nom"]
                     utilisateur.num_tel = teacher_data["num_tel"]
-                    utilisateur.statut = utilisateur.password != "pass202234"
-                    utilisateur.get_statut = False
+                    utilisateur.statut = True
+                    utilisateur.get_statut = True
                     print("teacher updated")
                     print(vars(utilisateur))
                     print(utilisateur.id)

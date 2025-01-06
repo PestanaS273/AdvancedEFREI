@@ -38,12 +38,13 @@ The backend includes JWT-based authentication and authorization, configured in t
 - Role-based access control.
 - CORS configuration to allow frontend communication.
 
-## Running the Backend
-Ensure that the MySQL database is running and accessible. Then, the backend can be started using the following commands:
-
+## Create Jar File
+Before creating a new jar file, the use of IntelliJ is recommended and Maven must be installed.
+The used .JAR file is in the jar directory. If you want to create a new jar, run the following command :
 ```bash
-cd APBACK
-./mvnw spring-boot:run
+  mvn clean install -DskipTests
 ```
+
+Then, place the jar created at the Target directory to the jar directory.
 
 The backend will be accessible at `http://localhost:8095`.

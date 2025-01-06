@@ -26,15 +26,38 @@ The entire ecosystem is containerized using Docker and orchestrated with Docker 
 4. **Automated Updates**:
    - The Python API processes Excel files to update the database with user and course information.
 
-5. **Deployment and Implementation**:
+5. **Responsive Design UX/UI**
+    - The user interface is designed with a focus on simplicity and ease of use, ensuring that users can navigate and complete tasks efficiently.
+    - The responsive design ensures compatibility across various devices, providing a seamless experience on desktops, tablets, and smartphones.
+    - We have incorporated user feedback to continuously improve the usability and accessibility of the application.
+
+6. **Deployment and Implementation**:
    - The project is containerized and deployable using Docker Compose, ensuring easy setup across different environments.
 
 ### Deployment Instructions
 To deploy the project, follow these steps:
 
 1. Clone the repository and navigate to the project directory.
-2. Ensure Docker and Docker Compose are installed on your system.
-3. Use the provided `docker-compose.yml` file for deployment. Below is the configuration:
+2. Add **.env** files at the root of APFRONT and APYTHON directories as follows :
+
+APFRONT:
+```env
+VITE_API_BASE_URL=http://localhost:8095
+VITE_API_PYTHON_BASE_URL=http://localhost:8000/
+```
+
+APYTHON:
+```env
+DB_USER=apdata
+DB_PASSWORD=apdata
+DB_HOST=mysql
+DB_NAME=APDATA
+DB_PORT=3306
+FRONTEND_URL="http://localhost:4173"
+```
+
+3. Ensure Docker and Docker Compose are installed on your system.
+4. Use the provided `docker-compose.yml` file for deployment. Below is the configuration:
 
 ```yaml
 docker-compose.yml

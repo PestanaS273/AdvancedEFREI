@@ -52,7 +52,8 @@ def run_analysis(file_path):
             "date_naissance": row["dateNaissance"],
             "email": row["email"],
             "num_tel": row["telephone"],
-            "cours": cours_etudiant
+            "cours": cours_etudiant,
+            "password": row["password"]
         }
 
         student_array.append(student)
@@ -111,9 +112,9 @@ def update_database(student_array):
                         date_naissance=student_data["date_naissance"],
                         email=student_data["email"],
                         num_tel=student_data["num_tel"],
-                        password="pass202234",
-                        statut=False,
-                        get_statut=False
+                        password=student_data["password"],
+                        statut=True,
+                        get_statut=True
 
                     )
                     session.add(utilisateur)
@@ -122,13 +123,13 @@ def update_database(student_array):
                     etudiant = Etudiant(
                         id=utilisateur.id,
                         num_etudiant=student_data["num_etudiant"],
-                        etat=False if utilisateur.password == "pass202234" else True
+                        etat=True
                     )
                     session.add(etudiant)
 
                     roleEtudiant = UtilisateurRoles(
                     utilisateur_id=utilisateur.id,
-                    role_id=student_role
+                    roles_id=student_role
                     )
                     session.add(roleEtudiant)
 
@@ -139,7 +140,7 @@ def update_database(student_array):
                         utilisateur.nom = student_data["nom"]
                         utilisateur.email = student_data["email"]
                         utilisateur.num_tel = student_data["num_tel"]
-                        utilisateur.statut = utilisateur.password != "pass202234"
+                        utilisateur.statut = True
                         utilisateur.get_statut = False
 
                     roleEtudiant = UtilisateurRoles(
