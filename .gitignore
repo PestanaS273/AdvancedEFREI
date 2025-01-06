@@ -580,3 +580,5 @@ buildNumber.properties
 
 
 # End of https://www.toptal.com/developers/gitignore/api/python,venv
+.DS_Store
+APYTHON/.DS_Store
