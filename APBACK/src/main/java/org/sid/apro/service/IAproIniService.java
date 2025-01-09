@@ -51,7 +51,7 @@ public interface IAproIniService {
 
     public void initQuestions();
 
-    public void initFormes();
+    public int initFormes();
 
 
     public Reponse saveReponse(ReponseVO reponseVO);

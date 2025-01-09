@@ -247,7 +247,7 @@ public class AproInitServiceImpl implements IAproIniService {
     }
 
     @Override
-    public void initFormes() {
+    public int initFormes() {
         coursRepository.findAll().forEach(cours -> {
             for (int i = 0; i < 3; i++) { // 3 formes par cours
                 Forme forme = new Forme();
@@ -271,6 +271,7 @@ public class AproInitServiceImpl implements IAproIniService {
             }
             coursRepository.save(cours);
         });
+        return 1;
     }
 
     @Override
