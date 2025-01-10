@@ -103,4 +103,10 @@ public class ApoRestController {
         return service.initFormes();
     }*/
 
+    @GetMapping("/getAllIntervenant")
+    public List<Intervenant> getAllIntervant(){
+        return service.getAllIntervenants();
+
+    }
+
 }

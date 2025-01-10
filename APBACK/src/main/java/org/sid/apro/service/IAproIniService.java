@@ -76,6 +76,8 @@ public interface IAproIniService {
 
     public List<Forme> getAllFromsFromCours(long idCours);
 
+    public List<Intervenant> getAllIntervenants();
+
 
 
 

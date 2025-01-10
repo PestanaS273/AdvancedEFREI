@@ -424,5 +424,14 @@ public class AproInitServiceImpl implements IAproIniService {
         return formes;
     }
 
+    @Override
+    public List<Intervenant> getAllIntervenants() {
+        ArrayList<Intervenant> intervenants = new ArrayList<>();
+        intervenantRepository.findAll().forEach(intervenant -> {
+            intervenants.add(intervenant);
+        });
+        return intervenants;
+    }
+
 
 }
