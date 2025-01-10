@@ -15,8 +15,8 @@ public class Cours implements Serializable {
     private long id;
     @Column(unique = true, nullable = false)
     private String nomCours;
-    @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Collection<Forme> formes = new ArrayList<>();
     @OneToMany(mappedBy = "cours", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<EtudiantCoursForm> etudiantCoursForms = new ArrayList<>();
