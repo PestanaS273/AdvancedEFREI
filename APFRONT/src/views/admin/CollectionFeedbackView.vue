@@ -27,8 +27,6 @@ export default {
     data() {
       return {
       forms: [
-          { id: 1, student: "Sebastian", created: "2024-11-01" },
-          { id: 2, student: "Adam", created: "2024-11-05" },
         ],
       };
   },
@@ -36,14 +34,24 @@ export default {
   methods: {
     async getFormsForCourse() {
       try {
-        const response = await formServices.getFormsForCourse();
+        const id = await this.getCoursId();
+        console.log('CoursId:', id);
+        const response = await formServices.getFormsForCourse(id);
         console.log(response);
         this.forms = response;
       } catch (error) {
         console.error(error);
       }
+    },
+    async getCoursId() {
+      return this.$store.state.cours.coursId;
     }
-  }
+  },
+
+  async created() {
+    await this.getFormsForCourse();
+
+  },
 };
 
 

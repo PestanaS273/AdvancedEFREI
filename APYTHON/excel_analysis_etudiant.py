@@ -52,7 +52,8 @@ def run_analysis(file_path):
             "date_naissance": row["dateNaissance"],
             "email": row["email"],
             "num_tel": row["telephone"],
-            "cours": cours_etudiant
+            "cours": cours_etudiant,
+            "password": row["password"]
         }
 
         student_array.append(student)
@@ -104,6 +105,7 @@ def update_database(student_array):
             try :
                 etudiant = session.query(Etudiant).filter_by(num_etudiant=student_data["num_etudiant"]).first()
 
+
                 if not etudiant:
                     utilisateur = Utilisateur(
                         prenom=student_data["prenom"],
@@ -111,9 +113,9 @@ def update_database(student_array):
                         date_naissance=student_data["date_naissance"],
                         email=student_data["email"],
                         num_tel=student_data["num_tel"],
-                        password="pass202234",
-                        statut=False,
-                        get_statut=False
+                        password=student_data["password"],
+                        statut=True,
+                        get_statut=True
 
                     )
                     session.add(utilisateur)
@@ -122,25 +124,35 @@ def update_database(student_array):
                     etudiant = Etudiant(
                         id=utilisateur.id,
                         num_etudiant=student_data["num_etudiant"],
-                        etat=False if utilisateur.password == "pass202234" else True
+                        etat=True
                     )
                     session.add(etudiant)
 
                     roleEtudiant = UtilisateurRoles(
                     utilisateur_id=utilisateur.id,
-                    role_id=student_role
+                    roles_id=student_role
                     )
                     session.add(roleEtudiant)
 
                 else:
                     utilisateur = session.query(Utilisateur).filter_by(id=etudiant.id).first()
+
                     if utilisateur:
                         utilisateur.prenom = student_data["prenom"]
                         utilisateur.nom = student_data["nom"]
                         utilisateur.email = student_data["email"]
                         utilisateur.num_tel = student_data["num_tel"]
                         utilisateur.statut = utilisateur.password != "pass202234"
-                        utilisateur.get_statut = False
+                        utilisateur.get_statut = True
+
+                        try:
+                            session.commit()
+                        except Exception as e:
+                            session.rollback()
+                            print(f"Error processing student {etudiant.id}: {e}")
+
+                    else:
+                            print(f"Utilisateur with ID {etudiant.id} not found.")
 
                     roleEtudiant = UtilisateurRoles(
                     utilisateur_id=utilisateur.id,

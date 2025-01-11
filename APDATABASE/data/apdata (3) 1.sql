@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 31 déc. 2024 à 09:40
+-- Généré le : ven. 10 jan. 2025 à 20:58
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -84,18 +84,33 @@ INSERT INTO `cours_formes` (`cours_id`, `formes_id`) VALUES
 (2, 1),
 (2, 2),
 (2, 3),
+(2, 16),
+(2, 17),
+(2, 18),
 (5, 4),
 (5, 5),
 (5, 6),
+(5, 19),
+(5, 20),
+(5, 21),
 (4, 7),
 (4, 8),
 (4, 9),
+(4, 22),
+(4, 23),
+(4, 24),
 (3, 10),
 (3, 11),
 (3, 12),
+(3, 25),
+(3, 26),
+(3, 27),
 (1, 13),
 (1, 14),
-(1, 15);
+(1, 15),
+(1, 28),
+(1, 29),
+(1, 30);
 
 -- --------------------------------------------------------
 
@@ -193,29 +208,68 @@ CREATE TABLE `forme` (
   `etudiant_id` bigint(20) DEFAULT NULL,
   `id` bigint(20) NOT NULL,
   `question_id` bigint(20) DEFAULT NULL,
-  `reponse_id` bigint(20) DEFAULT NULL
+  `reponse_id` bigint(20) DEFAULT NULL,
+  `sara` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `forme`
 --
 
-INSERT INTO `forme` (`anonyme`, `etudiant_id`, `id`, `question_id`, `reponse_id`) VALUES
-(b'0', 2, 1, NULL, NULL),
-(b'0', 1, 2, NULL, NULL),
-(b'0', NULL, 3, NULL, NULL),
-(b'0', NULL, 4, NULL, NULL),
-(b'0', NULL, 5, NULL, NULL),
-(b'0', NULL, 6, NULL, NULL),
-(b'0', NULL, 7, NULL, NULL),
-(b'0', NULL, 8, NULL, NULL),
-(b'0', NULL, 9, NULL, NULL),
-(b'0', NULL, 10, NULL, NULL),
-(b'0', NULL, 11, NULL, NULL),
-(b'0', NULL, 12, NULL, NULL),
-(b'0', NULL, 13, NULL, NULL),
-(b'0', NULL, 14, NULL, NULL),
-(b'0', NULL, 15, NULL, NULL);
+INSERT INTO `forme` (`anonyme`, `etudiant_id`, `id`, `question_id`, `reponse_id`, `sara`) VALUES
+(b'0', 2, 1, NULL, NULL, NULL),
+(b'0', 1, 2, NULL, NULL, NULL),
+(b'0', NULL, 3, NULL, NULL, NULL),
+(b'0', NULL, 4, NULL, NULL, NULL),
+(b'0', NULL, 5, NULL, NULL, NULL),
+(b'0', NULL, 6, NULL, NULL, NULL),
+(b'0', NULL, 7, NULL, NULL, NULL),
+(b'0', NULL, 8, NULL, NULL, NULL),
+(b'0', NULL, 9, NULL, NULL, NULL),
+(b'0', NULL, 10, NULL, NULL, NULL),
+(b'0', NULL, 11, NULL, NULL, NULL),
+(b'0', NULL, 12, NULL, NULL, NULL),
+(b'0', NULL, 13, NULL, NULL, NULL),
+(b'0', NULL, 14, NULL, NULL, NULL),
+(b'0', NULL, 15, NULL, NULL, NULL),
+(b'0', NULL, 16, NULL, NULL, NULL),
+(b'0', NULL, 17, NULL, NULL, NULL),
+(b'0', NULL, 18, NULL, NULL, NULL),
+(b'0', NULL, 19, NULL, NULL, NULL),
+(b'0', NULL, 20, NULL, NULL, NULL),
+(b'0', NULL, 21, NULL, NULL, NULL),
+(b'0', NULL, 22, NULL, NULL, NULL),
+(b'0', NULL, 23, NULL, NULL, NULL),
+(b'0', NULL, 24, NULL, NULL, NULL),
+(b'0', NULL, 25, NULL, NULL, NULL),
+(b'0', NULL, 26, NULL, NULL, NULL),
+(b'0', NULL, 27, NULL, NULL, NULL),
+(b'0', NULL, 28, NULL, NULL, NULL),
+(b'0', NULL, 29, NULL, NULL, NULL),
+(b'0', NULL, 30, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `forme_cours`
+--
+
+CREATE TABLE `forme_cours` (
+  `formes_id` bigint(20) NOT NULL,
+  `cours_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `forme_courses`
+--
+
+CREATE TABLE `forme_courses` (
+  `forme_id` bigint(20) NOT NULL,
+  `courses_id` bigint(20) NOT NULL,
+  `formes_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -255,7 +309,22 @@ INSERT INTO `forme_question_reponses` (`forme_id`, `question_reponses_id`) VALUE
 (2, 10),
 (2, 11),
 (2, 12),
-(2, 13);
+(2, 13),
+(16, 2),
+(17, 1),
+(18, 3),
+(19, 3),
+(20, 1),
+(21, 4),
+(22, 5),
+(23, 2),
+(24, 5),
+(25, 2),
+(26, 5),
+(27, 4),
+(28, 4),
+(29, 2),
+(30, 5);
 
 -- --------------------------------------------------------
 
@@ -493,6 +562,21 @@ ALTER TABLE `forme`
   ADD KEY `FKis41klnu6g4awluh3hhvj29ps` (`reponse_id`);
 
 --
+-- Index pour la table `forme_cours`
+--
+ALTER TABLE `forme_cours`
+  ADD KEY `FKjiesw7v1g38mvpj66grmoqkgw` (`cours_id`),
+  ADD KEY `FKfsi6s8uqsyrg0u8fs7t0a0y7s` (`formes_id`);
+
+--
+-- Index pour la table `forme_courses`
+--
+ALTER TABLE `forme_courses`
+  ADD KEY `FKoa0ljmdj3xseg1hn3qo6k29mb` (`courses_id`),
+  ADD KEY `FKmcuc43tbkrub491yuyryrur90` (`forme_id`),
+  ADD KEY `FKo6q9e8bd7l2v3aotkfxjdotd7` (`formes_id`);
+
+--
 -- Index pour la table `forme_question_reponses`
 --
 ALTER TABLE `forme_question_reponses`
@@ -576,7 +660,7 @@ ALTER TABLE `fiche_data`
 -- AUTO_INCREMENT pour la table `forme`
 --
 ALTER TABLE `forme`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT pour la table `question`
@@ -666,6 +750,21 @@ ALTER TABLE `forme`
   ADD CONSTRAINT `FKai4owdues1wkhy0bciby1od6c` FOREIGN KEY (`etudiant_id`) REFERENCES `etudiant` (`id`),
   ADD CONSTRAINT `FKis41klnu6g4awluh3hhvj29ps` FOREIGN KEY (`reponse_id`) REFERENCES `reponse` (`id`),
   ADD CONSTRAINT `FKk8peekclqu4wdeyelc09fcujr` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`);
+
+--
+-- Contraintes pour la table `forme_cours`
+--
+ALTER TABLE `forme_cours`
+  ADD CONSTRAINT `FKfsi6s8uqsyrg0u8fs7t0a0y7s` FOREIGN KEY (`formes_id`) REFERENCES `forme` (`id`),
+  ADD CONSTRAINT `FKjiesw7v1g38mvpj66grmoqkgw` FOREIGN KEY (`cours_id`) REFERENCES `cours` (`id`);
+
+--
+-- Contraintes pour la table `forme_courses`
+--
+ALTER TABLE `forme_courses`
+  ADD CONSTRAINT `FKmcuc43tbkrub491yuyryrur90` FOREIGN KEY (`forme_id`) REFERENCES `forme` (`id`),
+  ADD CONSTRAINT `FKo6q9e8bd7l2v3aotkfxjdotd7` FOREIGN KEY (`formes_id`) REFERENCES `forme` (`id`),
+  ADD CONSTRAINT `FKoa0ljmdj3xseg1hn3qo6k29mb` FOREIGN KEY (`courses_id`) REFERENCES `cours` (`id`);
 
 --
 -- Contraintes pour la table `forme_question_reponses`
