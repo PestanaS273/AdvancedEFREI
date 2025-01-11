@@ -382,6 +382,7 @@ public class AproInitServiceImpl implements IAproIniService {
     @Override
     public Forme createForme(NewFormeVO newFormeVO) {
         ArrayList<String> questions = (ArrayList<String>) newFormeVO.getQuestions();
+        Cours cours = coursRepository.findById(newFormeVO.getIdCours());
         Forme forme = new Forme();
         questions.forEach(question -> {
             QuestionReponse questionReponse = new QuestionReponse();
@@ -390,6 +391,7 @@ public class AproInitServiceImpl implements IAproIniService {
             questionReponseRepository.save(questionReponse);
             forme.getQuestionReponses().add(questionReponse);
         });
+        forme.getCours().add(cours);
         formRepository.save(forme);
         return forme;
 
