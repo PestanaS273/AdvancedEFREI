@@ -25,6 +25,9 @@ public class Forme implements Serializable {
     private Etudiant etudiant;
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     private Collection<QuestionReponse> questionReponses = new ArrayList<>();
+    @ManyToMany(mappedBy = "formes",fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+
+    private Collection<Cours> cours = new ArrayList<>();
 
 
 }

@@ -247,7 +247,7 @@ public class AproInitServiceImpl implements IAproIniService {
     }
 
     @Override
-    public void initFormes() {
+    public int initFormes() {
         coursRepository.findAll().forEach(cours -> {
             for (int i = 0; i < 3; i++) { // 3 formes par cours
                 Forme forme = new Forme();
@@ -271,6 +271,7 @@ public class AproInitServiceImpl implements IAproIniService {
             }
             coursRepository.save(cours);
         });
+        return 1;
     }
 
     @Override
@@ -381,6 +382,7 @@ public class AproInitServiceImpl implements IAproIniService {
     @Override
     public Forme createForme(NewFormeVO newFormeVO) {
         ArrayList<String> questions = (ArrayList<String>) newFormeVO.getQuestions();
+        Cours cours = coursRepository.findById(newFormeVO.getIdCours());
         Forme forme = new Forme();
         questions.forEach(question -> {
             QuestionReponse questionReponse = new QuestionReponse();
@@ -389,6 +391,7 @@ public class AproInitServiceImpl implements IAproIniService {
             questionReponseRepository.save(questionReponse);
             forme.getQuestionReponses().add(questionReponse);
         });
+        forme.getCours().add(cours);
         formRepository.save(forme);
         return forme;
 
@@ -421,6 +424,15 @@ public class AproInitServiceImpl implements IAproIniService {
             formes.add(forme);
         });
         return formes;
+    }
+
+    @Override
+    public List<Intervenant> getAllIntervenants() {
+        ArrayList<Intervenant> intervenants = new ArrayList<>();
+        intervenantRepository.findAll().forEach(intervenant -> {
+            intervenants.add(intervenant);
+        });
+        return intervenants;
     }
 
 

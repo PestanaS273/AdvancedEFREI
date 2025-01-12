@@ -90,17 +90,23 @@ public class ApoRestController {
     public List<Etudiant> getEtudiantFromCours(@RequestParam long idCours){
         return service.getEtudiantsFromCours(idCours);
     }
-    @GetMapping("/getAllFoms")
-    public List<Forme> getAllFoms(){
+    @GetMapping("/getAllForms")
+    public List<Forme> getAllForms(){
         return service.getAllFroms();
     }
-    @GetMapping("/getAllFromsfromCours")
-    public List<Forme> getAllFromsfromCours(@RequestParam long idCours){
+    @GetMapping("/getAllFormsfromCours")
+    public List<Forme> getAllFormsfromCours(@RequestParam long idCours){
         return service.getAllFromsFromCours(idCours);
     }
-    /*@GetMapping("/initProf")
+    /*@GetMapping("/initFormes")
     public int initProf(){
-        return service.initProf();
+        return service.initFormes();
     }*/
+
+    @GetMapping("/getAllIntervenant")
+    public List<Intervenant> getAllIntervenant(){
+        return service.getAllIntervenants();
+
+    }
 
 }

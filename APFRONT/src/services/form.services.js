@@ -1,12 +1,12 @@
 import apiClient from './api';
 
 const getAllForms = async () => {
-    const response = await apiClient.get('/getAllFoms');
+    const response = await apiClient.get('/getAllForms');
     return response.data;
 }
 
 const getFormsForCourse = async (idCours) => {
-    const response = await apiClient.get('/getAllFromsfromCours', {
+    const response = await apiClient.get('/getAllFormsfromCours', {
         params: {
             idCours: idCours
         }

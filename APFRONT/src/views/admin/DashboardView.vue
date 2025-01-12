@@ -88,13 +88,32 @@ data() {
             try {
                 const response = await formServices.getAllForms();
                 console.log(response);
-                this.surveys = response;
+
+                const groupedForms = response.reduce((acc, form) => {
+                    const courseName = form.cours[0].nomCours;
+                    console.log(courseName);
+                    if (!acc[courseName]) {
+                        acc[courseName] = {
+                            id: form.id,
+                            nomCours: courseName,
+                            idCours: form.cours[0].id,
+                            count: 0
+                        };
+                    }
+                    acc[courseName].count += 1;
+                    return acc;
+                }, {});
+                console.log(groupedForms);
+
+
+                this.surveys = Object.values(groupedForms);
+                console.log(this.surveys);
                 this.totalForms = response.length;
 
             } catch (error) {
                 console.error(error);
             }
-        }
+        },
 
 
     },
