@@ -380,10 +380,11 @@ public class AproInitServiceImpl implements IAproIniService {
     }
 
     @Override
-    public Forme                      createForme(NewFormeVO newFormeVO) {
+    public Forme createForme(NewFormeVO newFormeVO) {
         ArrayList<String> questions = (ArrayList<String>) newFormeVO.getQuestions();
         Cours cours = coursRepository.findById(newFormeVO.getIdCours());
         Forme forme = new Forme();
+        forme.setAnonyme(newFormeVO.isAnonyme());
         questions.forEach(question -> {
             QuestionReponse questionReponse = new QuestionReponse();
             questionReponse.setQuestion(question);
@@ -393,7 +394,7 @@ public class AproInitServiceImpl implements IAproIniService {
         });
         forme.getCours().add(cours);
         cours.getFormes().add(forme);
-        coursRepository.save(cours);
+
         formRepository.save(forme);
         return forme;
 
