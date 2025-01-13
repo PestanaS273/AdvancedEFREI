@@ -89,8 +89,12 @@ data() {
                 const response = await formServices.getAllForms();
                 console.log(response);
 
+
                 const groupedForms = response.reduce((acc, form) => {
-                    const courseName = form.cours[0].nomCours;
+                    const courseName = form.cours[0]?.nomCours;
+                    if (!courseName) {
+                        return acc;
+                    }
                     console.log(courseName);
                     if (!acc[courseName]) {
                         acc[courseName] = {
