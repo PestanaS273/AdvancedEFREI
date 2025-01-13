@@ -2,7 +2,6 @@ version: '3.8'
 services:
   mysql:
     build: ./APDATABASE
-    # image: pestana273/mysql:8.0
     container_name: mysql-container
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -14,14 +13,33 @@ services:
     networks:
       - app-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p", "root"]
       interval: 10s
       timeout: 5s
       retries: 3
-    
+
+  frontend:
+    build: ./APFRONT
+
+    container_name: frontend-container
+    ports:
+      - "4173:4173"
+    networks:
+      - app-network
+
+  python-api:
+    build: ./APYTHON
+    container_name: python-api-container
+    depends_on:
+      - frontend
+      - mysql
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+
   backend: 
     build: ./APBACK
-    # image: pestana273/backend:1
     container_name: backend-container
     depends_on:
       - mysql
@@ -31,28 +49,6 @@ services:
       - SPRING_DATASOURCE_PASSWORD=apdata
     ports:
       - "8095:8095"
-    networks:
-      - app-network
-
-  frontend:
-    build: ./APFRONT
-
-    # image: pestana273/frontend:1
-    container_name: frontend-container
-    ports:
-      - "4173:4173"
-    networks:
-      - app-network
-
-  python-api:
-    build: ./APYTHON
-    # image: pestana273/python-api:1
-    container_name: python-api-container
-    depends_on:
-      - frontend
-      - mysql
-    ports:
-      - "8000:8000"
     networks:
       - app-network
 

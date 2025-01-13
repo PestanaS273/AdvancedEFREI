@@ -543,7 +543,7 @@ fabric.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
+
 *.war
 *.nar
 *.ear
@@ -580,3 +580,5 @@ buildNumber.properties
 
 
 # End of https://www.toptal.com/developers/gitignore/api/python,venv
+.DS_Store
+APYTHON/.DS_Store

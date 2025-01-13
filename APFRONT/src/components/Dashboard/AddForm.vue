@@ -39,6 +39,7 @@ async function submitForm() {
         const students = await coursServices.getStudentsFromCours(coursID);
         console.log('Students:', students);
         for (const studentId of students) {
+            console.log('coursID:', coursID);
             const formData = {
                 idCours: coursID,
                 teacher: 10,
