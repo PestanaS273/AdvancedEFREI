@@ -10,4 +10,5 @@ public class NewFormeVO {
     List<String> response;
     boolean anonyme;
     long idCours;
+    long idEtudiant;
 }

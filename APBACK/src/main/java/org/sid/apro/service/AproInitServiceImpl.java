@@ -383,8 +383,10 @@ public class AproInitServiceImpl implements IAproIniService {
     public Forme createForme(NewFormeVO newFormeVO) {
         ArrayList<String> questions = (ArrayList<String>) newFormeVO.getQuestions();
         Cours cours = coursRepository.findById(newFormeVO.getIdCours());
+        Etudiant etudiant = etudiantRepository.findById(newFormeVO.getIdEtudiant());
         Forme forme = new Forme();
         forme.setAnonyme(newFormeVO.isAnonyme());
+        forme.setEtudiant(etudiant);
         questions.forEach(question -> {
             QuestionReponse questionReponse = new QuestionReponse();
             questionReponse.setQuestion(question);
