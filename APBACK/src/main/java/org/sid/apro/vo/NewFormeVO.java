@@ -8,4 +8,5 @@ import java.util.List;
 public class NewFormeVO {
     List<String> questions;
     List<String> response;
+    long idCours;
 }

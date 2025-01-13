@@ -51,7 +51,7 @@ public interface IAproIniService {
 
     public void initQuestions();
 
-    public void initFormes();
+    public int initFormes();
 
 
     public Reponse saveReponse(ReponseVO reponseVO);
@@ -75,6 +75,8 @@ public interface IAproIniService {
     public List<Forme> getAllFroms();
 
     public List<Forme> getAllFromsFromCours(long idCours);
+
+    public List<Intervenant> getAllIntervenants();
 
 
 

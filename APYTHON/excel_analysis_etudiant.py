@@ -105,6 +105,7 @@ def update_database(student_array):
             try :
                 etudiant = session.query(Etudiant).filter_by(num_etudiant=student_data["num_etudiant"]).first()
 
+
                 if not etudiant:
                     utilisateur = Utilisateur(
                         prenom=student_data["prenom"],
@@ -135,13 +136,23 @@ def update_database(student_array):
 
                 else:
                     utilisateur = session.query(Utilisateur).filter_by(id=etudiant.id).first()
+
                     if utilisateur:
                         utilisateur.prenom = student_data["prenom"]
                         utilisateur.nom = student_data["nom"]
                         utilisateur.email = student_data["email"]
                         utilisateur.num_tel = student_data["num_tel"]
-                        utilisateur.statut = True
-                        utilisateur.get_statut = False
+                        utilisateur.statut = utilisateur.password != "pass202234"
+                        utilisateur.get_statut = True
+
+                        try:
+                            session.commit()
+                        except Exception as e:
+                            session.rollback()
+                            print(f"Error processing student {etudiant.id}: {e}")
+
+                    else:
+                            print(f"Utilisateur with ID {etudiant.id} not found.")
 
                     roleEtudiant = UtilisateurRoles(
                     utilisateur_id=utilisateur.id,

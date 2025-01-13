@@ -27,7 +27,7 @@ const getAllStudents = async () => {
 }
 
 const getAllTeachers = async () => {
-    const response = await apiClient.get('/getAllTeachers');
+    const response = await apiClient.get('/getAllIntervenant');
     return response.data;
 }
 

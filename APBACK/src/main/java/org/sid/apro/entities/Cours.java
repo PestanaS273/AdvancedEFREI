@@ -1,5 +1,6 @@
 package org.sid.apro.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,6 +17,8 @@ public class Cours implements Serializable {
     @Column(unique = true, nullable = false)
     private String nomCours;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnore
     private Collection<Forme> formes = new ArrayList<>();
     @OneToMany(mappedBy = "cours", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<EtudiantCoursForm> etudiantCoursForms = new ArrayList<>();
