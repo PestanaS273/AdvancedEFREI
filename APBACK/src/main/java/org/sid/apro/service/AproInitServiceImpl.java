@@ -441,4 +441,15 @@ public class AproInitServiceImpl implements IAproIniService {
     }
 
 
+    @Override
+    public Forme getFormeById(long idForme) {
+        Forme forme = formRepository.findById(idForme);
+        if (forme == null) throw new RuntimeException("Forme not found");
+        return forme;
+    }
+
+
+
+
+
 }

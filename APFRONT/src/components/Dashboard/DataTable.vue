@@ -3,10 +3,6 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 import store from '../../store/index'
 
-const setCollectionForm = (form) => {
-  store.commit('collectionForms/setCollectionForms', form)
-  console.log('Selected Form:', form)
-}
 
 const setCoursId = (id) => {
   store.commit('cours/setCoursId', id)

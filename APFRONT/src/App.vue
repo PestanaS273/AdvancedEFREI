@@ -1,7 +1,9 @@
 <template>
 <div id="app">
   <BaseNav v-if="showNav" />
-  <router-view />
+  <div class="mg-4">
+    <router-view />
+  </div>
 </div>
 </template>
 

@@ -1,14 +1,16 @@
 const state = {
-    form: null,
+    form: JSON.parse(localStorage.getItem('form')) || null,
 };
 
 const mutations = {
     setForm(state, form) {
         state.form = form;
+        localStorage.setItem('form', JSON.stringify(form));
         console.log('Form:', form);
     },
     exitForm(state) {
         state.form = null;
+        localStorage.removeItem('form');
     },
 };
 

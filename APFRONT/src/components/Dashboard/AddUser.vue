@@ -100,7 +100,7 @@ export default {
             this.showAddUserMenu = !this.showAddUserMenu;
         },
         async submitForm() {
-            // Lógica para enviar el formulario
+
         }
     },
     created() {

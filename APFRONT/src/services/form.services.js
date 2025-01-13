@@ -26,7 +26,7 @@ const getFormsForUser = async (id) => {
 const getForm = async (id) => {
     const response = await apiClient.get('/getForm', {
         params: {
-            id: id
+            id: id,
         }
     });
     return response.data;

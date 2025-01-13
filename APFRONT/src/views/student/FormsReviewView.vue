@@ -25,16 +25,31 @@ const { t } = useI18n()
 </template>
 
 <script>
+import formServices from '../../services/form.services';
+
 export default {
     components: { AnswerTable, Breadcrumb },
     data() {
       return {
       forms: [
-          { id: 1, question: "Points", answer: "5"  },
-          { id: 2, question: "Grade", answer: "4" },
+          // { id: 1, question: "Points", answer: "5"  },
+          // { id: 2, question: "Grade", answer: "4" },
         ],
       };
   },
+
+  methods: {
+    async getForm() {
+
+      const response = await formServices.getForm(this.$route.params.id);
+      console.log(response);
+      return response;
+    }
+
+  },
+  async created() {
+    this.form = await this.getForm();
+  }
 
 };
 

@@ -78,7 +78,7 @@ public interface IAproIniService {
 
     public List<Intervenant> getAllIntervenants();
 
-
+    public Forme getFormeById(long idForme);
 
 
 }

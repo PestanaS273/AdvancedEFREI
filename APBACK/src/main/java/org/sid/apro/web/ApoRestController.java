@@ -126,4 +126,9 @@ public class ApoRestController {
 
     }
 
+    @GetMapping("/getForm")
+    public Forme getForm(@RequestParam long id) {
+        return service.getFormeById(id);
+    }
+
 }

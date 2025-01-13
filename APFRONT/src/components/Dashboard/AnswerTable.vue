@@ -15,13 +15,13 @@
         </thead>
         <tbody>
           <tr
-            v-for="(form, index) in data"
-            :key="form.id"
+            v-for="(questionResponse, index) in questionReponses"
+            :key="questionReponses.id"
             :class="index % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
           >
-            <td class="px-6 py-4 text-sm text-gray-700">{{ form.id }}</td>
-            <td class="px-6 py-4 text-sm text-gray-700">{{ form.question }}</td>
-            <td class="px-6 py-4 text-sm text-gray-700">{{ form.answer }}</td>
+          <td class="px-6 py-4 text-sm text-gray-700">{{ questionResponse.id }}</td>
+          <td class="px-6 py-4 text-sm text-gray-700">{{ questionResponse.question }}</td>
+          <td class="px-6 py-4 text-sm text-gray-700">{{ questionResponse.response }}</td>
           </tr>
         </tbody>
       </table>
@@ -30,16 +30,32 @@
   
   <script>
 
+import formServices from '../../services/form.services';
 
 
 
   export default {
-    props: {
-      data: {
-        type: Array,
-        required: true,
-      },
+    data() {
+      return {
+        questionReponses: [],
+      };
     },
+    methods: {
+      async getForm() {
+        const response = await formServices.getForm(this.$route.params.id);
+        console.log(response);
+        console.log(response.questionReponses);
+        this.questionReponses = response.questionReponses || [];
+        return response;
+      }
+
+    },
+    async created() {
+      this.data = await this.getForm();
+      for (let i = 0; i < this.data.questionReponses.length; i++) {
+        console.log(this.data.questionReponses[i].id);
+      }
+    }
   };
   </script>
   

@@ -42,10 +42,9 @@ async function submitForm() {
             console.log('coursID:', coursID);
             const formData = {
                 idCours: coursID,
-                teacher: 10,
-                student: studentId,
+                idEtudiant: studentId.id,
                 questions: allQuestions,
-                anonymSurvey: anonymSurvey.value,
+                anonyme: anonymSurvey.value,
             };
             const response = await formServices.addForm(formData);
             console.log('Form submitted:', response);

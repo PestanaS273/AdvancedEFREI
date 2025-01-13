@@ -20,13 +20,13 @@ const { t } = useI18n()
             />
             <StatsCard
                 :title="t('Total Forms')"
-                value="120"
+                :value=totalForms
                 icon="📋"
                 bgColor="bg-blue-500"
             />
             <StatsCard
                 :title="t('Active Users')"
-                value="350"
+                :value=activeUsers
                 icon="👥"
                 bgColor="bg-purple-500"
             />
@@ -45,6 +45,10 @@ const { t } = useI18n()
 import StatsCard from "../../components/Dashboard/StatsCard.vue";
 import DataTable from "../../components/Dashboard/DataTable.vue";
 import DataTableToComplete from "../../components/Dashboard/DataTableToComplete.vue";
+import utilisateurServices from '../../services/utilisateur.services';
+import formServices from '../../services/form.services';
+
+
 
 
 export default {
@@ -65,8 +69,71 @@ data() {
           { id: 1, title: "Enquête sur le crous", responses: 0, created: "2024-11-01" },
           { id: 2, title: "Opinion sur les locaux", responses: 0, created: "2024-11-05" },
       ],
+      activeUsers: 0,
+      totalForms: 0,
     };
     },
+
+    methods:{
+        async getActiveUsers() {
+            try {
+                const response = await utilisateurServices.getActiveUsers();
+                this.activeUsers = response;
+                console.log(this.activeUsers);
+                
+            } catch (error) {
+                console.error(error);
+            }
+
+        },
+        async getAllForms() {
+            try {
+                const response = await formServices.getAllForms();
+                console.log(response);
+
+
+                const groupedForms = response.reduce((acc, form) => {
+                    const courseName = form.cours[0]?.nomCours;
+                    if (!courseName) {
+                        return acc;
+                    }
+                    console.log(courseName);
+                    const userConnected = this.$store.state.user.user.email;
+                    console.log(userConnected);
+                    if (form.etudiant.email === userConnected) {
+                        if (!acc[courseName]) {
+                            acc[courseName] = {
+                                id: form.id,
+                                nomCours: courseName,
+                                idCours: form.cours[0].id,
+                                count: 0
+                            };
+                        }
+                        acc[courseName].count += 1;
+
+                    }
+
+
+
+                    return acc;
+                }, {});
+                console.log(groupedForms);
+
+
+                this.surveys = Object.values(groupedForms);
+                console.log(this.surveys);
+                this.totalForms = response.length;
+
+            } catch (error) {
+                console.error(error);
+            }
+        },
+    },
+
+    async created() {
+        await this.getActiveUsers();
+        await this.getAllForms();
+    },  
 };
 </script>
 
