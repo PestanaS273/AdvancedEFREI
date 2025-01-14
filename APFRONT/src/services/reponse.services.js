@@ -1,7 +1,7 @@
 import apiClient from "./api";
 
-const saveResponse = async (response) => {
-    const response = await apiClient.post('/saveResponse', response);
+const saveResponse = async (answer) => {
+    const response = await apiClient.post('/saveResponse', answer);
     return response.data;
 }
 

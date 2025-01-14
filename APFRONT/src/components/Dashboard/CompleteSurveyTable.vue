@@ -1,43 +1,21 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import apiClient from '../../services/api'; 
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 // const questions = ref([]);
 const questions = [
-    { id: 1, question: 'What is your name?', type: 'text' },
-    { id: 2, question: 'How would you rate our service?', type: 'rating' },
-    { id: 3, question: 'What is your favorite color?', type: 'text' },
-    { id: 4, question: 'How would you rate our product?', type: 'rating' },
+
+
 ]
 const answers = ref({});
-
-const fetchQuestions = async () => {
-  try {
-    const response = await apiClient.get('/questions'); 
-    questions.value = response.data;
-  } catch (error) {
-    console.error('Error fetching questions:', error);
-  }
-};
 
 const setAnswer = (id, value) => {
   answers.value[id] = value;
 };
 
-const submitAnswers = async () => {
-  try {
-    const response = await apiClient.post('/submit-answers', answers.value); 
-    console.log('Answers submitted successfully:', response.data);
-  } catch (error) {
-    console.error('Error submitting answers:', error);
-  }
-};
 
-onMounted(() => {
-  fetchQuestions();
-});
+
 </script>
 
 <template>
@@ -50,23 +28,16 @@ onMounted(() => {
           <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase">{{ t('Answer') }}</th>
         </tr>
       </thead>
-      <tbody v-if="questions.length > 0">
+      <tbody v-if="questionReponses.length > 0">
         <tr
-          v-for="(question, index) in questions"
-          :key="question.id"
+          v-for="(question, index) in questionReponses"
+          :key="questionReponses.id"
           :class="index % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
         >
           <td class="px-6 py-4 text-sm text-gray-700">{{ question.id }}</td>
           <td class="px-6 py-4 text-sm text-gray-700">{{ question.question }}</td>
           <td class="px-6 py-4 text-sm text-gray-700">
-            <template v-if="question.type === 'text'">
-              <textarea
-                v-model="answers[question.id]"
-                class="w-full p-2 border border-gray-300 rounded-md resize-y"
-                :placeholder="t('Your answer')"
-              ></textarea>
-            </template>
-            <template v-else-if="question.type === 'rating'">
+            <template v-if="question.type === 'rating'">
               <div class="flex space-x-2">
                 <div
                   v-for="n in 5"
@@ -85,19 +56,23 @@ onMounted(() => {
                   {{ n }}
                 </div>
               </div>
+              
+            </template>
+            <template v-else>
+              <textarea
+                v-model="answers[question.id]"
+                class="w-full p-2 border border-gray-300 rounded-md resize-y"
+                :placeholder="t('Your answer')"
+              >
+            </textarea>
             </template>
           </td>
-        </tr>
-      </tbody>
-      <tbody v-else>
-        <tr>
-          <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-700">{{ t('No questions available') }}</td>
         </tr>
       </tbody>
     </table>
     <div class="p-6">
       <button
-        @click="submitAnswers"
+        @click="saveResponse"
         class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
       >
         {{ t('Submit') }}
@@ -107,13 +82,36 @@ onMounted(() => {
 </template>
 
 <script>
+import formServices from '../../services/form.services';
+import responseServices from '../../services/reponse.services'
+
 export default {
-  props: {
-    data: {
-      type: Array,
-      required: true,
+  data() {
+    return {
+      questionReponses: [],
+    };
+  },
+
+  methods: {
+    async saveResponse() {
+      const response = await responseServices.saveResponse(this.answers);
+      console.log(response);
+    },
+    async getForm() {
+      const response = await formServices.getForm(this.$route.params.id);
+      console.log(response);
+      console.log(response.questionReponses);
+      this.questionReponses = response.questionReponses || [];
+      return response;
     },
   },
+  async created() {
+    this.data = await this.getForm();
+    for (let i = 0; i < this.data.questionReponses.length; i++) {
+      console.log(this.data.questionReponses[i].id);
+    }
+
+  }
 };
 </script>
 
