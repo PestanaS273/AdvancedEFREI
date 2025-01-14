@@ -10,6 +10,10 @@ This project is a comprehensive web service system designed to integrate with ex
 
 The entire ecosystem is containerized using Docker and orchestrated with Docker Compose for seamless deployment and scalability.
 
+## architecture Diagram :
+
+![Architecture Diagram](Layer%20Diagram%20Advanced%20EFREI.drawio.png?raw=true "Architecture Diagram")
+
 ### Key Features
 1. **Survey Creation and Management**:
    - Administrators can create surveys for students in specific courses.
