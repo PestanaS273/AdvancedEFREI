@@ -1,6 +1,7 @@
 package org.sid.apro.web;
 
 import jakarta.transaction.Transactional;
+import org.sid.apro.dao.QuestionReponseRepository;
 import org.sid.apro.entities.*;
 import org.sid.apro.service.IAproIniService;
 import org.sid.apro.vo.EtudiantReponseVO;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Transactional
@@ -20,6 +22,10 @@ public class ApoRestController {
 
     @Autowired
     private IAproIniService service;
+
+    @Autowired
+    private QuestionReponseRepository questionReponseRepository;
+
 
     @PostMapping("/inscrire")
     public Utilisateur saveUser(@RequestBody User user) {
@@ -129,6 +135,18 @@ public class ApoRestController {
     @GetMapping("/getForm")
     public Forme getForm(@RequestParam long id) {
         return service.getFormeById(id);
+    }
+
+    @PutMapping("/setAnswers")
+    public QuestionReponse setAnswers(@RequestParam Long id, @RequestParam String reponse) {
+        Optional<QuestionReponse> questionReponseOptional = questionReponseRepository.findById(id);
+        if (questionReponseOptional.isPresent()) {
+            QuestionReponse questionReponse = questionReponseOptional.get();
+            questionReponse.setAnswer(reponse);
+            return questionReponseRepository.save(questionReponse);
+        } else {
+            throw new RuntimeException("QuestionReponse not found with id " + id);
+        }
     }
 
 }

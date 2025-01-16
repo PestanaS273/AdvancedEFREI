@@ -16,4 +16,6 @@ public interface QuestionReponseRepository extends JpaRepository<QuestionReponse
     QuestionReponse findByQuestion(String question);
     @Query("SELECT q FROM QuestionReponse q WHERE q.id = :id")
     QuestionReponse findByQuestionId(Long id);
+    Optional<QuestionReponse> findById(Long id);
+
 }
