@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -454,7 +455,22 @@ public class AproInitServiceImpl implements IAproIniService {
         return formRepository.findByEtudiantId(idEtudiant);
     }
 
-
+    @Override
+    public List<Forme> getAllFormesFromEtudiantTrue(long idEtudiant) {
+        List<Forme> formes = new ArrayList<>();
+        List<Forme> formesTrue = new ArrayList<>();
+        formes = formRepository.findByEtudiantId(idEtudiant);
+        formes.forEach(forme -> {
+            Collection<QuestionReponse> questionReponse =  forme.getQuestionReponses();
+            questionReponse.forEach(qr -> {
+                String question = qr.getReponse();
+                if(question != null){
+                    formesTrue.add(forme);
+                }
+            });
+        });
+        return formesTrue;
+    }
 
 
 }

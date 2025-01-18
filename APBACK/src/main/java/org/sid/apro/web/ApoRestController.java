@@ -135,5 +135,9 @@ public class ApoRestController {
     public List<Forme> getAllFormesFromEtudiant(@RequestParam long idEtudiant) {
         return service.getAllFormesFromEtudiant(idEtudiant);
     }
+    @GetMapping("/getAllFormesFromEtudiantTrue")
+    public List<Forme> getAllFormesFromEtudiantTrue(@RequestParam long idEtudiant) {
+        return service.getAllFormesFromEtudiantTrue(idEtudiant);
+    }
 
 }

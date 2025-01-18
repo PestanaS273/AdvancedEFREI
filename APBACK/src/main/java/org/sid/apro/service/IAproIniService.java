@@ -82,5 +82,7 @@ public interface IAproIniService {
 
     public List<Forme> getAllFormesFromEtudiant(long idEtudiant);
 
+    public List<Forme> getAllFormesFromEtudiantTrue(long idEtudiant);
+
 
 }
