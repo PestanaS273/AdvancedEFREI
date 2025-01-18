@@ -21,4 +21,9 @@ public class QuestionReponse implements Serializable {
     @Column(nullable = true)
     private String reponse;
 
+    public void setAnswer(String reponse) {
+        this.reponse = reponse;
+    }
+
+
 }
