@@ -451,19 +451,10 @@ public class AproInitServiceImpl implements IAproIniService {
 
     @Override
     public List<Forme> getAllFormesFromEtudiant(long idEtudiant) {
-        List<Forme> formes = new ArrayList<>();
-        Etudiant etudiant = etudiantRepository.findById(idEtudiant);
-        if(etudiant == null) throw new RuntimeException("Etudiant not found");
-        formRepository.findAll().forEach(forme -> {
-            Etudiant etudiant2 = forme.getEtudiant();
-            System.out.println(etudiant2);
-            if(etudiant2 == null) throw new RuntimeException("Etudiant not found1");
-            if(etudiant2 == etudiant){
-                formes.add(forme);
-            }
-        });
-        return formes;
+        return formRepository.findByEtudiantId(idEtudiant);
     }
+
+
 
 
 }

@@ -1,5 +1,6 @@
 package org.sid.apro.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +23,7 @@ public class Forme implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Collection<EtudiantCoursForm> etudiantCoursForms = new ArrayList<>();
     @ManyToOne
+    @JsonIgnore
     private Etudiant etudiant;
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     private Collection<QuestionReponse> questionReponses = new ArrayList<>();
