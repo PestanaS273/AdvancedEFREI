@@ -31,11 +31,12 @@ APYTHON/
 Environment variables are stored in a `.env` file and loaded using `python-dotenv`. Example:
 
 ```
-DB_USER=your_user
-DB_PASSWORD=your_password
-DB_HOST=your_host
-DB_NAME=your_database
+DB_USER=apdata
+DB_PASSWORD=apdata
+DB_HOST=mysql
+DB_NAME=APDATA
 DB_PORT=3306
+FRONTEND_URL="http://localhost:4173"
 ```
 
 ## Endpoints
