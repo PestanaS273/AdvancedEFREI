@@ -60,12 +60,32 @@ async function submitForm() {
 
 const templates = {
   basic: [
-    { question: '¿Cómo calificarías la clase?' },
-    { question: '¿Qué mejorarías en la clase?' }
+    { question: 'What were your learning objectives?' },
+    { question: 'Rate your overall experience of the course' },
+    { question: 'How did this course develop you professionally?' },
+    { question: 'What will you do differently now you ve attended the course?' },
+    { question: 'What did you like most / least in the course?' }
+
+
   ],
   long: [
-    { question: '¿Cómo calificarías al profesor?' },
-    { question: '¿Qué sugerencias tienes para el profesor?' }
+    { question: 'What were your learning objectives?' },
+    { question: 'Rate your overall experience of the course' },
+    { question: 'How did this course develop you professionally?' },
+    { question: 'What will you do differently now you ve attended the course?' },
+    { question: 'What did you like most / least in the course?' },
+    { question: 'What was the most valuable part of the course?' },
+    { question: 'What was the least valuable part of the course?' },
+    { question: 'What would you change about the course?' },
+    { question: 'What would you keep the same about the course?' },
+    { question: 'What would you add to the course?' },
+    { question: 'What would you remove from the course?' },
+    { question: 'What was the most challenging part of the course?' },
+    { question: 'What was the easiest part of the course?' },
+    { question: 'What was the most enjoyable part of the course?' },
+    { question: 'What was the least enjoyable part of the course?' },
+    { question: 'What was the most useful part of the course?' },
+    { question: 'What was the least useful part of the course?' },
   ]
 };
 </script>
