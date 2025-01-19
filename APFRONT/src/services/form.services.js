@@ -48,7 +48,7 @@ const addForm = async (form) => {
 }
 
 const getFormsToComplete = async (idEtudiant) => {
-    const response = await apiClient.get('/getAllFormesFromEtudiantTrue', {
+    const response = await apiClient.get('/getAllFormesFromEtudiantFalse', {
         params: {
             idEtudiant: idEtudiant
         }
@@ -57,7 +57,7 @@ const getFormsToComplete = async (idEtudiant) => {
 }
 
 const getFormsCompleted = async (idEtudiant) => {
-    const response = await apiClient.get('/getAllFormesFromEtudiant', {
+    const response = await apiClient.get('/getAllFormesFromEtudiantTrue', {
         params: {
             idEtudiant: idEtudiant
         }

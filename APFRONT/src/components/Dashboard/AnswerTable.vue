@@ -21,7 +21,7 @@
           >
           <td class="px-6 py-4 text-sm text-gray-700">{{ questionResponse.id }}</td>
           <td class="px-6 py-4 text-sm text-gray-700">{{ questionResponse.question }}</td>
-          <td class="px-6 py-4 text-sm text-gray-700">{{ questionResponse.response }}</td>
+          <td class="px-6 py-4 text-sm text-gray-700">{{ questionResponse.reponse }}</td>
           </tr>
         </tbody>
       </table>

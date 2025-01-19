@@ -465,6 +465,15 @@ public class AproInitServiceImpl implements IAproIniService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Forme> getAllFormesFromEtudiantFalse(long idEtudiant) {
+        List<Forme> formes = formRepository.findByEtudiantId(idEtudiant);
+        return formes.stream()
+                .filter(forme -> forme.getQuestionReponses().stream()
+                        .anyMatch(qr -> qr.getReponse() == null))
+                .collect(Collectors.toList());
+    }
+
 
 
 }
