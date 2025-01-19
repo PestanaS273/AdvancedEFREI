@@ -47,6 +47,24 @@ const addForm = async (form) => {
     return response.data;
 }
 
+const getFormsToComplete = async (idEtudiant) => {
+    const response = await apiClient.get('/getAllFormesFromEtudiantTrue', {
+        params: {
+            idEtudiant: idEtudiant
+        }
+    });
+    return response.data;
+}
+
+const getFormsCompleted = async (idEtudiant) => {
+    const response = await apiClient.get('/getAllFormesFromEtudiant', {
+        params: {
+            idEtudiant: idEtudiant
+        }
+    });
+    return response.data;
+}
+
 export default {
     getAllForms,
     getFormsForCourse,
@@ -54,5 +72,7 @@ export default {
     createForm,
     getBaseFormTemplate,
     getFormsForUser,
-    addForm
+    addForm,
+    getFormsToComplete,
+    getFormsCompleted
 }

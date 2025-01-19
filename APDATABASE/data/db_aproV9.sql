@@ -84,22 +84,22 @@ CREATE TABLE `cours_formes` (
 -- Déchargement des données de la table `cours_formes`
 --
 
-INSERT INTO `cours_formes` (`cours_id`, `formes_id`) VALUES
-(2, 1),
-(2, 2),
-(2, 3),
-(5, 4),
-(5, 5),
-(5, 6),
-(4, 7),
-(4, 8),
-(4, 9),
-(3, 10),
-(3, 11),
-(3, 12),
-(1, 13),
-(1, 14),
-(1, 15);
+-- INSERT INTO `cours_formes` (`cours_id`, `formes_id`) VALUES
+-- (2, 1),
+-- (2, 2),
+-- (2, 3),
+-- (5, 4),
+-- (5, 5),
+-- (5, 6),
+-- (4, 7),
+-- (4, 8),
+-- (4, 9),
+-- (3, 10),
+-- (3, 11),
+-- (3, 12),
+-- (1, 13),
+-- (1, 14),
+-- (1, 15);
 
 -- --------------------------------------------------------
 
@@ -204,22 +204,22 @@ CREATE TABLE `forme` (
 -- Déchargement des données de la table `forme`
 --
 
-INSERT INTO `forme` (`anonyme`, `etudiant_id`, `id`, `question_id`, `reponse_id`) VALUES
-(b'0', 2, 1, NULL, NULL),
-(b'0', 1, 2, NULL, NULL),
-(b'0', NULL, 3, NULL, NULL),
-(b'0', NULL, 4, NULL, NULL),
-(b'0', NULL, 5, NULL, NULL),
-(b'0', NULL, 6, NULL, NULL),
-(b'0', NULL, 7, NULL, NULL),
-(b'0', NULL, 8, NULL, NULL),
-(b'0', NULL, 9, NULL, NULL),
-(b'0', NULL, 10, NULL, NULL),
-(b'0', NULL, 11, NULL, NULL),
-(b'0', NULL, 12, NULL, NULL),
-(b'0', NULL, 13, NULL, NULL),
-(b'0', NULL, 14, NULL, NULL),
-(b'0', NULL, 15, NULL, NULL);
+-- INSERT INTO `forme` (`anonyme`, `etudiant_id`, `id`, `question_id`, `reponse_id`) VALUES
+-- (b'0', 2, 1, NULL, NULL),
+-- (b'0', 1, 2, NULL, NULL),
+-- (b'0', NULL, 3, NULL, NULL),
+-- (b'0', NULL, 4, NULL, NULL),
+-- (b'0', NULL, 5, NULL, NULL),
+-- (b'0', NULL, 6, NULL, NULL),
+-- (b'0', NULL, 7, NULL, NULL),
+-- (b'0', NULL, 8, NULL, NULL),
+-- (b'0', NULL, 9, NULL, NULL),
+-- (b'0', NULL, 10, NULL, NULL),
+-- (b'0', NULL, 11, NULL, NULL),
+-- (b'0', NULL, 12, NULL, NULL),
+-- (b'0', NULL, 13, NULL, NULL),
+-- (b'0', NULL, 14, NULL, NULL),
+-- (b'0', NULL, 15, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -236,29 +236,29 @@ CREATE TABLE `forme_question_reponses` (
 -- Déchargement des données de la table `forme_question_reponses`
 --
 
-INSERT INTO `forme_question_reponses` (`forme_id`, `question_reponses_id`) VALUES
-(3, 2),
-(4, 2),
-(5, 2),
-(6, 5),
-(7, 4),
-(8, 3),
-(9, 1),
-(10, 1),
-(11, 1),
-(12, 2),
-(13, 1),
-(14, 5),
-(15, 4),
-(1, 2),
-(1, 6),
-(1, 7),
-(1, 8),
-(1, 9),
-(2, 1),
-(2, 10),
-(2, 11),
-(2, 12);
+-- INSERT INTO `forme_question_reponses` (`forme_id`, `question_reponses_id`) VALUES
+-- (3, 2),
+-- (4, 2),
+-- (5, 2),
+-- (6, 5),
+-- (7, 4),
+-- (8, 3),
+-- (9, 1),
+-- (10, 1),
+-- (11, 1),
+-- (12, 2),
+-- (13, 1),
+-- (14, 5),
+-- (15, 4),
+-- (1, 2),
+-- (1, 6),
+-- (1, 7),
+-- (1, 8),
+-- (1, 9),
+-- (2, 1),
+-- (2, 10),
+-- (2, 11),
+-- (2, 12);
 
 -- --------------------------------------------------------
 
@@ -310,19 +310,19 @@ CREATE TABLE `question_reponse` (
 -- Déchargement des données de la table `question_reponse`
 --
 
-INSERT INTO `question_reponse` (`id`, `question`, `reponse`) VALUES
-(1, 'What is Spring Boot?', NULL),
-(2, 'Explain JPA relationships.', NULL),
-(3, 'How to secure a REST API?', NULL),
-(4, 'What is a microservice?', NULL),
-(5, 'What are HTTP status codes?', NULL),
-(6, 'What are HTTP status codes?', 'sara je suis un spring 1'),
-(7, 'What are HTTP status codes?', 'sara je suis un spring 2'),
-(8, 'What are HTTP status codes?', 'sara je suis un spring 3'),
-(9, 'What are HTTP status codes?', 'sara je suis un spring 4'),
-(10, 'What are HTTP status codes?', 'othmane je suis un spring 1'),
-(11, 'What are HTTP status codes?', 'othmane je suis un spring 2'),
-(12, 'What are HTTP status codes?', 'othmane je suis un spring 3');
+-- INSERT INTO `question_reponse` (`id`, `question`, `reponse`) VALUES
+-- (1, 'What is Spring Boot?', NULL),
+-- (2, 'Explain JPA relationships.', NULL),
+-- (3, 'How to secure a REST API?', NULL),
+-- (4, 'What is a microservice?', NULL),
+-- (5, 'What are HTTP status codes?', NULL),
+-- (6, 'What are HTTP status codes?', 'sara je suis un spring 1'),
+-- (7, 'What are HTTP status codes?', 'sara je suis un spring 2'),
+-- (8, 'What are HTTP status codes?', 'sara je suis un spring 3'),
+-- (9, 'What are HTTP status codes?', 'sara je suis un spring 4'),
+-- (10, 'What are HTTP status codes?', 'othmane je suis un spring 1'),
+-- (11, 'What are HTTP status codes?', 'othmane je suis un spring 2'),
+-- (12, 'What are HTTP status codes?', 'othmane je suis un spring 3');
 
 -- --------------------------------------------------------
 

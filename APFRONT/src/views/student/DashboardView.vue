@@ -33,10 +33,10 @@ const { t } = useI18n()
         </div>
 
         <h1 class="text-xl font-bold text-gray-800 my-6">{{ t('Forms To Complete') }}</h1>
-        <DataTableToComplete :data="surveys" />
+        <DataTableToComplete :data="dataToComplete" />
         <br>
         <h1 class="text-xl font-bold text-gray-800 my-6">{{ t('Completed Forms') }}</h1>
-        <DataTable :data="surveys" />
+        <DataTable :data="dataCompleted" />
     </div>
 
 </template>
@@ -47,7 +47,7 @@ import DataTable from "../../components/Dashboard/DataTable.vue";
 import DataTableToComplete from "../../components/Dashboard/DataTableToComplete.vue";
 import utilisateurServices from '../../services/utilisateur.services';
 import formServices from '../../services/form.services';
-
+import store from '../../store/index';
 
 
 
@@ -55,15 +55,16 @@ export default {
 components: { StatsCard, DataTable, DataTableToComplete },
 data() {
     return {
-        surveys: [
+        dataCompleted: [
 
         ],
         dataToComplete: [
         //   { id: 1, title: "Enquête sur le crous", responses: 0, created: "2024-11-01" },
         //   { id: 2, title: "Opinion sur les locaux", responses: 0, created: "2024-11-05" },
-      ],
-      activeUsers: 0,
-      totalForms: 0,
+        ],
+        activeUsers: 0,
+        totalForms: 0,
+        user: {},
     };
     },
 
@@ -91,32 +92,81 @@ data() {
                         return acc;
                     }
                     console.log(courseName);
-                    const userConnected = this.$store.state.user.user.email;
-                    console.log(userConnected);
-                    if (form.etudiant.email === userConnected) {
-                        if (!acc[courseName]) {
-                            acc[courseName] = {
-                                id: form.id,
-                                nomCours: courseName,
-                                idCours: form.cours[0].id,
-                                count: 0
-                            };
-                        }
-                        acc[courseName].count += 1;
-
+                    if (!acc[courseName]) {
+                        acc[courseName] = {
+                            id: form.id,
+                            nomCours: courseName,
+                            idCours: form.cours[0].id,
+                            count: 0
+                        };
                     }
-
-
-
+                    acc[courseName].count += 1;
                     return acc;
                 }, {});
                 console.log(groupedForms);
 
 
-                this.surveys = Object.values(groupedForms);
-                console.log(this.surveys);
+                // this.surveys = Object.values(groupedForms);
+                // console.log(this.surveys);
                 this.totalForms = response.length;
 
+            } catch (error) {
+                console.error(error);
+            }
+        },
+
+        async getFormsToComplete() {
+            try {
+                const response = await formServices.getFormsToComplete(this.user.id);
+                console.log(response);
+                this.dataToComplete = response;
+                console.log(this.dataToComplete);
+
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getFormsCompleted() {
+            try {
+                const response = await formServices.getFormsCompleted(this.user.id);
+                console.log(response);
+
+                const groupedForms = response.reduce((acc, form) => {
+                    const courseName = form.cours[0]?.nomCours;
+                    if (!courseName) {
+                        return acc;
+                    }
+                    console.log(courseName);
+                    if (!acc[courseName]) {
+                        acc[courseName] = {
+                            id: form.id,
+                            nomCours: courseName,
+                            idCours: form.cours[0].id,
+                            count: 0
+                        };
+                    }
+                    acc[courseName].count += 1;
+                    return acc;
+                }, {});
+                console.log(groupedForms);
+
+
+                // this.surveys = Object.values(groupedForms);
+                // console.log(this.surveys);
+                this.dataCompleted = Object.values(groupedForms);
+            } catch (error) {
+                console.error(error);
+            }
+        },
+
+        async getUser() {
+            const user = store.getters['user/getUser'];
+            console.log(user.email);
+            try {
+                const response = await utilisateurServices.getUser(user.email);
+                console.log(response);
+                this.user = response;
+                console.log(this.user.prenom)
             } catch (error) {
                 console.error(error);
             }
@@ -124,7 +174,11 @@ data() {
     },
 
     async created() {
+        await this.getUser();
+
         await this.getActiveUsers();
+        await this.getFormsCompleted();
+        await this.getFormsToComplete();
         await this.getAllForms();
     },  
 };

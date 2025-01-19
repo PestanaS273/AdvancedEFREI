@@ -21,8 +21,8 @@
                 :class="index % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
             >
             <td class="px-6 py-4 text-sm text-gray-700">{{ survey.id }}</td>
-            <td class="px-6 py-4 text-sm text-gray-700">{{ survey.nomCours }}</td>
-            <td class="px-6 py-4 text-sm text-gray-700">{{ survey.count }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">{{ survey.cours[0].nomCours }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">0</td>
             <td class="px-6 py-4 text-sm text-gray-700">{{ survey.created }}</td>
             <td><RouterLink :to="{ name: 'student-feedback-answer', params: { id: survey.id}}" class="text-sm font-medium text-gray-600 uppercase">{{t('Start Survey')}}</RouterLink></td>
             </tr>
