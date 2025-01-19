@@ -3,6 +3,8 @@
 ## Overview
 The Python API is a FastAPI application designed to process Excel files and update the database with student and teacher data. It supports asynchronous operations and integrates with SQLAlchemy for ORM functionalities. The API is part of the web service ecosystem and provides endpoints for uploading and processing data files.
 
+You will find the excel files inside the excel_files direcotry.
+
 ## Folder Structure
 ```
 APYTHON/
