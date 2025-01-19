@@ -140,6 +140,8 @@ networks:
    docker-compose logs
    ```
 
+7. You will find the Excel Files inside the APYTHON directory, in excel_files subdirectory in order to test the Python API.
+
 ### Project Structure
 
 | Component  | Description | Details |
