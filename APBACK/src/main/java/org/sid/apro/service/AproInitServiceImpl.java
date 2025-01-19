@@ -15,6 +15,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -457,20 +458,13 @@ public class AproInitServiceImpl implements IAproIniService {
 
     @Override
     public List<Forme> getAllFormesFromEtudiantTrue(long idEtudiant) {
-        List<Forme> formes = new ArrayList<>();
-        List<Forme> formesTrue = new ArrayList<>();
-        formes = formRepository.findByEtudiantId(idEtudiant);
-        formes.forEach(forme -> {
-            Collection<QuestionReponse> questionReponse =  forme.getQuestionReponses();
-            questionReponse.forEach(qr -> {
-                String question = qr.getReponse();
-                if(question != null){
-                    formesTrue.add(forme);
-                }
-            });
-        });
-        return formesTrue;
+        List<Forme> formes = formRepository.findByEtudiantId(idEtudiant);
+        return formes.stream()
+                .filter(forme -> forme.getQuestionReponses().stream()
+                        .anyMatch(qr -> qr.getReponse() != null))
+                .collect(Collectors.toList());
     }
+
 
 
 }
